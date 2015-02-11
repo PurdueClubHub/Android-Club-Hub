@@ -30,10 +30,15 @@ public class LoginActivity extends ActionBarActivity {
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_login);
 
-        //TODO: Create function to toggle login form and progress spinner
+        //make form invisible
+        setFormVisible(false);
 
         //attempt log in with saved prefs before enabling form
         attemptLoginFromPrefs();
+
+        //log in with saved prefs failed. Present form
+        setFormVisible(true);
+
 
         //Set up buttons, etc
         Button login_button = (Button) findViewById(R.id.logInButton);
@@ -140,6 +145,17 @@ public class LoginActivity extends ActionBarActivity {
 
         }
     }
+
+    public void setFormVisible(boolean b)
+    {
+        int visibility = b ? View.VISIBLE : View.INVISIBLE;
+        int progressVisibility = b ? View.INVISIBLE : View.VISIBLE;
+
+        findViewById(R.id.loginProgressBar).setVisibility(progressVisibility);
+        findViewById(R.id.loginFrame).setVisibility(visibility);
+        findViewById(R.id.loginButtonsLayout).setVisibility(visibility);
+    }
+
 
     public void setFormEnabled(boolean b)
     {

@@ -14,7 +14,7 @@
         android:paddingLeft="16dp"
         android:paddingBottom="32dp"
         android:background="#A3792C"
-        android:id="@+id/frameLayout">
+        android:id="@+id/loginFrame">
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,12 +64,12 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/frameLayout"
+        android:layout_below="@id/loginFrame"
         android:layout_centerHorizontal="true"
         android:padding="16dp"
         android:gravity="center_horizontal"
         android:showDividers="middle"
-        android:divider="@drawable/abc_list_divider_mtrl_alpha"
+        android:id="@+id/loginButtonsLayout"
        >
 
 
@@ -103,8 +103,8 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_above="@+id/frameLayout"
+        android:id="@+id/loginProgressBar"
+        android:layout_above="@id/loginFrame"
         android:layout_centerHorizontal="true" />
 
 

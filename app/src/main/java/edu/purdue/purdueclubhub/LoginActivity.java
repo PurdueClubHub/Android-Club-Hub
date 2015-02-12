@@ -2,13 +2,19 @@ package edu.purdue.purdueclubhub;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
@@ -22,6 +28,9 @@ public class LoginActivity extends ActionBarActivity {
     private Firebase ref;
 
     private String userID;
+    private boolean isRegistrationForm = false;
+    int repeatPassEditTextID;
+    int emailEditTextID;
 
 
     @Override
@@ -54,9 +63,15 @@ public class LoginActivity extends ActionBarActivity {
         reg_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Start register activity
+                //TODO: Start register activity (I'm trying to merge these into 1 activity)
                 //Intent intent = new Intent(getBaseContext(), RegisterActivity.class);
                 //startActivity(intent);
+                if (!isRegistrationForm)
+                    setFormToRegistration();
+                else {
+                    //TODO: make function to register users
+                    // registerUser();
+                }
             }
         });
     }
@@ -146,8 +161,7 @@ public class LoginActivity extends ActionBarActivity {
         }
     }
 
-    public void setFormVisible(boolean b)
-    {
+    public void setFormVisible(boolean b) {
         int visibility = b ? View.VISIBLE : View.INVISIBLE;
         int progressVisibility = b ? View.INVISIBLE : View.VISIBLE;
 
@@ -175,5 +189,49 @@ public class LoginActivity extends ActionBarActivity {
     {
         SharedPreferences prefs = getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE);
         return prefs.getString("USER_PW", "NOT_FOUND");
+    }
+
+    private void setFormToRegistration() {
+        LinearLayout loginForm = (LinearLayout)findViewById(R.id.loginFrame);
+        ((RelativeLayout.LayoutParams)loginForm.getLayoutParams()).addRule(RelativeLayout.CENTER_VERTICAL, 0);
+        loginForm.getLayoutParams().height = 800;
+
+        Toast.makeText(getBaseContext(), "Hello", Toast.LENGTH_SHORT);
+
+        ((TextView)findViewById(R.id.loginTitle)).setText("Register");
+
+
+        TextView repeatPassLabel = new TextView(this);
+        repeatPassLabel.setText("Repeat Password:");
+
+        loginForm.addView(repeatPassLabel);
+
+        //Set up password EditText
+        EditText repeatPassEditText = new EditText(getBaseContext());
+        repeatPassEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        repeatPassEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        repeatPassEditText.setTextColor(Color.BLACK);
+        repeatPassEditText.setLinkTextColor(Color.BLACK);
+
+        repeatPassEditTextID = View.generateViewId();
+        repeatPassEditText.setId(repeatPassEditTextID);
+
+        loginForm.addView(repeatPassEditText);
+
+
+        /*TextView emailLabel = new TextView(this);
+        repeatPassLabel.setText("Email:");
+
+        loginForm.addView(emailLabel);
+
+        EditText emailEditText = new EditText(getBaseContext());
+        emailEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        emailEditTextID = View.generateViewId();
+        emailEditText.setId(emailEditTextID);
+
+        loginForm.addView(emailEditText);
+        */
+
+        isRegistrationForm = true;
     }
 }

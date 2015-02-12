@@ -10,6 +10,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -132,7 +133,6 @@ public class LoginActivity extends ActionBarActivity {
         String userPW = getSavedPassword();
 
         if (userEmail.equals("NOT_FOUND") && userPW.equals("NOT_FOUND")) {
-            //TODO:show login form
             Toast.makeText(getBaseContext(), "Could not find saved prefs", Toast.LENGTH_LONG).show();
             setFormEnabled(true);
         }
@@ -153,7 +153,6 @@ public class LoginActivity extends ActionBarActivity {
                 @Override
                 public void onAuthenticationError(FirebaseError firebaseError) {
                     Toast.makeText(getBaseContext(), "Auth Failed: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
-                    //TODO:Show login form
                     setFormEnabled(true);
                 }
             });
@@ -222,19 +221,22 @@ public class LoginActivity extends ActionBarActivity {
         //add it to the view
         loginForm.addView(repeatPassEditText);
 
-
-        /*TextView emailLabel = new TextView(this);
-        repeatPassLabel.setText("Email:");
+        TextView emailLabel = new TextView(this);
+        emailLabel.setText("Email:");
 
         loginForm.addView(emailLabel);
 
         EditText emailEditText = new EditText(getBaseContext());
         emailEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        emailEditText.setTextColor(Color.BLACK);
+
         emailEditTextID = View.generateViewId();
         emailEditText.setId(emailEditTextID);
 
         loginForm.addView(emailEditText);
-        */
+
+        findViewById(R.id.guestButton).setVisibility(View.INVISIBLE);
+        findViewById(R.id.logInButton).setVisibility(View.INVISIBLE);
 
         isRegistrationForm = true;
     }

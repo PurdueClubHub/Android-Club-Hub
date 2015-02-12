@@ -191,6 +191,9 @@ public class LoginActivity extends ActionBarActivity {
         return prefs.getString("USER_PW", "NOT_FOUND");
     }
 
+    /*
+        Function that animates the form from login to registration
+     */
     private void setFormToRegistration() {
         LinearLayout loginForm = (LinearLayout)findViewById(R.id.loginFrame);
         ((RelativeLayout.LayoutParams)loginForm.getLayoutParams()).addRule(RelativeLayout.CENTER_VERTICAL, 0);
@@ -216,6 +219,7 @@ public class LoginActivity extends ActionBarActivity {
         repeatPassEditTextID = View.generateViewId();
         repeatPassEditText.setId(repeatPassEditTextID);
 
+        //add it to the view
         loginForm.addView(repeatPassEditText);
 
 

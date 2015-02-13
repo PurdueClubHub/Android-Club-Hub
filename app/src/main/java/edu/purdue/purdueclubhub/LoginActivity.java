@@ -52,7 +52,7 @@ public class LoginActivity extends ActionBarActivity {
         setFormVisible(true);
 
 
-        //Set up buttons, etc
+        //Set up login button
         Button login_button = (Button) findViewById(R.id.logInButton);
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +62,7 @@ public class LoginActivity extends ActionBarActivity {
             }
         });
 
+        //set up registration button
         Button reg_button = (Button)findViewById(R.id.signUpButton);
         reg_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +73,34 @@ public class LoginActivity extends ActionBarActivity {
                     registerUser();
 
                 }
+            }
+        });
+
+        Button guest_button = (Button)findViewById(R.id.guestButton);
+        guest_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFormEnabled(false);
+                attemptGuestLogin();
+            }
+        });
+    }
+
+    private void attemptGuestLogin() {
+        ref.authAnonymously(new Firebase.AuthResultHandler() {
+
+            @Override
+            public void onAuthenticated(AuthData authData) {
+                Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
+                intent.putExtra("Uid", "Guest");
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onAuthenticationError(FirebaseError firebaseError) {
+                setFormEnabled(true);
+                Toast.makeText(getBaseContext(), "Auth Failed: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

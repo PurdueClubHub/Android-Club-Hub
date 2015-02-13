@@ -1,6 +1,7 @@
 package edu.purdue.purdueclubhub;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -25,7 +25,7 @@ import com.firebase.client.FirebaseError;
 public class LoginActivity extends ActionBarActivity {
 
 
-    final String FIREBASE_URL = "https://clubhub.firebaseio.com/";
+    final String FIREBASE_URL = "https://clubhub.firebaseio.com";
     private Firebase ref;
 
     private String userID;
@@ -39,6 +39,8 @@ public class LoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_login);
+
+        ref = new Firebase(FIREBASE_URL);
 
         //make form invisible
         setFormVisible(false);
@@ -71,12 +73,12 @@ public class LoginActivity extends ActionBarActivity {
                     setFormToRegistration();
                 else {
                     //TODO: make function to register users
-                    // registerUser();
+                    registerUser();
+
                 }
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,7 +105,6 @@ public class LoginActivity extends ActionBarActivity {
     {
         EditText email = (EditText)findViewById(R.id.usernameEditText);
         EditText pass = (EditText)findViewById(R.id.passwordEditText);
-        ref = new Firebase(FIREBASE_URL);
         ref.authWithPassword(email.getText().toString(), pass.getText().toString(), new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
@@ -114,9 +115,9 @@ public class LoginActivity extends ActionBarActivity {
                 prefs.edit().putString("USER_PW",id).apply();
 
                 //Toast.makeText(getBaseContext(), "SAVED PREFS", Toast.LENGTH_LONG).show();
-                //TODO: Start new main activity
-                //Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
+                intent.putExtra("Uid", authData.getUid());
+                startActivity(intent);
                 finish();
             }
 
@@ -131,7 +132,6 @@ public class LoginActivity extends ActionBarActivity {
     private void attemptLoginFromPrefs() {
         String userEmail = getSavedEmail();
         String userPW = getSavedPassword();
-
         if (userEmail.equals("NOT_FOUND") && userPW.equals("NOT_FOUND")) {
             Toast.makeText(getBaseContext(), "Could not find saved prefs", Toast.LENGTH_LONG).show();
             setFormEnabled(true);
@@ -146,7 +146,10 @@ public class LoginActivity extends ActionBarActivity {
                     //Toast.makeText(getBaseContext(), "Logged in with user ID: " + userID, Toast.LENGTH_LONG).show();
                     userID = authData.getUid();
                     Toast.makeText(getBaseContext(), "AUTH OKAY", Toast.LENGTH_LONG).show();
-                    //TODO:open main activity
+
+                    Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
+                    intent.putExtra("Uid", authData.getUid());
+                    startActivity(intent);
                     //caution: need to get user id in main activity
                 }
 
@@ -239,5 +242,47 @@ public class LoginActivity extends ActionBarActivity {
         findViewById(R.id.logInButton).setVisibility(View.INVISIBLE);
 
         isRegistrationForm = true;
+    }
+
+    private void registerUser()
+    {
+        setFormEnabled(false);
+        EditText email = (EditText)findViewById(R.id.usernameEditText);
+        EditText pass = (EditText)findViewById(R.id.passwordEditText);
+        EditText confirm_pass = (EditText)findViewById(repeatPassEditTextID);
+
+        String password = pass.getText().toString();
+        String confirm = confirm_pass.getText().toString();
+
+        if(!password.equals(confirm)) {
+            setFormEnabled(true);
+            Toast.makeText(getBaseContext(), "Password fields must match!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        ref.createUser(email.getText().toString(), pass.getText().toString(), new Firebase.ResultHandler() {
+            @Override
+            public void onSuccess() {
+                String pw = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
+                String id = ((EditText) findViewById(R.id.usernameEditText)).getText().toString();
+
+                SharedPreferences prefs = getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE);
+                prefs.edit().putString("USER_ID", id).apply();
+                prefs.edit().putString("USER_PW",pw).apply();
+
+                //Toast.makeText(getBaseContext(), "AuthData: " + ref.getAuth().getUid(), Toast.LENGTH_LONG).show();
+                attemptLoginFromPrefs();
+                //Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
+                //intent.putExtra("Uid", authData.getUid());
+                //startActivity(intent);
+                //finish();
+            }
+
+            @Override
+            public void onError(FirebaseError firebaseError) {
+                setFormEnabled(true);
+                Toast.makeText(getBaseContext(), "Auth Failed: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

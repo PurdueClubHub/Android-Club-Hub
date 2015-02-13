@@ -1,17 +1,26 @@
 package edu.purdue.purdueclubhub;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.firebase.client.Firebase;
+
 
 public class PurdueClubHub extends ActionBarActivity {
+
+
+    final String FIREBASE_URL = "https://clubhub.firebaseio.com";
+    private Firebase ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ref = new Firebase(FIREBASE_URL);
+        String Uid = getIntent().getExtras().getString("Uid");
+        ref.child("Users").child(Uid).child("registered?").setValue(true);
     }
 
 

@@ -285,6 +285,11 @@ public class LoginActivity extends ActionBarActivity {
             return;
         }
 
+        if(!Validation.isValidPassword(password)){
+            setFormEnabled(true);
+            Toast.makeText(getBaseContext(), "Invalid Password: Must Contain Number, Letter and Special Character", Toast.LENGTH_LONG).show();
+        }
+
         ref.createUser(email.getText().toString(), pass.getText().toString(), new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {

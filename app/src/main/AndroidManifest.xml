@@ -15,7 +15,7 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="Log In" >
+            android:label="ClubHub" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

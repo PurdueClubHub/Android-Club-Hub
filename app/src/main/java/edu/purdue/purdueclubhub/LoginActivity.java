@@ -52,7 +52,7 @@ public class LoginActivity extends ActionBarActivity {
         setFormVisible(true);
 
 
-        //Set up buttons, etc
+        //Set up login button
         Button login_button = (Button) findViewById(R.id.logInButton);
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,20 +62,45 @@ public class LoginActivity extends ActionBarActivity {
             }
         });
 
+        //set up registration button
         Button reg_button = (Button)findViewById(R.id.signUpButton);
         reg_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Start register activity (I'm trying to merge these into 1 activity)
-                //Intent intent = new Intent(getBaseContext(), RegisterActivity.class);
-                //startActivity(intent);
                 if (!isRegistrationForm)
                     setFormToRegistration();
                 else {
-                    //TODO: make function to register users
                     registerUser();
 
                 }
+            }
+        });
+
+        Button guest_button = (Button)findViewById(R.id.guestButton);
+        guest_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFormEnabled(false);
+                attemptGuestLogin();
+            }
+        });
+    }
+
+    private void attemptGuestLogin() {
+        ref.authAnonymously(new Firebase.AuthResultHandler() {
+
+            @Override
+            public void onAuthenticated(AuthData authData) {
+                Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
+                intent.putExtra("Uid", "Guest");
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onAuthenticationError(FirebaseError firebaseError) {
+                setFormEnabled(true);
+                Toast.makeText(getBaseContext(), "Auth Failed: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -150,7 +175,7 @@ public class LoginActivity extends ActionBarActivity {
                     Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
                     intent.putExtra("Uid", authData.getUid());
                     startActivity(intent);
-                    //caution: need to get user id in main activity
+                    finish();
                 }
 
                 @Override
@@ -172,7 +197,7 @@ public class LoginActivity extends ActionBarActivity {
         findViewById(R.id.loginButtonsLayout).setVisibility(visibility);
     }
 
-
+    //TODO: Refactor for our layout
     public void setFormEnabled(boolean b)
     {
         findViewById(R.id.usernameEditText).setEnabled(b);
@@ -272,10 +297,6 @@ public class LoginActivity extends ActionBarActivity {
 
                 //Toast.makeText(getBaseContext(), "AuthData: " + ref.getAuth().getUid(), Toast.LENGTH_LONG).show();
                 attemptLoginFromPrefs();
-                //Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
-                //intent.putExtra("Uid", authData.getUid());
-                //startActivity(intent);
-                //finish();
             }
 
             @Override

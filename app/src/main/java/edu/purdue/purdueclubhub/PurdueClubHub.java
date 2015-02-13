@@ -17,7 +17,8 @@ public class PurdueClubHub extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_purdue_club_hub);
+        Firebase.setAndroidContext(this);
         ref = new Firebase(FIREBASE_URL);
         String Uid = getIntent().getExtras().getString("Uid");
         ref.child("Users").child(Uid).child("registered?").setValue(true);

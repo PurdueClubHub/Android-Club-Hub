@@ -150,7 +150,7 @@ public class LoginActivity extends ActionBarActivity {
                     Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
                     intent.putExtra("Uid", authData.getUid());
                     startActivity(intent);
-                    //caution: need to get user id in main activity
+                    finish();
                 }
 
                 @Override

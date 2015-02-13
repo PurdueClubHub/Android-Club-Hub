@@ -168,7 +168,7 @@ public class LoginActivity extends ActionBarActivity {
         findViewById(R.id.loginButtonsLayout).setVisibility(visibility);
     }
 
-
+    //TODO: Refactor for our layout
     public void setFormEnabled(boolean b)
     {
         findViewById(R.id.usernameEditText).setEnabled(b);

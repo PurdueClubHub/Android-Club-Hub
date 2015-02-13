@@ -66,13 +66,9 @@ public class LoginActivity extends ActionBarActivity {
         reg_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Start register activity (I'm trying to merge these into 1 activity)
-                //Intent intent = new Intent(getBaseContext(), RegisterActivity.class);
-                //startActivity(intent);
                 if (!isRegistrationForm)
                     setFormToRegistration();
                 else {
-                    //TODO: make function to register users
                     registerUser();
 
                 }
@@ -272,10 +268,6 @@ public class LoginActivity extends ActionBarActivity {
 
                 //Toast.makeText(getBaseContext(), "AuthData: " + ref.getAuth().getUid(), Toast.LENGTH_LONG).show();
                 attemptLoginFromPrefs();
-                //Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
-                //intent.putExtra("Uid", authData.getUid());
-                //startActivity(intent);
-                //finish();
             }
 
             @Override

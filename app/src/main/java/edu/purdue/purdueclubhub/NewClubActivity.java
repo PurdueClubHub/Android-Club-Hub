@@ -9,12 +9,16 @@ import com.firebase.client.Firebase;
 
 
 public class NewClubActivity extends ActionBarActivity {
+    //Firebase Reference
+    Firebase mFirebaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Firebase mFirebaseRef = new Firebase("https")
         setContentView(R.layout.activity_login);
+
+        Firebase.setAndroidContext(this);
+        mFirebaseRef = new Firebase(getString(R.string.firebase_url));
     }
 
 

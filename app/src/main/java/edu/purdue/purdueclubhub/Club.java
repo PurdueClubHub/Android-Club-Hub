@@ -7,6 +7,12 @@ package edu.purdue.purdueclubhub;
 
 public class Club {
     String clubName;
-    String numFollowers;
+    int numFollowers;
+
+    public Club(String clubName, int numFollowers) {
+        this.clubName = clubName;
+        this.numFollowers = numFollowers;
+    }
+
 
 }

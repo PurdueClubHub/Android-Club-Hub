@@ -37,4 +37,7 @@ public class NewClubActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

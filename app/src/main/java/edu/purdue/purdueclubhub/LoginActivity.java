@@ -24,8 +24,6 @@ import com.firebase.client.FirebaseError;
 
 public class LoginActivity extends ActionBarActivity {
 
-
-    final String FIREBASE_URL = getString(R.string.firebase_url);
     private Firebase ref;
 
     private String userID;
@@ -40,7 +38,7 @@ public class LoginActivity extends ActionBarActivity {
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_login);
 
-        ref = new Firebase(FIREBASE_URL);
+        ref = new Firebase(getString(R.string.firebase_url));
 
         //make form invisible
         setFormVisible(false);

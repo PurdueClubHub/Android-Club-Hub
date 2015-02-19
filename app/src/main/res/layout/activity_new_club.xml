@@ -105,6 +105,7 @@
         android:id="@+id/create_club_submit"
         android:layout_marginTop="50dp"
         android:layout_below="@+id/cc_club_info"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="onCreateClub" />
 
 </RelativeLayout>

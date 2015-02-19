@@ -4,18 +4,26 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.firebase.client.Firebase;
+
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class NewClubActivity extends ActionBarActivity {
     //Firebase Reference
     Firebase mFirebaseRef;
 
+    //used for creating the app, brought in from a different intent
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_new_club);
 
         Firebase.setAndroidContext(this);
         mFirebaseRef = new Firebase(getString(R.string.firebase_url));
@@ -38,6 +46,19 @@ public class NewClubActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onCreateClub() {
+        String club_name = ((EditText)findViewById(R.id.cc_name_input)).getText().toString();
+        String club_desc = ((EditText)findViewById(R.id.cc_club_info)).getText().toString();
 
+        //TODO: Actually assign the current user. Not my name
+        Club toCreate = new Club(club_name, club_desc, "Tomer");
+        Map<String, Club> club = new HashMap<String, Club>();
+
+        club.put(club_name.replaceAll("\\s+", ""), toCreate);
+
+        Firebase mClubRef = mFirebaseRef.child("/Clubs/");
+        mClubRef.setValue(club);
+
+    }
 
 }

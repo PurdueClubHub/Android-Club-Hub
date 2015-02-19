@@ -25,7 +25,7 @@ import com.firebase.client.FirebaseError;
 public class LoginActivity extends ActionBarActivity {
 
 
-    final String FIREBASE_URL = "https://clubhub.firebaseio.com";
+    final String FIREBASE_URL = getString(R.string.firebase_url);
     private Firebase ref;
 
     private String userID;

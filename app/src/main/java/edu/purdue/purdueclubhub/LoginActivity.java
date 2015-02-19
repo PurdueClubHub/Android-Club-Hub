@@ -277,6 +277,7 @@ public class LoginActivity extends ActionBarActivity {
         String password = pass.getText().toString();
         String confirm = confirm_pass.getText().toString();
 
+
         if(!password.equals(confirm)) {
             setFormEnabled(true);
             Toast.makeText(getBaseContext(), "Password fields must match!", Toast.LENGTH_LONG).show();
@@ -286,6 +287,7 @@ public class LoginActivity extends ActionBarActivity {
         if(!Validation.isValidPassword(password)){
             setFormEnabled(true);
             Toast.makeText(getBaseContext(), "Invalid Password: Must Contain Number, Letter and Special Character", Toast.LENGTH_LONG).show();
+            return;
         }
 
         ref.createUser(email.getText().toString(), pass.getText().toString(), new Firebase.ResultHandler() {

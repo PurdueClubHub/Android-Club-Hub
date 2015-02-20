@@ -138,7 +138,7 @@ public class LoginActivity extends ActionBarActivity {
                 prefs.edit().putString("USER_PW",id).apply();
 
                 //Toast.makeText(getBaseContext(), "SAVED PREFS", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
+                Intent intent = new Intent(getBaseContext(), HomePageActivity.class);
                 intent.putExtra("Uid", authData.getUid());
                 startActivity(intent);
                 finish();
@@ -170,7 +170,7 @@ public class LoginActivity extends ActionBarActivity {
                     userID = authData.getUid();
                     Toast.makeText(getBaseContext(), "AUTH OKAY", Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
+                    Intent intent = new Intent(getBaseContext(), HomePageActivity.class);
                     intent.putExtra("Uid", authData.getUid());
                     startActivity(intent);
                     finish();

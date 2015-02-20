@@ -286,7 +286,7 @@ public class LoginActivity extends ActionBarActivity {
 
         if(!Validation.isValidPassword(password)){
             setFormEnabled(true);
-            Toast.makeText(getBaseContext(), "Invalid Password: Must Contain Number, Letter and Special Character", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Invalid Password: Must Contain Capitalized and Non-Capitalized letter, a number, and a Special Character", Toast.LENGTH_LONG).show();
             return;
         }
 

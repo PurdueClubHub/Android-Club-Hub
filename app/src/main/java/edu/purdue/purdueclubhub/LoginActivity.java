@@ -131,7 +131,7 @@ public class LoginActivity extends ActionBarActivity {
         ref.authWithPassword(email.getText().toString(), pass.getText().toString(), new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
-                SharedPreferences prefs = getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE);
+                SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
                 String id = ((EditText) findViewById(R.id.usernameEditText)).getText().toString();
                 prefs.edit().putString("USER_ID", id).apply();
                 id = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
@@ -206,13 +206,13 @@ public class LoginActivity extends ActionBarActivity {
 
     private String getSavedEmail()
     {
-        SharedPreferences prefs = getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         return prefs.getString("USER_ID", "NOT_FOUND");
     }
 
     private String getSavedPassword()
     {
-        SharedPreferences prefs = getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         return prefs.getString("USER_PW", "NOT_FOUND");
     }
 
@@ -277,6 +277,7 @@ public class LoginActivity extends ActionBarActivity {
         String password = pass.getText().toString();
         String confirm = confirm_pass.getText().toString();
 
+
         if(!password.equals(confirm)) {
             setFormEnabled(true);
             Toast.makeText(getBaseContext(), "Password fields must match!", Toast.LENGTH_LONG).show();
@@ -286,6 +287,7 @@ public class LoginActivity extends ActionBarActivity {
         if(!Validation.isValidPassword(password)){
             setFormEnabled(true);
             Toast.makeText(getBaseContext(), "Invalid Password: Must Contain Number, Letter and Special Character", Toast.LENGTH_LONG).show();
+            return;
         }
 
         ref.createUser(email.getText().toString(), pass.getText().toString(), new Firebase.ResultHandler() {
@@ -294,7 +296,7 @@ public class LoginActivity extends ActionBarActivity {
                 String pw = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
                 String id = ((EditText) findViewById(R.id.usernameEditText)).getText().toString();
 
-                SharedPreferences prefs = getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE);
+                SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
                 prefs.edit().putString("USER_ID", id).apply();
                 prefs.edit().putString("USER_PW",pw).apply();
 
@@ -307,6 +309,7 @@ public class LoginActivity extends ActionBarActivity {
                 setFormEnabled(true);
                 Toast.makeText(getBaseContext(), "Auth Failed: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
+
         });
     }
 }

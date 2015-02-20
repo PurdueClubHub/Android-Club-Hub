@@ -88,6 +88,11 @@ public class PurdueClubHub extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == R.id.create_club_menu_item) {
+            Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         return super.onOptionsItemSelected(item);
     }

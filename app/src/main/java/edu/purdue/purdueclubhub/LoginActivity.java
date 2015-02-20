@@ -309,6 +309,7 @@ public class LoginActivity extends ActionBarActivity {
                 setFormEnabled(true);
                 Toast.makeText(getBaseContext(), "Auth Failed: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
+
         });
     }
 }

@@ -4,11 +4,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 import com.firebase.client.Firebase;
 
-import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +26,8 @@ public class NewClubActivity extends ActionBarActivity {
         setContentView(R.layout.activity_new_club);
 
         Firebase.setAndroidContext(this);
-        mFirebaseRef = new Firebase(getString(R.string.firebase_url));
+        mFirebaseRef = new Firebase(getResources().getString(R.string.firebase_url));
+
     }
 
 
@@ -46,7 +47,7 @@ public class NewClubActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onCreateClub() {
+    public void onCreateClub(View v) {
         String club_name = ((EditText)findViewById(R.id.cc_name_input)).getText().toString();
         String club_desc = ((EditText)findViewById(R.id.cc_club_info)).getText().toString();
 
@@ -54,9 +55,9 @@ public class NewClubActivity extends ActionBarActivity {
         Club toCreate = new Club(club_name, club_desc, "Tomer");
         Map<String, Club> club = new HashMap<String, Club>();
 
-        club.put(club_name.replaceAll("\\s+", ""), toCreate);
+        club.put(club_name, toCreate);
 
-        Firebase mClubRef = mFirebaseRef.child("/Clubs/");
+        Firebase mClubRef = mFirebaseRef.child("clubs");
         mClubRef.setValue(club);
 
     }

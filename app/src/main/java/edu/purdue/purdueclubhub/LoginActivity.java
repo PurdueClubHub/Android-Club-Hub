@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.simplelogin.SimpleLogin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -274,7 +273,6 @@ public class LoginActivity extends ActionBarActivity {
     private void registerUser()
     {
         setFormEnabled(false);
-        SimpleLogin authClient = new SimpleLogin(ref, getApplicationContext());
 
         //EditTexts of email, passwords, and username
         EditText usernameEditText = (EditText) findViewById(usernameEditTextID);

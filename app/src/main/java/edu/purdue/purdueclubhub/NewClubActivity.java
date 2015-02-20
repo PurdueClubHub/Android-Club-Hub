@@ -1,12 +1,16 @@
 package edu.purdue.purdueclubhub;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 
 import java.util.HashMap;
@@ -17,8 +21,10 @@ public class NewClubActivity extends ActionBarActivity {
     //Firebase Reference
     Firebase mFirebaseRef;
 
-    //used for creating the app, brought in from a different intent
-    String username;
+
+    //preferences
+    SharedPreferences prefs;
+    String UID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,14 @@ public class NewClubActivity extends ActionBarActivity {
         Firebase.setAndroidContext(this);
         mFirebaseRef = new Firebase(getResources().getString(R.string.firebase_url));
 
+        prefs = getPreferences(Context.MODE_PRIVATE);
+
+        //mFirebaseRef.authWithPassword(prefs.getString("USER_ID", "NOT_FOUND"), prefs.getString("USER_PW", "NOT_FOUND"), new  Firebase.AuthResultHandler() {
+        //});
+
+        AuthData auth = mFirebaseRef.getAuth();
+        EditText clubname = (EditText)findViewById(R.id.cc_name_input);
+        UID = auth.getUid();
     }
 
 
@@ -50,15 +64,14 @@ public class NewClubActivity extends ActionBarActivity {
     public void onCreateClub(View v) {
         String club_name = ((EditText)findViewById(R.id.cc_name_input)).getText().toString();
         String club_desc = ((EditText)findViewById(R.id.cc_club_info)).getText().toString();
+        String[] club_admins = new String[5];
+        club_admins[0] = "Tomer";
 
-        //TODO: Actually assign the current user. Not my name
-        Club toCreate = new Club(club_name, club_desc, "Tomer");
-        Map<String, Club> club = new HashMap<String, Club>();
+        Map<String, Object> club = new HashMap<String, Object>();
+        club.put("description", club_desc);
+        club.put("officers", club_admins);
 
-        club.put(club_name, toCreate);
-
-        Firebase mClubRef = mFirebaseRef.child("clubs");
-        mClubRef.setValue(club);
+        mFirebaseRef.child("clubs").child(club_name).setValue(club);
 
     }
 

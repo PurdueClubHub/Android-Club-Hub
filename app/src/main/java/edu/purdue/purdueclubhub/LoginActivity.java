@@ -21,6 +21,10 @@ import android.widget.Toast;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.simplelogin.SimpleLogin;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -29,7 +33,7 @@ public class LoginActivity extends ActionBarActivity {
     private String userID;
     private boolean isRegistrationForm = false;
     int repeatPassEditTextID;
-    int emailEditTextID;
+    int usernameEditTextID;
 
 
     @Override
@@ -126,13 +130,13 @@ public class LoginActivity extends ActionBarActivity {
 
     private void attemptLogin()
     {
-        EditText email = (EditText)findViewById(R.id.usernameEditText);
+        EditText email = (EditText)findViewById(R.id.emailEditText);
         EditText pass = (EditText)findViewById(R.id.passwordEditText);
         ref.authWithPassword(email.getText().toString(), pass.getText().toString(), new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
                 SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-                String id = ((EditText) findViewById(R.id.usernameEditText)).getText().toString();
+                String id = ((EditText) findViewById(R.id.emailEditText)).getText().toString();
                 prefs.edit().putString("USER_ID", id).apply();
                 id = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
                 prefs.edit().putString("USER_PW",id).apply();
@@ -198,7 +202,7 @@ public class LoginActivity extends ActionBarActivity {
     //TODO: Refactor for our layout
     public void setFormEnabled(boolean b)
     {
-        findViewById(R.id.usernameEditText).setEnabled(b);
+        findViewById(R.id.emailEditText).setEnabled(b);
         findViewById(R.id.passwordEditText).setEnabled(b);
         findViewById(R.id.logInButton).setEnabled(b);
         findViewById(R.id.signUpButton).setEnabled(b);
@@ -247,19 +251,19 @@ public class LoginActivity extends ActionBarActivity {
         //add it to the view
         loginForm.addView(repeatPassEditText);
 
-        TextView emailLabel = new TextView(this);
-        emailLabel.setText("Email:");
+        TextView usernameLabel = new TextView(this);
+        usernameLabel.setText("Username:");
 
-        loginForm.addView(emailLabel);
+        loginForm.addView(usernameLabel);
 
-        EditText emailEditText = new EditText(getBaseContext());
-        emailEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        emailEditText.setTextColor(Color.BLACK);
+        EditText usernameEditText = new EditText(getBaseContext());
+        usernameEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+        usernameEditText.setTextColor(Color.BLACK);
 
-        emailEditTextID = View.generateViewId();
-        emailEditText.setId(emailEditTextID);
+        usernameEditTextID = View.generateViewId();
+        usernameEditText.setId(usernameEditTextID);
 
-        loginForm.addView(emailEditText);
+        loginForm.addView(usernameEditText);
 
         findViewById(R.id.guestButton).setVisibility(View.INVISIBLE);
         findViewById(R.id.logInButton).setVisibility(View.INVISIBLE);
@@ -270,37 +274,51 @@ public class LoginActivity extends ActionBarActivity {
     private void registerUser()
     {
         setFormEnabled(false);
-        EditText email = (EditText)findViewById(R.id.usernameEditText);
-        EditText pass = (EditText)findViewById(R.id.passwordEditText);
+        SimpleLogin authClient = new SimpleLogin(ref, getApplicationContext());
+
+        //EditTexts of email, passwords, and username
+        EditText usernameEditText = (EditText) findViewById(usernameEditTextID);
+        EditText emailEditText = (EditText)findViewById(R.id.emailEditText);
+        final EditText pass = (EditText)findViewById(R.id.passwordEditText);
         EditText confirm_pass = (EditText)findViewById(repeatPassEditTextID);
 
-        String password = pass.getText().toString();
+        final String username = usernameEditText.getText().toString();
+        final String email = emailEditText.getText().toString();
+        final String password = pass.getText().toString();
         String confirm = confirm_pass.getText().toString();
 
-
+        //Compare passwords make sure they match
         if(!password.equals(confirm)) {
             setFormEnabled(true);
             Toast.makeText(getBaseContext(), "Password fields must match!", Toast.LENGTH_LONG).show();
             return;
         }
 
+        //validate that password is strong
         if(!Validation.isValidPassword(password)){
             setFormEnabled(true);
             Toast.makeText(getBaseContext(), "Invalid Password: Must Contain Number, Letter and Special Character", Toast.LENGTH_LONG).show();
             return;
         }
 
-        ref.createUser(email.getText().toString(), pass.getText().toString(), new Firebase.ResultHandler() {
+        //Create the user
+        ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String,Object>>() {
+
             @Override
-            public void onSuccess() {
-                String pw = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
-                String id = ((EditText) findViewById(R.id.usernameEditText)).getText().toString();
-
+            public void onSuccess(Map<String,Object> result) {
+                //Save those values
                 SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-                prefs.edit().putString("USER_ID", id).apply();
-                prefs.edit().putString("USER_PW",pw).apply();
+                prefs.edit().putString("USER_ID", email).apply();
+                prefs.edit().putString("USER_PW", password).apply();
 
-                //Toast.makeText(getBaseContext(), "AuthData: " + ref.getAuth().getUid(), Toast.LENGTH_LONG).show();
+                String UID = (String)result.get("uid");
+
+                //save user name and email
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("email", email);
+                map.put("username", username);
+                ref.child("users").child(UID).setValue(map);
+
                 attemptLoginFromPrefs();
             }
 

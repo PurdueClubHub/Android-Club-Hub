@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Email:"
-                android:id="@+id/labelForUsername"
+                android:id="@+id/labelForEmail"
                  />
 
             <EditText
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/usernameEditText"
+                android:id="@+id/emailEditText"
                 />
 
 

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#222">
+
+    <FrameLayout
+        android:layout_width="325dp"
+        android:layout_height="340dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="90dp"
+        android:background="#A3792C"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="New Club"
+        android:id="@+id/textView8"
+        android:layout_weight="1.04"
+        android:gravity="center"
+        android:textSize="36dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="#A3792C" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Club Name*"
+        android:id="@+id/textView9"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:background="#A3792C" />
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="24dp"
+        android:id="@+id/cc_name_input"
+        android:layout_alignBottom="@+id/textView9"
+        android:layout_toEndOf="@+id/textView9"
+        android:backgroundTint="#ffffffff"
+        android:enabled="true"
+        android:editable="true"
+        android:background="#ffffff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Advisor *"
+        android:id="@+id/textView10"
+        android:layout_toStartOf="@+id/cc_advi_input"
+        android:layout_marginTop="150dp"
+        android:background="#A3792C" />
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="24dp"
+        android:id="@+id/cc_advi_input"
+        android:backgroundTint="#ffffffff"
+        android:enabled="true"
+        android:editable="true"
+        android:layout_marginTop="150dp"
+        android:layout_toEndOf="@+id/textView9"
+        android:background="#ffffffff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="President*"
+        android:id="@+id/textView11"
+        android:layout_toStartOf="@+id/cc_advi_input"
+        android:layout_marginTop="200dp"
+        android:background="#A3792C" />
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="24dp"
+        android:id="@+id/cc_pres_input"
+        android:backgroundTint="#ffffffff"
+        android:enabled="true"
+        android:editable="true"
+        android:layout_alignBottom="@+id/textView11"
+        android:layout_toEndOf="@+id/textView11"
+        android:background="#ffffffff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Club Information"
+        android:id="@+id/textView12"
+        android:layout_alignStart="@+id/textView11"
+        android:layout_marginTop="250dp"
+        android:background="#A3792C" />
+
+    <EditText
+        android:layout_width="290dp"
+        android:layout_height="140dp"
+        android:id="@+id/cc_club_info"
+        android:backgroundTint="#ffffffff"
+        android:enabled="true"
+        android:editable="true"
+        android:layout_toEndOf="@+id/textView11"
+        android:layout_below="@+id/textView12"
+        android:layout_alignStart="@+id/textView12"
+        android:inputType="text|textLongMessage"
+        android:nestedScrollingEnabled="true"
+        android:background="#ffffffff" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Club"
+        android:id="@+id/create_club_submit"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/cc_club_info"
+        android:layout_centerHorizontal="true"
+        android:onClick="onCreateClub" />
+
+</RelativeLayout>

@@ -19,22 +19,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 
 public class LoginActivity extends ActionBarActivity {
 
-
-    final String FIREBASE_URL = "https://clubhub.firebaseio.com";
     private Firebase ref;
 
     private String userID;
     private boolean isRegistrationForm = false;
     int repeatPassEditTextID;
-    int displayNameEditTextID;
-    String userDisplayName = "";
+    int emailEditTextID;
 
 
     @Override
@@ -43,7 +38,7 @@ public class LoginActivity extends ActionBarActivity {
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_login);
 
-        ref = new Firebase(FIREBASE_URL);
+        ref = new Firebase(getString(R.string.firebase_url));
 
         //make form invisible
         setFormVisible(false);
@@ -136,13 +131,11 @@ public class LoginActivity extends ActionBarActivity {
         ref.authWithPassword(email.getText().toString(), pass.getText().toString(), new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
-                SharedPreferences prefs = getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE);
+                SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
                 String id = ((EditText) findViewById(R.id.usernameEditText)).getText().toString();
                 prefs.edit().putString("USER_ID", id).apply();
                 id = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
                 prefs.edit().putString("USER_PW",id).apply();
-
-                createUserData(authData, userDisplayName);
 
                 //Toast.makeText(getBaseContext(), "SAVED PREFS", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
@@ -176,8 +169,6 @@ public class LoginActivity extends ActionBarActivity {
                     //Toast.makeText(getBaseContext(), "Logged in with user ID: " + userID, Toast.LENGTH_LONG).show();
                     userID = authData.getUid();
                     Toast.makeText(getBaseContext(), "AUTH OKAY", Toast.LENGTH_LONG).show();
-
-                    createUserData(authData, userDisplayName);
 
                     Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
                     intent.putExtra("Uid", authData.getUid());
@@ -215,13 +206,13 @@ public class LoginActivity extends ActionBarActivity {
 
     private String getSavedEmail()
     {
-        SharedPreferences prefs = getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         return prefs.getString("USER_ID", "NOT_FOUND");
     }
 
     private String getSavedPassword()
     {
-        SharedPreferences prefs = getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         return prefs.getString("USER_PW", "NOT_FOUND");
     }
 
@@ -233,7 +224,7 @@ public class LoginActivity extends ActionBarActivity {
         ((RelativeLayout.LayoutParams)loginForm.getLayoutParams()).addRule(RelativeLayout.CENTER_VERTICAL, 0);
         loginForm.getLayoutParams().height = 800;
 
-        //Toast.makeText(getBaseContext(), "Hello", Toast.LENGTH_SHORT);
+        Toast.makeText(getBaseContext(), "Hello", Toast.LENGTH_SHORT);
 
         ((TextView)findViewById(R.id.loginTitle)).setText("Register");
 
@@ -256,19 +247,19 @@ public class LoginActivity extends ActionBarActivity {
         //add it to the view
         loginForm.addView(repeatPassEditText);
 
-        TextView displayName = new TextView(this);
-        displayName.setText("Display Name:");
+        TextView emailLabel = new TextView(this);
+        emailLabel.setText("Email:");
 
-        loginForm.addView(displayName);
+        loginForm.addView(emailLabel);
 
-        EditText displayNameEditText = new EditText(getBaseContext());
-        displayNameEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        displayNameEditText.setTextColor(Color.BLACK);
+        EditText emailEditText = new EditText(getBaseContext());
+        emailEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        emailEditText.setTextColor(Color.BLACK);
 
-        displayNameEditTextID = View.generateViewId();
-        displayNameEditText.setId(displayNameEditTextID);
+        emailEditTextID = View.generateViewId();
+        emailEditText.setId(emailEditTextID);
 
-        loginForm.addView(displayNameEditText);
+        loginForm.addView(emailEditText);
 
         findViewById(R.id.guestButton).setVisibility(View.INVISIBLE);
         findViewById(R.id.logInButton).setVisibility(View.INVISIBLE);
@@ -286,9 +277,16 @@ public class LoginActivity extends ActionBarActivity {
         String password = pass.getText().toString();
         String confirm = confirm_pass.getText().toString();
 
+
         if(!password.equals(confirm)) {
             setFormEnabled(true);
             Toast.makeText(getBaseContext(), "Password fields must match!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(!Validation.isValidPassword(password)){
+            setFormEnabled(true);
+            Toast.makeText(getBaseContext(), "Invalid Password: Must Contain Number, Letter and Special Character", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -298,11 +296,9 @@ public class LoginActivity extends ActionBarActivity {
                 String pw = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
                 String id = ((EditText) findViewById(R.id.usernameEditText)).getText().toString();
 
-                userDisplayName = ((EditText) findViewById(displayNameEditTextID)).getText().toString();
-
-                SharedPreferences prefs = getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE);
+                SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
                 prefs.edit().putString("USER_ID", id).apply();
-                prefs.edit().putString("USER_PW", pw).apply();
+                prefs.edit().putString("USER_PW",pw).apply();
 
                 //Toast.makeText(getBaseContext(), "AuthData: " + ref.getAuth().getUid(), Toast.LENGTH_LONG).show();
                 attemptLoginFromPrefs();
@@ -313,28 +309,7 @@ public class LoginActivity extends ActionBarActivity {
                 setFormEnabled(true);
                 Toast.makeText(getBaseContext(), "Auth Failed: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
-        });
-    }
 
-    private void createUserData(final AuthData authData, final String displayName)
-    {
-        ref.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.hasChild(authData.getUid()))
-                {
-                    if(!displayName.equals(""))
-                    {
-                        ref.child("users").child(authData.getUid()).child("displayName").setValue(userDisplayName);
-                    }
-                        ref.child("users").child(authData.getUid()).child("groups").setValue("null");
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
         });
     }
 }

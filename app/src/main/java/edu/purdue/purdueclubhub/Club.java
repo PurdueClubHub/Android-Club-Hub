@@ -7,6 +7,21 @@ package edu.purdue.purdueclubhub;
 
 public class Club {
     String clubName;
-    String numFollowers;
+
+    //Short description of the club
+    String description;
+
+    //usernames of people who can edit the club
+    String[] officers = new String[5];
+
+    int numFollowers;
+
+    public Club(String clubName, String description, String firstOfficer) {
+        this.clubName = clubName;
+        this.description = description;
+        this.officers[0] = new String(firstOfficer);
+        this.numFollowers = 0;
+    }
+
 
 }

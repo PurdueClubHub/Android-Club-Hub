@@ -16,9 +16,13 @@ public class Validation {
             return false;
         }
 
-        if (!pass.matches("[0-9]+") || !pass.matches("[a-z][A-Z]+") || !pass.matches("\\p{Punct}+")){
+        if (!pass.matches("^(?=.*[a-z][A-Z])(?=.*\\d)(?=.*(_|[&*.,?])).+$")){
             return false;
         }
+        return true;
+    }
+
+    public static boolean isValidEmail(String email){
         return true;
     }
 
@@ -32,7 +36,7 @@ public class Validation {
             return false;
         }
 
-        if(user.matches("^([A-Za-z0-9 -_.])")){
+        if(user.matches(".*^([A-Za-z0-9 -_.]).*")){
             return false;
         }
         return true;

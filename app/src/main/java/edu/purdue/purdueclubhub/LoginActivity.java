@@ -19,8 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -31,7 +33,8 @@ public class LoginActivity extends ActionBarActivity {
     private String userID;
     private boolean isRegistrationForm = false;
     int repeatPassEditTextID;
-    int emailEditTextID;
+    int displayNameEditTextID;
+    String userDisplayName = "";
 
 
     @Override
@@ -139,6 +142,8 @@ public class LoginActivity extends ActionBarActivity {
                 id = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
                 prefs.edit().putString("USER_PW",id).apply();
 
+                createUserData(authData, userDisplayName);
+
                 //Toast.makeText(getBaseContext(), "SAVED PREFS", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
                 intent.putExtra("Uid", authData.getUid());
@@ -171,6 +176,8 @@ public class LoginActivity extends ActionBarActivity {
                     //Toast.makeText(getBaseContext(), "Logged in with user ID: " + userID, Toast.LENGTH_LONG).show();
                     userID = authData.getUid();
                     Toast.makeText(getBaseContext(), "AUTH OKAY", Toast.LENGTH_LONG).show();
+
+                    createUserData(authData, userDisplayName);
 
                     Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
                     intent.putExtra("Uid", authData.getUid());
@@ -226,7 +233,7 @@ public class LoginActivity extends ActionBarActivity {
         ((RelativeLayout.LayoutParams)loginForm.getLayoutParams()).addRule(RelativeLayout.CENTER_VERTICAL, 0);
         loginForm.getLayoutParams().height = 800;
 
-        Toast.makeText(getBaseContext(), "Hello", Toast.LENGTH_SHORT);
+        //Toast.makeText(getBaseContext(), "Hello", Toast.LENGTH_SHORT);
 
         ((TextView)findViewById(R.id.loginTitle)).setText("Register");
 
@@ -249,19 +256,19 @@ public class LoginActivity extends ActionBarActivity {
         //add it to the view
         loginForm.addView(repeatPassEditText);
 
-        TextView emailLabel = new TextView(this);
-        emailLabel.setText("Email:");
+        TextView displayName = new TextView(this);
+        displayName.setText("Display Name:");
 
-        loginForm.addView(emailLabel);
+        loginForm.addView(displayName);
 
-        EditText emailEditText = new EditText(getBaseContext());
-        emailEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        emailEditText.setTextColor(Color.BLACK);
+        EditText displayNameEditText = new EditText(getBaseContext());
+        displayNameEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        displayNameEditText.setTextColor(Color.BLACK);
 
-        emailEditTextID = View.generateViewId();
-        emailEditText.setId(emailEditTextID);
+        displayNameEditTextID = View.generateViewId();
+        displayNameEditText.setId(displayNameEditTextID);
 
-        loginForm.addView(emailEditText);
+        loginForm.addView(displayNameEditText);
 
         findViewById(R.id.guestButton).setVisibility(View.INVISIBLE);
         findViewById(R.id.logInButton).setVisibility(View.INVISIBLE);
@@ -291,9 +298,11 @@ public class LoginActivity extends ActionBarActivity {
                 String pw = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
                 String id = ((EditText) findViewById(R.id.usernameEditText)).getText().toString();
 
+                userDisplayName = ((EditText) findViewById(displayNameEditTextID)).getText().toString();
+
                 SharedPreferences prefs = getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE);
                 prefs.edit().putString("USER_ID", id).apply();
-                prefs.edit().putString("USER_PW",pw).apply();
+                prefs.edit().putString("USER_PW", pw).apply();
 
                 //Toast.makeText(getBaseContext(), "AuthData: " + ref.getAuth().getUid(), Toast.LENGTH_LONG).show();
                 attemptLoginFromPrefs();
@@ -303,6 +312,28 @@ public class LoginActivity extends ActionBarActivity {
             public void onError(FirebaseError firebaseError) {
                 setFormEnabled(true);
                 Toast.makeText(getBaseContext(), "Auth Failed: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void createUserData(final AuthData authData, final String displayName)
+    {
+        ref.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChild(authData.getUid()))
+                {
+                    if(!displayName.equals(""))
+                    {
+                        ref.child("users").child(authData.getUid()).child("displayName").setValue(userDisplayName);
+                    }
+                        ref.child("users").child(authData.getUid()).child("groups").setValue("null");
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
             }
         });
     }

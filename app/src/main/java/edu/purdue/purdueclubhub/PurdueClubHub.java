@@ -20,8 +20,8 @@ public class PurdueClubHub extends ActionBarActivity {
         setContentView(R.layout.activity_purdue_club_hub);
         Firebase.setAndroidContext(this);
         ref = new Firebase(FIREBASE_URL);
-        String Uid = getIntent().getExtras().getString("Uid");
-        ref.child("Users").child(Uid).child("registered?").setValue(true);
+        //String Uid = getIntent().getExtras().getString("Uid");
+        //ref.child("Users").child(Uid).child("registered?").setValue(true);
     }
 
 

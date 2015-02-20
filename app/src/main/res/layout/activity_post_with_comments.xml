@@ -17,15 +17,22 @@
             android:id="@+id/Title">
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="305dp"
                 android:layout_height="fill_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Post View"
                 android:id="@+id/activity_post_view_title"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical|left"
                 android:textAlignment="center"
                 android:textSize="50sp"
                 android:gravity="center" />
+
+            <Button
+                android:layout_width="86dp"
+                android:layout_height="wrap_content"
+                android:text="Up-Vote Post"
+                android:id="@+id/button_up_vote"
+                android:layout_gravity="right|center_vertical" />
         </FrameLayout>
 
         <FrameLayout

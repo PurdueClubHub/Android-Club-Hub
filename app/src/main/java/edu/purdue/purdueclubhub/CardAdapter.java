@@ -4,6 +4,8 @@ package edu.purdue.purdueclubhub;
  * Created by Cameron on 2/20/2015.
  */
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,14 +53,29 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder>{
 
 class ViewHolder extends RecyclerView.ViewHolder{
 
+    public View view;
     public TextView contents;
     public TextView clubName;
     public TextView userid;
 
     public ViewHolder(View itemView) {
         super(itemView);
+        view = itemView;
         contents = (TextView)itemView.findViewById(R.id.contents);
         clubName = (TextView)itemView.findViewById(R.id.club_name);
         userid = (TextView)itemView.findViewById(R.id.username);
+        view.setOnClickListener(new View.OnClickListener(){
+            @Override public void onClick(View v){
+                String content = contents.getText().toString();
+                String cName = clubName.getText().toString();
+                String user = userid.getText().toString();
+                Intent intent = new Intent(v.getContext(), PostViewActivity.class);
+                intent.putExtra("content",content);
+                intent.putExtra("clubName",cName);
+                intent.putExtra("userid",user);
+                v.getContext().startActivity(intent);
+            }
+        });
+
     }
 }

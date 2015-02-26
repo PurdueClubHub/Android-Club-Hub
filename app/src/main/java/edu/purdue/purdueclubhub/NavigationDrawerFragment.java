@@ -22,9 +22,6 @@ package edu.purdue.purdueclubhub;
         import java.util.ArrayList;
         import java.util.List;
 
-/**
- * Created by poliveira on 24/10/2014.
- */
 public class NavigationDrawerFragment extends Fragment implements NavigationDrawerCallbacks {
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
@@ -141,9 +138,10 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
     public List<NavigationItem> getMenu() {
         List<NavigationItem> items = new ArrayList<NavigationItem>();
-        items.add(new NavigationItem("item 1"));//, getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("item 2"));//, getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("item 3"));//, getResources().getDrawable(R.drawable.ic_menu_check)));
+        items.add(new NavigationItem("Search Clubs"));//, getResources().getDrawable(R.drawable.ic_menu_check)));
+        items.add(new NavigationItem("Create Club "));//, getResources().getDrawable(R.drawable.ic_menu_check)));
+        items.add(new NavigationItem("Settings"));//, getResources().getDrawable(R.drawable.ic_menu_check)));
+        items.add(new NavigationItem("Logout"));//, getResources().getDrawable(R.drawable.ic_menu_check)));
         return items;
     }
 

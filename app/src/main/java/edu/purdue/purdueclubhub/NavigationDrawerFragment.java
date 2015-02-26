@@ -50,7 +50,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(navigationItems);
         adapter.setNavigationDrawerCallbacks(this);
         mDrawerList.setAdapter(adapter);
-        selectItem(mCurrentSelectedPosition);
+        //selectItem(mCurrentSelectedPosition);
         return view;
     }
 

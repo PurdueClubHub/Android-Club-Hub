@@ -22,4 +22,6 @@
         <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
 
+    <style name="Theme.MyCompatTheme" parent="@style/Theme.AppCompat.Light"></style>
+
 </resources>

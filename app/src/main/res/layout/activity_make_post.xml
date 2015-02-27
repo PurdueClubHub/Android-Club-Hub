@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#222">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Club Name"
+            android:id="@+id/Post_Club_Name"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:textSize="32dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#A3792C"
+            android:layout_marginTop="20dp" />
+
+        <FrameLayout
+            android:layout_width="320dp"
+            android:layout_height="360dp"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:layout_gravity="center"
+            android:background="#A3792C"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Username"
+                android:id="@+id/textView13"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_gravity="center_horizontal"
+                android:background="#A3792C"
+                android:layout_marginTop="20dp" />
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:id="@+id/editText"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="#ffffffff" />
+
+        </FrameLayout>
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="78dp"
+            android:text="Make Post"
+            android:id="@+id/make_post_button"
+            android:layout_row="6"
+            android:layout_column="0"
+            android:layout_gravity="center"
+            android:textSize="24dp" />
+    </GridLayout>
+
+</LinearLayout>

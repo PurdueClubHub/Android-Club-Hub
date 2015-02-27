@@ -7,7 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/post_grid_layout"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#222">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -27,12 +28,6 @@
                 android:textSize="50sp"
                 android:gravity="center" />
 
-            <Button
-                android:layout_width="86dp"
-                android:layout_height="wrap_content"
-                android:text="Up-Vote Post"
-                android:id="@+id/button_up_vote"
-                android:layout_gravity="right|center_vertical" />
         </FrameLayout>
 
         <FrameLayout
@@ -40,7 +35,8 @@
             android:layout_height="181dp"
             android:layout_row="1"
             android:layout_column="0"
-            android:id="@+id/Post">
+            android:id="@+id/Post"
+            android:background="#A3792C">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,12 +55,13 @@
                 android:layout_gravity="right|top" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="98dp"
+                android:layout_width="343dp"
+                android:layout_height="117dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
                 android:id="@+id/textView_desc"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:background="#ffffffff" />
         </FrameLayout>
 
         <FrameLayout
@@ -72,13 +69,15 @@
             android:layout_height="242dp"
             android:layout_row="2"
             android:layout_column="0"
-            android:id="@+id/Comments">
+            android:id="@+id/Comments"
+            android:background="#A3792C">
 
             <ListView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="343dp"
+                android:layout_height="222dp"
                 android:id="@+id/listView"
-                android:layout_gravity="center|bottom|left|right|top" />
+                android:layout_gravity="center"
+                android:background="#ffffffff" />
         </FrameLayout>
 
         <FrameLayout
@@ -89,25 +88,18 @@
             android:id="@+id/Comment_buttons">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="108dp"
                 android:layout_height="match_parent"
-                android:text="Sort By Age"
-                android:id="@+id/button_age"
-                android:layout_gravity="left|top" />
-
-            <Button
-                android:layout_width="155dp"
-                android:layout_height="match_parent"
-                android:text="Sort By Popularity"
-                android:id="@+id/button_popularity"
-                android:layout_gravity="center_horizontal|top" />
+                android:text="Up-Vote Post"
+                android:id="@+id/button_up_vote"
+                android:layout_gravity="right|center_vertical" />
 
             <Button
                 android:layout_width="108dp"
                 android:layout_height="match_parent"
                 android:text="New Comment"
                 android:id="@+id/button_comment"
-                android:layout_gravity="right|center_vertical" />
+                android:layout_gravity="left|center_vertical" />
         </FrameLayout>
     </GridLayout>
 </LinearLayout>

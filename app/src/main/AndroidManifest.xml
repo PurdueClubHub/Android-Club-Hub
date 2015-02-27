@@ -34,6 +34,10 @@
             android:name=".PostViewActivity"
             android:label="@string/title_post_view_activity" >
         </activity>
+        <activity
+            android:name=".ClubActivity"
+            android:label="@string/title_activity_club" >
+        </activity>
     </application>
 
 </manifest>

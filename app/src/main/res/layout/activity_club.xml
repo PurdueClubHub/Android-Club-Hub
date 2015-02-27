@@ -7,7 +7,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/textView2"
+        android:id="@+id/activity_club_title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp" />
@@ -19,8 +19,8 @@
         android:id="@+id/button2"
         android:layout_marginBottom="24dp"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/textView2"
-        android:layout_toStartOf="@+id/textView2" />
+        android:layout_toLeftOf="@+id/activity_club_title"
+        android:layout_toStartOf="@+id/activity_club_title" />
 
     <Button
         android:layout_width="wrap_content"
@@ -39,14 +39,14 @@
         android:text="New Post"
         android:id="@+id/button4"
         android:layout_alignTop="@+id/button2"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_alignEnd="@+id/textView2" />
+        android:layout_alignRight="@+id/activity_club_title"
+        android:layout_alignEnd="@+id/activity_club_title" />
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/scrollView"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/activity_club_title"
         android:layout_alignLeft="@+id/button2"
         android:layout_alignStart="@+id/button2"
         android:layout_toStartOf="@+id/button4"
@@ -68,8 +68,9 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Information"
-                android:id="@+id/textView3"
-                android:layout_weight="0.32" />
+                android:id="@+id/activity_club_information"
+                android:layout_weight="0.32"
+                android:focusableInTouchMode="true" />
 
             <TextView
                 android:layout_width="match_parent"

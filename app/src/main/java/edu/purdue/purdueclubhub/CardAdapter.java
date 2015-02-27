@@ -29,6 +29,10 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder>{
 
     }
 
+    public List<Post> getPosts(){
+        return posts;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())

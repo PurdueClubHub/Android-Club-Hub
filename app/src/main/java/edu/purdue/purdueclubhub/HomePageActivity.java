@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 /**
  * Created by Cameron on 2/18/2015.
  */
@@ -27,7 +29,8 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
     private String m_Text = "";
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager layoutManager;
-    RecyclerView.Adapter adapter;
+    //RecyclerView.Adapter adapter;
+    CardAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,9 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         return super.onOptionsItemSelected(item);
     }
 
+    public void displayText(String text){
+        Toast.makeText(this, "'" + m_Text + "' was entered in the dialog box.", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -109,6 +115,16 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     m_Text = input.getText().toString();
+                    displayText(m_Text);
+                    List<Post> posts = adapter.getPosts();
+                    for(int i = 0; i < posts.size(); i++){
+                        Post tempPost = posts.get(i);
+                        if(tempPost.clubName.equalsIgnoreCase(m_Text)){
+                            //Display
+                        }
+                    }
+
+                    //Compare the text to clubs, and display only those matched to the text
                 }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -121,10 +137,18 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             builder.show();
         }
         if(position == 1){
-            Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
+            /*Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
+            //NEED TO ADD SENDING OF USER ID!!
             intent.putExtra("Uid", "Guest");
             startActivity(intent);
-            finish();
+            finish();*/
+            Bundle bundle = getIntent().getExtras();
+            String UID = bundle.getString("Uid");
+            Toast.makeText(this, UID + " clicked 'Create Clubs'", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
+            intent.putExtra("Uid", UID);
+            startActivity(intent);
+            //finish();
         }
     }
 

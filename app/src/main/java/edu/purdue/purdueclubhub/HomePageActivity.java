@@ -118,6 +118,12 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
 
             builder.show();
         }
+        if(position == 1){
+            Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
+            intent.putExtra("Uid", "Guest");
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override

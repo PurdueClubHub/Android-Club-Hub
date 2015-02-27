@@ -1,14 +1,14 @@
 package edu.purdue.purdueclubhub;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
@@ -40,7 +40,6 @@ public class NewClubActivity extends ActionBarActivity {
         //});
 
         AuthData auth = mFirebaseRef.getAuth();
-        EditText clubname = (EditText)findViewById(R.id.cc_name_input);
         UID = auth.getUid();
     }
 
@@ -65,7 +64,7 @@ public class NewClubActivity extends ActionBarActivity {
         String club_name = ((EditText)findViewById(R.id.cc_name_input)).getText().toString();
         String club_desc = ((EditText)findViewById(R.id.cc_club_info)).getText().toString();
         String[] club_admins = new String[5];
-        club_admins[0] = "Tomer";
+        club_admins[0] = UID;
 
         Map<String, Object> club = new HashMap<String, Object>();
         club.put("description", club_desc);
@@ -73,6 +72,10 @@ public class NewClubActivity extends ActionBarActivity {
 
         mFirebaseRef.child("clubs").child(club_name).setValue(club);
 
+        Intent i = new Intent(this, ClubViewActivity.class);
+        i.putExtra("Club", club_name);
+        finish();
+        startActivity(i);
     }
 
 }

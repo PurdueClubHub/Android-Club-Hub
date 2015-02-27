@@ -2,13 +2,11 @@ package edu.purdue.purdueclubhub;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
@@ -39,6 +37,7 @@ public class NewClubActivity extends ActionBarActivity {
         //mFirebaseRef.authWithPassword(prefs.getString("USER_ID", "NOT_FOUND"), prefs.getString("USER_PW", "NOT_FOUND"), new  Firebase.AuthResultHandler() {
         //});
 
+        //this.getSupportActionBar().setDisplayHomeAsUpEnabled(true); //This line is supposed to allow tapping the icon on the action bar to go back to parent activity
         AuthData auth = mFirebaseRef.getAuth();
         EditText clubname = (EditText)findViewById(R.id.cc_name_input);
         UID = auth.getUid();
@@ -65,7 +64,7 @@ public class NewClubActivity extends ActionBarActivity {
         String club_name = ((EditText)findViewById(R.id.cc_name_input)).getText().toString();
         String club_desc = ((EditText)findViewById(R.id.cc_club_info)).getText().toString();
         String[] club_admins = new String[5];
-        club_admins[0] = "Tomer";
+        club_admins[0] = UID;
 
         Map<String, Object> club = new HashMap<String, Object>();
         club.put("description", club_desc);

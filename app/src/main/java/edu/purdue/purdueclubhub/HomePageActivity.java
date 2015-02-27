@@ -1,8 +1,10 @@
 package edu.purdue.purdueclubhub;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -71,9 +73,18 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         else if (id == R.id.create_club_menu_item) {
             Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
             startActivity(intent);
+            //finish();
+        }
+        else if(id == R.id.logout)
+        {
+            Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+            startActivity(intent);
+            SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor prefsEdit = prefs.edit();
+            prefsEdit.clear();
+            prefsEdit.commit();
             finish();
         }
-
 
         return super.onOptionsItemSelected(item);
     }

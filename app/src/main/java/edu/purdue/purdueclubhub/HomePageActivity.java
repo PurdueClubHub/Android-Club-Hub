@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -95,7 +96,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
     }
 
     public void displayText(String text){
-        Toast.makeText(this, "'" + m_Text + "' was entered in the dialog box.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -104,7 +105,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         if(position == 0){
             Toast.makeText(this, "Search Clubs Selected", Toast.LENGTH_SHORT).show();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Search Clubs");
+            builder.setTitle("Search Posts");
 
             final EditText input = new EditText(this);
 
@@ -115,16 +116,18 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     m_Text = input.getText().toString();
-                    displayText(m_Text);
+                    int j = 0;
                     List<Post> posts = adapter.getPosts();
+                    List<Post> foundPosts = new ArrayList<Post>();;
                     for(int i = 0; i < posts.size(); i++){
                         Post tempPost = posts.get(i);
-                        if(tempPost.clubName.equalsIgnoreCase(m_Text)){
-                            //Display
+                        //displayText(posts.get(i).username);
+                        if(tempPost.contents.equalsIgnoreCase(m_Text)){
+                            displayText("Found a match at " + i);
+                            foundPosts.add(j, tempPost);
+                            j++;
                         }
                     }
-
-                    //Compare the text to clubs, and display only those matched to the text
                 }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -138,17 +141,34 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         }
         if(position == 1){
             /*Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
-            //NEED TO ADD SENDING OF USER ID!!
             intent.putExtra("Uid", "Guest");
             startActivity(intent);
             finish();*/
             Bundle bundle = getIntent().getExtras();
             String UID = bundle.getString("Uid");
-            Toast.makeText(this, UID + " clicked 'Create Clubs'", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
-            intent.putExtra("Uid", UID);
+            if(UID.equals("Guest")){
+                Toast.makeText(this, "Please login to create a club.", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(this, UID + " clicked 'Create Clubs'", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
+                intent.putExtra("Uid", UID);
+                startActivity(intent);
+                //finish();
+            }
+        }
+        if(position == 2){
+            //Add transition to setting screen
+        }
+        if(position == 3){
+            Intent intent = new Intent(getBaseContext(), LoginActivity.class);
             startActivity(intent);
-            //finish();
+            SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+            // SharedPreferences.Editor prefsEdit = prefs.edit();
+            //prefsEdit.remove("USER_ID").apply();
+            //prefsEdit.remove("USER_PW").apply();
+            prefs.edit().remove("USER_ID").apply();
+            prefs.edit().remove("USER_ID").apply();
+            finish();
         }
     }
 

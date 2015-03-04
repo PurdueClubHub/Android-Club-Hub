@@ -24,7 +24,7 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder>{
         posts = new ArrayList<Post>();
 
         for (int i = 0; i< 24; i++){
-            posts.add(new Post("Club "+i,"User "+i,"Message Contents "+i));
+            posts.add(new Post("Club "+i,"Message Contents "+i,"User "+i));
         }
 
     }
@@ -45,7 +45,7 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder>{
     public void onBindViewHolder(ViewHolder holder, int position) {
         Post post = posts.get(position);
         holder.clubName.setText(post.clubName);
-        holder.userid.setText(post.userid);
+        holder.userid.setText(post.username);
         holder.contents.setText((post.contents));
     }
 

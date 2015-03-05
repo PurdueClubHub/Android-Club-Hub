@@ -161,13 +161,14 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         }
         if(position == 3){
             Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+            SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name),MODE_PRIVATE);
+            SharedPreferences.Editor prefsEdit = prefs.edit();
+            prefsEdit.clear().commit();
+            /*prefsEdit.remove("USER_ID").apply();
+            prefsEdit.remove("USER_PW").apply();
+            prefs.edit().remove("USER_ID").apply();
+            prefs.edit().remove("USER_ID").apply();*/
             startActivity(intent);
-            SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-            // SharedPreferences.Editor prefsEdit = prefs.edit();
-            //prefsEdit.remove("USER_ID").apply();
-            //prefsEdit.remove("USER_PW").apply();
-            prefs.edit().remove("USER_ID").apply();
-            prefs.edit().remove("USER_ID").apply();
             finish();
         }
     }

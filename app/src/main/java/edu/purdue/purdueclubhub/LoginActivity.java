@@ -28,7 +28,7 @@ import java.util.Map;
 public class LoginActivity extends ActionBarActivity {
 
     private Firebase ref;
-
+    private String PREF_NAME;
     private String userID;
     private boolean isRegistrationForm = false;
     int repeatPassEditTextID;
@@ -42,6 +42,7 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
 
         ref = new Firebase(getString(R.string.firebase_url));
+        PREF_NAME = getResources().getString(R.string.prefs_name);
 
         //make form invisible
         setFormVisible(false);
@@ -135,7 +136,7 @@ public class LoginActivity extends ActionBarActivity {
         ref.authWithPassword(email.getText().toString(), pass.getText().toString(), new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
-                SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
                 String id = ((EditText) findViewById(R.id.emailEditText)).getText().toString();
                 prefs.edit().putString("USER_ID", id).apply();
                 id = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
@@ -210,13 +211,13 @@ public class LoginActivity extends ActionBarActivity {
 
     private String getSavedEmail()
     {
-        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
         return prefs.getString("USER_ID", "NOT_FOUND");
     }
 
     private String getSavedPassword()
     {
-        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         return prefs.getString("USER_PW", "NOT_FOUND");
     }
 
@@ -306,7 +307,7 @@ public class LoginActivity extends ActionBarActivity {
             @Override
             public void onSuccess(Map<String,Object> result) {
                 //Save those values
-                SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences prefs = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
                 prefs.edit().putString("USER_ID", email).apply();
                 prefs.edit().putString("USER_PW", password).apply();
 

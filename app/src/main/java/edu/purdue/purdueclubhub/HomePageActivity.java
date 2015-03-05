@@ -84,6 +84,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             Intent intent = new Intent(getBaseContext(), LoginActivity.class);
             startActivity(intent);
             SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+            //Toast.makeText(getBaseContext(), prefs.getString("USER_ID",""), Toast.LENGTH_LONG).show();
            // SharedPreferences.Editor prefsEdit = prefs.edit();
             //prefsEdit.remove("USER_ID").apply();
             //prefsEdit.remove("USER_PW").apply();

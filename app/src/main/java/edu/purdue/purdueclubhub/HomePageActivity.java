@@ -30,8 +30,9 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
     private String m_Text = "";
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager layoutManager;
-    //RecyclerView.Adapter adapter;
-    CardAdapter adapter;
+    //RecyclerView.Adapter postAdapter;
+    CardAdapterPosts postAdapter;
+    CardAdapterClubs clubAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +51,9 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        adapter = new CardAdapter();
-        mRecyclerView.setAdapter(adapter);
+        postAdapter = new CardAdapterPosts();
+        clubAdapter = new CardAdapterClubs();
+        mRecyclerView.setAdapter(clubAdapter);
 
     }
 
@@ -103,6 +105,12 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
     public void onNavigationDrawerItemSelected(int position) {
         //Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
         if(position == 0){
+            mRecyclerView.setAdapter(clubAdapter);
+        }
+        if(position == 1){
+            mRecyclerView.setAdapter(postAdapter);
+        }
+        if(position == 2){
             Toast.makeText(this, "Search Clubs Selected", Toast.LENGTH_SHORT).show();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Search Posts");
@@ -117,7 +125,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 public void onClick(DialogInterface dialog, int which) {
                     m_Text = input.getText().toString();
                     int j = 0;
-                    List<Post> posts = adapter.getPosts();
+                    List<Post> posts = postAdapter.getPosts();
                     List<Post> foundPosts = new ArrayList<Post>();;
                     for(int i = 0; i < posts.size(); i++){
                         Post tempPost = posts.get(i);
@@ -139,7 +147,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
 
             builder.show();
         }
-        if(position == 1){
+        if(position == 3){
             /*Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
             intent.putExtra("Uid", "Guest");
             startActivity(intent);
@@ -156,12 +164,12 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 //finish();
             }
         }
-        if(position == 2){
-            //Add transition to setting screen
+        if(position == 4){
+            //Go to settings page
         }
-        if(position == 3){
+        if(position == 5){
             Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-            SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name),MODE_PRIVATE);
+            SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
             SharedPreferences.Editor prefsEdit = prefs.edit();
             prefsEdit.clear().commit();
             /*prefsEdit.remove("USER_ID").apply();

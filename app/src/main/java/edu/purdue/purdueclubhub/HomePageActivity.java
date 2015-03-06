@@ -30,8 +30,9 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
     private String m_Text = "";
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager layoutManager;
-    //RecyclerView.Adapter adapter;
-    CardAdapter adapter;
+    //RecyclerView.Adapter postAdapter;
+    CardAdapterPosts postAdapter;
+    CardAdapterClubs clubAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +51,9 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        adapter = new CardAdapter();
-        mRecyclerView.setAdapter(adapter);
+        postAdapter = new CardAdapterPosts();
+        clubAdapter = new CardAdapterClubs();
+        mRecyclerView.setAdapter(clubAdapter);
 
     }
 
@@ -117,7 +119,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 public void onClick(DialogInterface dialog, int which) {
                     m_Text = input.getText().toString();
                     int j = 0;
-                    List<Post> posts = adapter.getPosts();
+                    List<Post> posts = postAdapter.getPosts();
                     List<Post> foundPosts = new ArrayList<Post>();;
                     for(int i = 0; i < posts.size(); i++){
                         Post tempPost = posts.get(i);
@@ -161,7 +163,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         }
         if(position == 3){
             Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-            SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name),MODE_PRIVATE);
+            SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
             SharedPreferences.Editor prefsEdit = prefs.edit();
             prefsEdit.clear().commit();
             /*prefsEdit.remove("USER_ID").apply();

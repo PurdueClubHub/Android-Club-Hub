@@ -23,7 +23,7 @@ public class PostViewActivity extends Activity{
         Bundle recdData = getIntent().getExtras();
         contents.setText(recdData.getString("content"));
         clubName.setText(recdData.getString("clubName"));
-        userid.setText(recdData.getString("userid"));
+        userid.setText(recdData.getString("firstOfficer"));
 
     }
 

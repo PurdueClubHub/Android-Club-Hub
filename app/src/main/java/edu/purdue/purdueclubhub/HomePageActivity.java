@@ -52,7 +52,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         mRecyclerView.setLayoutManager(layoutManager);
 
         postAdapter = new CardAdapterPosts();
-        clubAdapter = new CardAdapterClubs();
+        clubAdapter = new CardAdapterClubs(getApplicationContext());
         mRecyclerView.setAdapter(clubAdapter);
 
     }

@@ -105,6 +105,12 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
     public void onNavigationDrawerItemSelected(int position) {
         //Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
         if(position == 0){
+            //View posts
+        }
+        if(position == 1){
+            //View clubs
+        }
+        if(position == 2){
             Toast.makeText(this, "Search Clubs Selected", Toast.LENGTH_SHORT).show();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Search Posts");
@@ -141,7 +147,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
 
             builder.show();
         }
-        if(position == 1){
+        if(position == 3){
             /*Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
             intent.putExtra("Uid", "Guest");
             startActivity(intent);
@@ -158,10 +164,10 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 //finish();
             }
         }
-        if(position == 2){
-            //Add transition to setting screen
+        if(position == 4){
+            //Go to settings page
         }
-        if(position == 3){
+        if(position == 5){
             Intent intent = new Intent(getBaseContext(), LoginActivity.class);
             SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
             SharedPreferences.Editor prefsEdit = prefs.edit();

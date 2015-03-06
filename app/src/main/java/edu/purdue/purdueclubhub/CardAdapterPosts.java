@@ -23,7 +23,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
         posts = new ArrayList<Post>();
 
         for (int i = 0; i< 24; i++){
-            posts.add(new Post("Club "+i,"Message Contents "+i,"User "+i));
+            posts.add(new Post("Post "+i,"Message Contents "+i,"User "+i));
         }
 
     }

@@ -302,6 +302,12 @@ public class LoginActivity extends ActionBarActivity {
             Toast.makeText(getBaseContext(), "Invalid Password: Must Contain Capitalized and Non-Capitalized letter, a number, and a Special Character", Toast.LENGTH_LONG).show();
             return;
         }
+        if(!Validation.isValidUsername(username))
+        {
+            setFormEnabled(true);
+            Toast.makeText(getBaseContext(), "Invalid Username: Must not be specail username, \"guest\"", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         //Create the user
         ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String,Object>>() {

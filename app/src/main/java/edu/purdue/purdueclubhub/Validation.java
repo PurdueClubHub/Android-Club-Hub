@@ -37,12 +37,12 @@ public class Validation {
         }
 
         //if(user.matches(".*^([A-Za-z0-9 -_.]).*")){
-        if(user.matches("[A-Za-z0-9-_]*"))
+        if(user.matches("[A-Za-z0-9-_]*") && !user.matches("guest"))
         {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
 }

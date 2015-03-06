@@ -93,7 +93,6 @@ public class LoginActivity extends ActionBarActivity {
 
             @Override
             public void onAuthenticated(AuthData authData) {
-                //Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
                 Intent intent = new Intent(getBaseContext(), HomePageActivity.class);
                 intent.putExtra("Uid", "Guest");
                 startActivity(intent);

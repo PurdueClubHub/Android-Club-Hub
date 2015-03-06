@@ -4,7 +4,6 @@ package edu.purdue.purdueclubhub;
  * Created by Cameron on 2/20/2015.
  */
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,16 +14,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardAdapter extends RecyclerView.Adapter<ViewHolder>{
+public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
 
     List<Post> posts;
 
-    public CardAdapter(){
+    public CardAdapterPosts(){
         super();
         posts = new ArrayList<Post>();
 
         for (int i = 0; i< 24; i++){
-            posts.add(new Post("Club "+i,"Message Contents "+i,"User "+i));
+            posts.add(new Post("Post "+i,"Message Contents "+i,"User "+i));
         }
 
     }
@@ -34,15 +33,15 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder>{
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolderPosts onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_view,parent,false);
-        ViewHolder viewHolder = new ViewHolder(v);
+                .inflate(R.layout.card_view_posts,parent,false);
+        ViewHolderPosts viewHolder = new ViewHolderPosts(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolderPosts holder, int position) {
         Post post = posts.get(position);
         holder.clubName.setText(post.clubName);
         holder.userid.setText(post.username);
@@ -55,14 +54,14 @@ public class CardAdapter extends RecyclerView.Adapter<ViewHolder>{
     }
 }
 
-class ViewHolder extends RecyclerView.ViewHolder{
+class ViewHolderPosts extends RecyclerView.ViewHolder{
 
     public View view;
     public TextView contents;
     public TextView clubName;
     public TextView userid;
 
-    public ViewHolder(View itemView) {
+    public ViewHolderPosts(View itemView) {
         super(itemView);
         view = itemView;
         contents = (TextView)itemView.findViewById(R.id.contents);
@@ -76,7 +75,7 @@ class ViewHolder extends RecyclerView.ViewHolder{
                 Intent intent = new Intent(v.getContext(), PostViewActivity.class);
                 intent.putExtra("content",content);
                 intent.putExtra("clubName",cName);
-                intent.putExtra("userid",user);
+                intent.putExtra("firstOfficer",user);
                 v.getContext().startActivity(intent);
             }
         });

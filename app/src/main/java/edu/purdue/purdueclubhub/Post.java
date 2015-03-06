@@ -23,7 +23,7 @@ public class Post {
         Map<String, String> r = new HashMap<String, String>();
 
         r.put("club", clubName);
-        r.put("contents", contents);
+        r.put("description", contents);
         r.put("username", username);
 
         return r;

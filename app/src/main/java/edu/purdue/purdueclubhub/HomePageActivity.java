@@ -82,14 +82,10 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         else if(id == R.id.logout)
         {
             Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+            SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
+            SharedPreferences.Editor prefsEdit = prefs.edit();
+            prefsEdit.clear().commit();
             startActivity(intent);
-            SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-            //Toast.makeText(getBaseContext(), prefs.getString("USER_ID",""), Toast.LENGTH_LONG).show();
-           // SharedPreferences.Editor prefsEdit = prefs.edit();
-            //prefsEdit.remove("USER_ID").apply();
-            //prefsEdit.remove("USER_PW").apply();
-            prefs.edit().remove("USER_ID").apply();
-            prefs.edit().remove("USER_ID").apply();
             finish();
         }
 
@@ -119,7 +115,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                     m_Text = input.getText().toString();
                     int j = 0;
                     List<Post> posts = adapter.getPosts();
-                    List<Post> foundPosts = new ArrayList<Post>();;
+                    List<Post> foundPosts = new ArrayList<>();
                     for(int i = 0; i < posts.size(); i++){
                         Post tempPost = posts.get(i);
                         //displayText(posts.get(i).username);

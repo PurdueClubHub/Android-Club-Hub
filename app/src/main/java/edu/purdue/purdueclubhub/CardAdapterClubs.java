@@ -19,6 +19,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class CardAdapterClubs extends RecyclerView.Adapter<ViewHolderClubs>{
@@ -36,8 +37,20 @@ public class CardAdapterClubs extends RecyclerView.Adapter<ViewHolderClubs>{
         clubhub.child("clubs").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                clubs.clear();
                 //System.out.println(snapshot.getValue());  //prints "Do you have data? You'll love Firebase.
-                Toast.makeText(context, snapshot.getValue().toString(), Toast.LENGTH_LONG).show();
+               // Toast.makeText(context, snapshot.getValue().toString(), Toast.LENGTH_LONG).show();
+                Iterable<DataSnapshot> iterator = snapshot.getChildren();
+                //Toast.makeText(context, snapshot.getKey(), Toast.LENGTH_LONG).show();
+                for(DataSnapshot ds: iterator){
+                    String description = ds.child("description").getValue().toString();
+                    //Toast.makeText(context, description, Toast.LENGTH_LONG).show();
+                    DataSnapshot officers = ds.child("officers");
+                    String first_officer = officers.child("0").getValue().toString();
+                    //Toast.makeText(context, first_officer, Toast.LENGTH_LONG).show();
+                    Club club = new Club(ds.getKey(), description, first_officer);
+                    clubs.add(club);
+                }
                 /*DataSnapshot description = snapshot.child("description");
                 Toast.makeText(context, description.getValue().toString(), Toast.LENGTH_LONG).show();
                 DataSnapshot officers = snapshot.child("officers");
@@ -47,9 +60,9 @@ public class CardAdapterClubs extends RecyclerView.Adapter<ViewHolderClubs>{
             @Override public void onCancelled(FirebaseError error) { }
         });
 
-        for (int i = 0; i< 24; i++){
+        /*for (int i = 0; i< 24; i++){
             clubs.add(new Club("Club " + i, "Description "+i, "First Officer " + i));
-        }
+        }*/
 
     }
 

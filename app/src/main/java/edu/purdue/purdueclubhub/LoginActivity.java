@@ -166,11 +166,14 @@ public class LoginActivity extends ActionBarActivity {
         else {
             //Toast.makeText(getBaseContext(), "Logging in with saved preferences", Toast.LENGTH_LONG).show();
             //if (ref.getAuth() == null) {
+            //String newString = new String("AUTH OKAY: " + userEmail);
+          //  Toast.makeText(getBaseContext(), newString, Toast.LENGTH_LONG).show();
             ref.authWithPassword(userEmail, userPW, new Firebase.AuthResultHandler() {
                 @Override
                 public void onAuthenticated(AuthData authData) {
                     //Toast.makeText(getBaseContext(), "Logged in with user ID: " + userID, Toast.LENGTH_LONG).show();
                     userID = authData.getUid();
+
                     Toast.makeText(getBaseContext(), "AUTH OKAY", Toast.LENGTH_LONG).show();
 
                     Intent intent = new Intent(getBaseContext(), HomePageActivity.class);
@@ -296,6 +299,12 @@ public class LoginActivity extends ActionBarActivity {
         if(!Validation.isValidPassword(password)){
             setFormEnabled(true);
             Toast.makeText(getBaseContext(), "Invalid Password: Must Contain Capitalized and Non-Capitalized letter, a number, and a Special Character", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(!Validation.isValidUsername(username))
+        {
+            setFormEnabled(true);
+            Toast.makeText(getBaseContext(), "Invalid Username: Must not be specail username, \"guest\"", Toast.LENGTH_LONG).show();
             return;
         }
 

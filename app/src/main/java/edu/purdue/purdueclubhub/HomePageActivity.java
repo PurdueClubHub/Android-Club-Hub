@@ -84,13 +84,10 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         else if(id == R.id.logout)
         {
             Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+            SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
+            SharedPreferences.Editor prefsEdit = prefs.edit();
+            prefsEdit.clear().commit();
             startActivity(intent);
-            SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-           // SharedPreferences.Editor prefsEdit = prefs.edit();
-            //prefsEdit.remove("USER_ID").apply();
-            //prefsEdit.remove("USER_PW").apply();
-            prefs.edit().remove("USER_ID").apply();
-            prefs.edit().remove("USER_ID").apply();
             finish();
         }
 

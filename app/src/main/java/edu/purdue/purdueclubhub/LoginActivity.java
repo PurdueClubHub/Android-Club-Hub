@@ -1,6 +1,5 @@
 package edu.purdue.purdueclubhub;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -298,6 +297,13 @@ public class LoginActivity extends ActionBarActivity {
         if(!Validation.isValidPassword(password)){
             setFormEnabled(true);
             Toast.makeText(getBaseContext(), "Invalid Password: Must Contain Capitalized and Non-Capitalized letter, a number, and a Special Character", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(username.equals("") || (username == null))
+        {
+            setFormEnabled(true);
+            Toast.makeText(getBaseContext(), "Provide a display name", Toast.LENGTH_LONG).show();
             return;
         }
 

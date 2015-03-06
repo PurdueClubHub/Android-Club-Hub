@@ -4,9 +4,16 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import java.util.Map;
 
 /**
  * Created by PJ on 2/26/2015..
@@ -26,8 +33,33 @@ public class NewPostActivity extends ActionBarActivity{
 
         AuthData auth = mFirebaseRef.getAuth();
         UID = auth.getUid();
-        clubName = "Test Club";
-        username = "testuser";
+        clubName = getIntent().getStringExtra("Club");
+        String uid = mFirebaseRef.getAuth().getUid();
+
+        //username = FirebaseUtilities.lookupUsername(uid);
+        Firebase userRef = mFirebaseRef.child("users").child(uid);
+        //final String[] ret = new String[1];
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("username")) {
+                    Map<String, Object> value = (Map<String, Object>) dataSnapshot.getValue();
+                    //ret[0] = (String) value.get("username");
+                    ((TextView)findViewById(R.id.usernameTextView)).setText(value.get("username").toString());
+                }
+                else {
+                    //ret[0] = "Username";
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+        });
+
+        ((TextView)findViewById(R.id.usernameTextView)).setText(username);
+        ((TextView)findViewById(R.id.Post_Club_Name)).setText(clubName);
 
         Button makePostButton = (Button) findViewById(R.id.make_post_button);
         makePostButton.setOnClickListener(new View.OnClickListener() {
@@ -40,10 +72,15 @@ public class NewPostActivity extends ActionBarActivity{
 
     private void makePost()
     {
-        Post p = new Post(clubName, "test post please ignore", username);
+        String content = ((EditText)findViewById(R.id.postContentEditText)).getText().toString();
+
+        if(content == null || content.equals(""))
+            return;
+
+        Post p = new Post(clubName, content, username);
         Firebase postsRef = mFirebaseRef.child("posts");
         postsRef.push().setValue(p.toMap());
-
+        finish();
     }
 
 }

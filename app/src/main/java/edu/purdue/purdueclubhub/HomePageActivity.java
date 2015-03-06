@@ -102,10 +102,10 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
     public void onNavigationDrawerItemSelected(int position) {
         //Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
         if(position == 0){
-            //View posts
+            mRecyclerView.setAdapter(clubAdapter);
         }
         if(position == 1){
-            //View clubs
+            mRecyclerView.setAdapter(postAdapter);
         }
         if(position == 2){
             Toast.makeText(this, "Search Clubs Selected", Toast.LENGTH_SHORT).show();

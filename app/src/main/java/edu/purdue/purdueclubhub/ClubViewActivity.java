@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
@@ -28,7 +29,7 @@ public class ClubViewActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_club);
+        setContentView(R.layout.activity_club);
 
         Firebase.setAndroidContext(this);
         mFirebaseRef = new Firebase(getResources().getString(R.string.firebase_url));
@@ -39,7 +40,16 @@ public class ClubViewActivity extends ActionBarActivity {
         UID = auth.getUid();
 
         calling = getIntent();
-        String clubname = calling.getStringExtra("Club");
+        final String clubname = calling.getStringExtra("Club");
+
+        findViewById(R.id.newpostbutton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), NewPostActivity.class);
+                i.putExtra("Club", clubname);
+                startActivity(i);
+            }
+        });
 
         //TODO: Verify that the club exists and find out if used is admin
 

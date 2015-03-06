@@ -74,8 +74,8 @@ public class NewClubActivity extends ActionBarActivity {
 
         Intent i = new Intent(this, ClubViewActivity.class);
         i.putExtra("Club", club_name);
-        finish();
         startActivity(i);
+        finish();
     }
 
 }

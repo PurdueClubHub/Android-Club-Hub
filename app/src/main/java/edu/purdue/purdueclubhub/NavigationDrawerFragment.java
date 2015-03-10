@@ -141,6 +141,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         items.add(new NavigationItem("View Clubs"));
         items.add(new NavigationItem("View Posts"));
         items.add(new NavigationItem("Search Posts"));//, getResources().getDrawable(R.drawable.ic_menu_check)));
+        items.add(new NavigationItem("Search Clubs"));
         items.add(new NavigationItem("Create Club "));//, getResources().getDrawable(R.drawable.ic_menu_check)));
         items.add(new NavigationItem("Settings"));//, getResources().getDrawable(R.drawable.ic_menu_check)));
         items.add(new NavigationItem("Logout"));//, getResources().getDrawable(R.drawable.ic_menu_check)));

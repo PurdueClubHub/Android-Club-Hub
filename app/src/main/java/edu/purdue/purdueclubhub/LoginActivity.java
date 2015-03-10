@@ -131,13 +131,13 @@ public class LoginActivity extends ActionBarActivity {
     {
         EditText email = (EditText)findViewById(R.id.emailEditText);
         EditText pass = (EditText)findViewById(R.id.passwordEditText);
-        ref.authWithPassword(email.getText().toString(), pass.getText().toString(), new Firebase.AuthResultHandler() {
+        ref.authWithPassword(email.getText().toString(), pass.getText().toString().trim(), new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
                 SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                String id = ((EditText) findViewById(R.id.emailEditText)).getText().toString();
+                String id = ((EditText) findViewById(R.id.emailEditText)).getText().toString().trim();
                 prefs.edit().putString("USER_ID", id).apply();
-                id = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
+                id = ((EditText) findViewById(R.id.passwordEditText)).getText().toString().trim();
                 prefs.edit().putString("USER_PW",id).apply();
 
                 //Toast.makeText(getBaseContext(), "SAVED PREFS", Toast.LENGTH_LONG).show();
@@ -283,10 +283,10 @@ public class LoginActivity extends ActionBarActivity {
         final EditText pass = (EditText)findViewById(R.id.passwordEditText);
         EditText confirm_pass = (EditText)findViewById(repeatPassEditTextID);
 
-        final String username = usernameEditText.getText().toString();
-        final String email = emailEditText.getText().toString();
-        final String password = pass.getText().toString();
-        String confirm = confirm_pass.getText().toString();
+        final String username = usernameEditText.getText().toString().trim();
+        final String email = emailEditText.getText().toString().trim();
+        final String password = pass.getText().toString().trim();
+        String confirm = confirm_pass.getText().toString().trim();
 
         //Compare passwords make sure they match
         if(!password.equals(confirm)) {

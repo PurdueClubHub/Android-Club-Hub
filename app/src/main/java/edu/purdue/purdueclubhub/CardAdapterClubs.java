@@ -25,7 +25,7 @@ import java.util.List;
 public class CardAdapterClubs extends RecyclerView.Adapter<ViewHolderClubs>{
 
     Firebase clubhub;
-    List<Club> clubs;
+    ArrayList<Club> clubs;
     Context context;
 
     public CardAdapterClubs(Context c){
@@ -37,11 +37,8 @@ public class CardAdapterClubs extends RecyclerView.Adapter<ViewHolderClubs>{
         clubhub.child("clubs").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                clubs.clear();
-                //System.out.println(snapshot.getValue());  //prints "Do you have data? You'll love Firebase.
-               // Toast.makeText(context, snapshot.getValue().toString(), Toast.LENGTH_LONG).show();
+                //clubs.clear();
                 Iterable<DataSnapshot> iterator = snapshot.getChildren();
-                //Toast.makeText(context, snapshot.getKey(), Toast.LENGTH_LONG).show();
                 for(DataSnapshot ds: iterator){
                     String description = ds.child("description").getValue().toString();
                     //Toast.makeText(context, description, Toast.LENGTH_LONG).show();
@@ -49,13 +46,15 @@ public class CardAdapterClubs extends RecyclerView.Adapter<ViewHolderClubs>{
                     String first_officer = officers.child("0").getValue().toString();
                     //Toast.makeText(context, first_officer, Toast.LENGTH_LONG).show();
                     Club club = new Club(ds.getKey(), description, first_officer);
-                    clubs.add(club);
+                    if(!Club.alreadyExists(clubs,club)){
+                        clubs.add(club);
+                    }
+                    CardAdapterClubs.this.notifyDataSetChanged();
                 }
                 /*DataSnapshot description = snapshot.child("description");
                 Toast.makeText(context, description.getValue().toString(), Toast.LENGTH_LONG).show();
                 DataSnapshot officers = snapshot.child("officers");
                 Toast.makeText(context, officers.getValue().toString(), Toast.LENGTH_LONG).show();*/
-
             }
             @Override public void onCancelled(FirebaseError error) { }
         });

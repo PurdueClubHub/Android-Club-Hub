@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.TextView;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
@@ -26,10 +27,20 @@ public class ClubViewActivity extends ActionBarActivity {
     //intent of calling activity
     Intent calling;
 
+    TextView description, clubName, first_officer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_club);
+
+        description = (TextView) findViewById(R.id.textView4);
+        clubName = (TextView) findViewById(R.id.textView2);
+        first_officer = (TextView) findViewById(R.id.textView6);
+
+        Bundle recdData = getIntent().getExtras();
+        description.setText(recdData.getString("description"));
+        clubName.setText(recdData.getString("clubName"));
+        first_officer.setText(recdData.getString("firstOfficer"));
 
         Firebase.setAndroidContext(this);
         mFirebaseRef = new Firebase(getResources().getString(R.string.firebase_url));

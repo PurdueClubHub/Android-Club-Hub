@@ -77,9 +77,15 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             return true;
         }
         else if (id == R.id.create_club_menu_item) {
-            Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
-            startActivity(intent);
-            //finish();
+            Bundle bundle = getIntent().getExtras();
+            String UID = bundle.getString("Uid");
+            if(UID.equals("Guest")) {
+                Toast.makeText(this, "Please login to create a club.", Toast.LENGTH_SHORT).show();
+            }else {
+                Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
+                startActivity(intent);
+                //finish();
+            }
         }
         else if(id == R.id.logout)
         {
@@ -108,7 +114,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             mRecyclerView.setAdapter(postAdapter);
         }
         if(position == 2){
-            Toast.makeText(this, "Search Clubs Selected", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Search Clubs Selected", Toast.LENGTH_SHORT).show();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Search Posts");
 
@@ -120,6 +126,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    mRecyclerView.setAdapter(postAdapter);
                     m_Text = input.getText().toString();
                     int j = 0;
                     List<Post> posts = postAdapter.getPosts();

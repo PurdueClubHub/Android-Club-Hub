@@ -62,6 +62,11 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
 
     }
 
+    public void switchPostList(ArrayList<Post> p){
+        posts = p;
+        CardAdapterPosts.this.notifyDataSetChanged();
+    }
+
     public List<Post> getPosts(){
         return posts;
     }

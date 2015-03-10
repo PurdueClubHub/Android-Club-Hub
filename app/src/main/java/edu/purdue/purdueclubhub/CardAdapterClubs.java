@@ -49,6 +49,7 @@ public class CardAdapterClubs extends RecyclerView.Adapter<ViewHolderClubs>{
                     if(!Club.alreadyExists(clubs,club)){
                         clubs.add(club);
                     }
+                    CardAdapterClubs.this.notifyDataSetChanged();
                 }
                 /*DataSnapshot description = snapshot.child("description");
                 Toast.makeText(context, description.getValue().toString(), Toast.LENGTH_LONG).show();

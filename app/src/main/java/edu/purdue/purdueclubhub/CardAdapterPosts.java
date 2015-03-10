@@ -46,6 +46,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                     Post post = new Post("NAME", description,"USER");
                     posts.add(post);
                 }
+                CardAdapterPosts.this.notifyDataSetChanged();
                 /*DataSnapshot description = snapshot.child("description");
                 Toast.makeText(context, description.getValue().toString(), Toast.LENGTH_LONG).show();
                 DataSnapshot officers = snapshot.child("officers");

@@ -32,7 +32,7 @@
         <activity
             android:name=".NewClubActivity"
             android:label="@string/title_activity_new_club"
-            android:parentActivityName=".PurdueClubHub" >
+            android:parentActivityName=".HomePageActivity" >
             >
         </activity>
 
@@ -43,7 +43,8 @@
 
         <activity
             android:name=".ClubViewActivity"
-            android:label="@string/title_club_view_activity" >
+            android:label="@string/title_club_view_activity"
+            android:parentActivityName=".HomePageActivity" >
         </activity>
 
         <activity

@@ -115,6 +115,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         }
         if(position == 2){
             //Toast.makeText(this, "Search Clubs Selected", Toast.LENGTH_SHORT).show();
+            mRecyclerView.setAdapter(postAdapter);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Search Posts");
 
@@ -126,7 +127,6 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    mRecyclerView.setAdapter(postAdapter);
                     m_Text = input.getText().toString();
                     int j = 0;
                     List<Post> posts = postAdapter.getPosts();
@@ -152,6 +152,44 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             builder.show();
         }
         if(position == 3){
+            //Search Clubs
+            mRecyclerView.setAdapter(clubAdapter);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Search Clubs");
+
+            final EditText input = new EditText(this);
+
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.setView(input);
+
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    m_Text = input.getText().toString();
+                    int j = 0;
+                    List<Club> clubs = clubAdapter.getClubs();
+                    List<Club> foundClubs = new ArrayList<Club>();;
+                    for(int i = 0; i < clubs.size(); i++){
+                        Club tempClub = clubs.get(i);
+                        //displayText(posts.get(i).username);
+                        if(tempClub.clubName.equalsIgnoreCase(m_Text)){
+                            displayText("Found a match at " + i);
+                            foundClubs.add(j, tempClub);
+                            j++;
+                        }
+                    }
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            builder.show();
+        }
+        if(position == 4){
             /*Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
             intent.putExtra("Uid", "Guest");
             startActivity(intent);
@@ -168,10 +206,10 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 //finish();
             }
         }
-        if(position == 4){
+        if(position == 5){
             //Go to settings page
         }
-        if(position == 5){
+        if(position == 6){
             Intent intent = new Intent(getBaseContext(), LoginActivity.class);
             SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
             SharedPreferences.Editor prefsEdit = prefs.edit();

@@ -29,10 +29,10 @@ public class Club {
     public static boolean alreadyExists(ArrayList<Club> clubs, Club c){
         for (Club club : clubs){
             if(club.clubName.equals(c.clubName) && club.description.equals(c.description)){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
 }

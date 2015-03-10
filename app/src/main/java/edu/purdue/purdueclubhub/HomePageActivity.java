@@ -39,6 +39,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        mToolbar.setTitle("Clubs");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -103,9 +104,11 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         //Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
         if(position == 0){
             mRecyclerView.setAdapter(clubAdapter);
+            mToolbar.setTitle("Clubs");
         }
         if(position == 1){
             mRecyclerView.setAdapter(postAdapter);
+            mToolbar.setTitle("Posts");
         }
         if(position == 2){
             Toast.makeText(this, "Search Clubs Selected", Toast.LENGTH_SHORT).show();

@@ -8,33 +8,13 @@
         android:layout_width="325dp"
         android:layout_height="340dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="90dp"
         android:background="#A3792C"
-        android:layout_alignParentEnd="true"
         android:id="@+id/frameLayout"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true">
 
-        <FrameLayout
-            android:layout_width="310dp"
-            android:layout_height="108dp"
-            android:layout_gravity="center_horizontal|bottom">
-
-            <EditText
-                android:layout_width="290dp"
-                android:layout_height="86dp"
-                android:id="@+id/cc_club_info"
-                android:backgroundTint="#ffffffff"
-                android:enabled="true"
-                android:editable="true"
-                android:layout_below="@+id/textView12"
-                android:inputType="text|textLongMessage"
-                android:nestedScrollingEnabled="true"
-                android:background="#ffffffff"
-                android:layout_alignBottom="@+id/frameLayout"
-                android:layout_alignParentEnd="true"
-                android:layout_alignStart="@+id/frameLayout"
-                android:layout_gravity="center_horizontal|top" />
-        </FrameLayout>
     </FrameLayout>
 
     <TextView
@@ -51,6 +31,24 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:background="#A3792C" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:id="@+id/cc_club_info"
+        android:backgroundTint="#ffffffff"
+        android:enabled="true"
+        android:editable="true"
+        android:layout_below="@+id/textView12"
+        android:inputType="text|textLongMessage"
+        android:nestedScrollingEnabled="true"
+        android:background="#ffffffff"
+        android:layout_alignStart="@+id/frameLayout"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -133,7 +131,7 @@
         android:text="Create Club"
         android:id="@+id/create_club_submit"
         android:onClick="onCreateClub"
-        android:layout_below="@+id/frameLayout"
+        android:layout_below="@+id/cc_club_info"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp" />
 

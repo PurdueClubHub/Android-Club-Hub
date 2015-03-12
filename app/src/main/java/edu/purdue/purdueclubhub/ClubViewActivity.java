@@ -34,7 +34,7 @@ public class ClubViewActivity extends ActionBarActivity {
     //intent of calling activity
     Intent calling;
 
-    TextView description, clubName, first_officer;
+    TextView description, clubName, officers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +47,18 @@ public class ClubViewActivity extends ActionBarActivity {
 
         description = (TextView) findViewById(R.id.descriptionTextView);
         clubName = (TextView) findViewById(R.id.clubNameTextView);
-        //first_officer = (TextView) findViewById(R.id.textView6);
+        officers = (TextView) findViewById(R.id.officersTextView);
 
         Bundle recdData = getIntent().getExtras();
         description.setText(recdData.getString("description"));
         clubName.setText(recdData.getString("clubName"));
-//        first_officer.setText(recdData.getString("firstOfficer"));
+        //first_officer.setText(recdData.getString("firstOfficer"));
+        /*String [] array = new String[5];
+        String officersFromArray = "";
+        officers = recdData.getString("officers");
+        officersFromArray = officersFromArray + array[0] + '\n';*/
+        //officers.setText(recdData.getString("officers"));
+        officers.setText(recdData.getString("firstOfficer"));
 
         Firebase.setAndroidContext(this);
         mFirebaseRef = new Firebase(getResources().getString(R.string.firebase_url));

@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 
 import java.util.HashMap;

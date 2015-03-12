@@ -224,7 +224,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             if(UID.equals("Guest")){
                 Toast.makeText(this, "Please login to create a club.", Toast.LENGTH_SHORT).show();
             }else {
-                Toast.makeText(this, UID + " clicked 'Create Clubs'", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, UID + " clicked 'Create Clubs'", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
                 intent.putExtra("Uid", UID);
                 startActivity(intent);
@@ -239,10 +239,6 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
             SharedPreferences.Editor prefsEdit = prefs.edit();
             prefsEdit.clear().commit();
-            /*prefsEdit.remove("USER_ID").apply();
-            prefsEdit.remove("USER_PW").apply();
-            prefs.edit().remove("USER_ID").apply();
-            prefs.edit().remove("USER_ID").apply();*/
             startActivity(intent);
             finish();
         }

@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Purdue Club Hub"
-        android:id="@+id/activity_club_title"
+        android:id="@+id/clubNameTextView"
         android:textSize="30sp"
         android:layout_marginTop="30dp"
         android:layout_alignParentTop="true"
@@ -22,7 +22,7 @@
         android:layout_marginTop="75dp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/activity_club_title"
+        android:layout_below="@+id/clubNameTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="#A3792C"
@@ -34,7 +34,7 @@
             android:text="Top Clubs"
             android:textSize="25sp"
             android:textColor="#000000"
-            android:id="@+id/activity_club_information"
+            android:id="@+id/textView3"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -43,7 +43,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/topClubsScrollView"
-            android:layout_below="@+id/activity_club_information"
+            android:layout_below="@+id/textView3"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" >
 
@@ -63,7 +63,7 @@
         android:layout_marginTop="75dp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/activity_club_title"
+        android:layout_below="@+id/clubNameTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="#A3792C"
@@ -108,8 +108,8 @@
         android:text="Top Clubs"
         android:id="@+id/topClubsButton"
         android:layout_alignTop="@+id/topPostsButton"
-        android:layout_alignLeft="@+id/activity_club_title"
-        android:layout_alignStart="@+id/activity_club_title"
+        android:layout_alignLeft="@+id/clubNameTextView"
+        android:layout_alignStart="@+id/clubNameTextView"
         android:enabled="true"
         android:clickable="true" />
 
@@ -118,9 +118,9 @@
         android:layout_height="wrap_content"
         android:text="Top Posts"
         android:id="@+id/topPostsButton"
-        android:layout_below="@+id/activity_club_title"
-        android:layout_alignRight="@+id/activity_club_title"
-        android:layout_alignEnd="@+id/activity_club_title"
+        android:layout_below="@+id/clubNameTextView"
+        android:layout_alignRight="@+id/clubNameTextView"
+        android:layout_alignEnd="@+id/clubNameTextView"
         android:enabled="true"
         android:clickable="true" />
 

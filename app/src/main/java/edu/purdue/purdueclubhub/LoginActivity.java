@@ -1,6 +1,5 @@
 package edu.purdue.purdueclubhub;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -28,7 +27,7 @@ import java.util.Map;
 public class LoginActivity extends ActionBarActivity {
 
     private Firebase ref;
-
+    private String PREF_NAME;
     private String userID;
     private boolean isRegistrationForm = false;
     int repeatPassEditTextID;
@@ -42,6 +41,7 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
 
         ref = new Firebase(getString(R.string.firebase_url));
+        PREF_NAME = getResources().getString(R.string.prefs_name);
 
         //make form invisible
         setFormVisible(false);
@@ -92,7 +92,6 @@ public class LoginActivity extends ActionBarActivity {
 
             @Override
             public void onAuthenticated(AuthData authData) {
-                //Intent intent = new Intent(getBaseContext(), PurdueClubHub.class);
                 Intent intent = new Intent(getBaseContext(), HomePageActivity.class);
                 intent.putExtra("Uid", "Guest");
                 startActivity(intent);
@@ -132,13 +131,13 @@ public class LoginActivity extends ActionBarActivity {
     {
         EditText email = (EditText)findViewById(R.id.emailEditText);
         EditText pass = (EditText)findViewById(R.id.passwordEditText);
-        ref.authWithPassword(email.getText().toString(), pass.getText().toString(), new Firebase.AuthResultHandler() {
+        ref.authWithPassword(email.getText().toString(), pass.getText().toString().trim(), new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
-                SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-                String id = ((EditText) findViewById(R.id.emailEditText)).getText().toString();
+                SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                String id = ((EditText) findViewById(R.id.emailEditText)).getText().toString().trim();
                 prefs.edit().putString("USER_ID", id).apply();
-                id = ((EditText) findViewById(R.id.passwordEditText)).getText().toString();
+                id = ((EditText) findViewById(R.id.passwordEditText)).getText().toString().trim();
                 prefs.edit().putString("USER_PW",id).apply();
 
                 //Toast.makeText(getBaseContext(), "SAVED PREFS", Toast.LENGTH_LONG).show();
@@ -167,11 +166,14 @@ public class LoginActivity extends ActionBarActivity {
         else {
             //Toast.makeText(getBaseContext(), "Logging in with saved preferences", Toast.LENGTH_LONG).show();
             //if (ref.getAuth() == null) {
+            //String newString = new String("AUTH OKAY: " + userEmail);
+          //  Toast.makeText(getBaseContext(), newString, Toast.LENGTH_LONG).show();
             ref.authWithPassword(userEmail, userPW, new Firebase.AuthResultHandler() {
                 @Override
                 public void onAuthenticated(AuthData authData) {
                     //Toast.makeText(getBaseContext(), "Logged in with user ID: " + userID, Toast.LENGTH_LONG).show();
                     userID = authData.getUid();
+
                     Toast.makeText(getBaseContext(), "AUTH OKAY", Toast.LENGTH_LONG).show();
 
                     Intent intent = new Intent(getBaseContext(), HomePageActivity.class);
@@ -210,13 +212,13 @@ public class LoginActivity extends ActionBarActivity {
 
     private String getSavedEmail()
     {
-        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
         return prefs.getString("USER_ID", "NOT_FOUND");
     }
 
     private String getSavedPassword()
     {
-        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         return prefs.getString("USER_PW", "NOT_FOUND");
     }
 
@@ -281,10 +283,10 @@ public class LoginActivity extends ActionBarActivity {
         final EditText pass = (EditText)findViewById(R.id.passwordEditText);
         EditText confirm_pass = (EditText)findViewById(repeatPassEditTextID);
 
-        final String username = usernameEditText.getText().toString();
-        final String email = emailEditText.getText().toString();
-        final String password = pass.getText().toString();
-        String confirm = confirm_pass.getText().toString();
+        final String username = usernameEditText.getText().toString().trim();
+        final String email = emailEditText.getText().toString().trim();
+        final String password = pass.getText().toString().trim();
+        String confirm = confirm_pass.getText().toString().trim();
 
         //Compare passwords make sure they match
         if(!password.equals(confirm)) {
@@ -299,6 +301,19 @@ public class LoginActivity extends ActionBarActivity {
             Toast.makeText(getBaseContext(), "Invalid Password: Must Contain Capitalized and Non-Capitalized letter, a number, and a Special Character", Toast.LENGTH_LONG).show();
             return;
         }
+        if(!Validation.isValidUsername(username))
+        {
+            setFormEnabled(true);
+            Toast.makeText(getBaseContext(), "Invalid Username: Must not be specail username, \"guest\"", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(username.equals("") || (username == null))
+        {
+            setFormEnabled(true);
+            Toast.makeText(getBaseContext(), "Provide a display name", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         //Create the user
         ref.createUser(email, password, new Firebase.ValueResultHandler<Map<String,Object>>() {
@@ -306,7 +321,7 @@ public class LoginActivity extends ActionBarActivity {
             @Override
             public void onSuccess(Map<String,Object> result) {
                 //Save those values
-                SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences prefs = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
                 prefs.edit().putString("USER_ID", email).apply();
                 prefs.edit().putString("USER_PW", password).apply();
 

@@ -8,18 +8,10 @@
     <string name="title_activity_new_club">NewClubActivity</string>
     <string name="title_home_page_activity">Home Page</string>
     <string name="title_post_view_activity">Post View</string>
+    <string name="title_new_post_activity">New Post</string>
+    <string name="title_club_view_activity">Club View</string>
     <string name="firebase_url">https://clubhub.firebaseio.com</string>
-    <string-array name="planets">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-        <item>Pluto</item>
-    </string-array>
+    <string name="prefs_name">App Prefs</string>
 
 
 

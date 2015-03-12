@@ -28,7 +28,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="36sp"
             android:textStyle="bold"
-            android:text="log in"
+            android:text="Log In"
             android:id="@+id/loginTitle"
             android:layout_gravity="center_horizontal" />
 
@@ -89,14 +89,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
-            android:text="guest"
+            android:text="Guest"
             android:id="@+id/guestButton" />
 
         <Button
             style="@style/BlackButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="sign up"
+            android:text="Sign Up"
             android:id="@+id/signUpButton"
             android:nestedScrollingEnabled="false" />
 
@@ -105,7 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:text="log in"
+            android:text="Log In"
             android:id="@+id/logInButton" />
 
     </LinearLayout>

@@ -1,5 +1,8 @@
 package edu.purdue.purdueclubhub;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+
 /**
  * Created by Cameron on 2/11/2015.
  */
@@ -23,5 +26,13 @@ public class Club {
         this.numFollowers = 0;
     }
 
+    public static boolean alreadyExists(ArrayList<Club> clubs, Club c){
+        for (Club club : clubs){
+            if(club.clubName.equals(c.clubName) && club.description.equals(c.description)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

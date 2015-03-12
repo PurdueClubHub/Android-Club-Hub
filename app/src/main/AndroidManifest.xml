@@ -32,13 +32,24 @@
         <activity
             android:name=".NewClubActivity"
             android:label="@string/title_activity_new_club"
-            android:parentActivityName=".PurdueClubHub" >
+            android:parentActivityName=".HomePageActivity" >
             >
         </activity>
 
         <activity
             android:name=".PostViewActivity"
             android:label="@string/title_post_view_activity" >
+        </activity>
+
+        <activity
+            android:name=".ClubViewActivity"
+            android:label="@string/title_club_view_activity"
+            android:parentActivityName=".HomePageActivity" >
+        </activity>
+
+        <activity
+            android:name=".NewPostActivity"
+            android:label="@string/title_new_post_activity" >
         </activity>
 
     </application>

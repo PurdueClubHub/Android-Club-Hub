@@ -246,6 +246,8 @@ public class LoginActivity extends ActionBarActivity {
         repeatPassEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
         repeatPassEditText.setTextColor(Color.BLACK);
         repeatPassEditText.setLinkTextColor(Color.BLACK);
+        repeatPassEditText.setEms(10);
+        repeatPassEditText.setTextAppearance(this,android.R.style.TextAppearance_Medium);
 
         repeatPassEditTextID = View.generateViewId();
         repeatPassEditText.setId(repeatPassEditTextID);

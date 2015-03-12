@@ -36,7 +36,7 @@ public class PostViewActivity extends Activity{
         contents.setText(recdData.getString("content"));
         clubName.setText(recdData.getString("clubName"));
         userid.setText(recdData.getString("userid"));
-        String postID = recdData.getString("userid");
+        String postID = recdData.getString("postid");
         String url = "https://clubhub.firebaseio.com/posts/"+postID+"/likes";
         clubhub = new Firebase(url);
 

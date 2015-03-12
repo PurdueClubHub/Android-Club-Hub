@@ -12,6 +12,7 @@ public class Post {
     String contents;
     String username;
     String likes;
+    String id;
 
     public Post(){}
 
@@ -20,7 +21,18 @@ public class Post {
         this.contents = cont;
         this.username = un;
         this.likes = likes;//"0";
+        id = "";
     }
+
+    public Post(String cn, String cont, String un, String likes, String id){
+        this.clubName = cn;
+        this.contents = cont;
+        this.username = un;
+        this.likes = likes;//"0";
+        this.id = id;
+    }
+
+    public String getId() { return id; }
 
     public String getClubName(){
         return clubName;

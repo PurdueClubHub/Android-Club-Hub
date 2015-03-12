@@ -21,6 +21,7 @@
         android:background="#A3792C" />
 
     <EditText
+        android:inputType="textMultiLine"
         android:layout_width="fill_parent"
         android:layout_height="180dp"
         android:id="@+id/cc_club_info"
@@ -50,6 +51,7 @@
         android:background="#A3792C" />
 
     <EditText
+        android:inputType="textPersonName"
         android:layout_width="200dp"
         android:layout_height="24dp"
         android:id="@+id/cc_name_input"
@@ -71,6 +73,7 @@
         android:background="#A3792C" />
 
     <EditText
+        android:inputType="textPersonName"
         android:layout_width="200dp"
         android:layout_height="24dp"
         android:id="@+id/cc_advi_input"
@@ -92,6 +95,7 @@
         android:background="#A3792C" />
 
     <EditText
+        android:inputType="textPersonName"
         android:layout_width="200dp"
         android:layout_height="24dp"
         android:id="@+id/cc_pres_input"

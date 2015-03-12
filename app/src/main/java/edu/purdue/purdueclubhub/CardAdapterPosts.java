@@ -40,11 +40,12 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                 for(DataSnapshot ds: iterator){
                     String description = ds.child("description").getValue().toString();
                     String clubName = ds.child("club").getValue().toString();
+                    String key = ds.getKey();
                     //Toast.makeText(context, description, Toast.LENGTH_LONG).show();
                     //DataSnapshot officers = ds.child("officers");
                     //String first_officer = officers.child("0").getValue().toString();
                     //Toast.makeText(context, first_officer, Toast.LENGTH_LONG).show();
-                    Post post = new Post(clubName, description,"USER");
+                    Post post = new Post(clubName, description, key);
                     posts.add(post);
                 }
                 CardAdapterPosts.this.notifyDataSetChanged();

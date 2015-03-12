@@ -48,7 +48,13 @@ public class CardAdapterClubs extends RecyclerView.Adapter<ViewHolderClubs>{
                     String description = ds.child("description").getValue().toString();
                     DataSnapshot officers = ds.child("officers");
                     first_officer_UID = officers.child("0").getValue().toString();
-                    first_officer = snapshot.child("users").child(first_officer_UID).child("username").getValue().toString();
+
+                   Object fo_obj = snapshot.child("users").child(first_officer_UID).child("username").getValue();
+                    if(fo_obj!= null) {
+                        first_officer = snapshot.child("users").child(first_officer_UID).child("username").getValue().toString();
+                    }else{
+                        first_officer = "null";
+                    }
 
                     Club club = new Club(ds.getKey(), description, first_officer);
                     if(!Club.alreadyExists(clubs,club)){
@@ -66,12 +72,15 @@ public class CardAdapterClubs extends RecyclerView.Adapter<ViewHolderClubs>{
 
     }
     public void getOfficers(final String f){
-        clubhub.child("users").addValueEventListener(new ValueEventListener(){
+        clubhub.child("users").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot1){
+            public void onDataChange(DataSnapshot snapshot1) {
                 first_officer = snapshot1.child(f).toString();
             }
-            @Override public void onCancelled(FirebaseError error){}
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+            }
         });
         Toast.makeText(context, first_officer, Toast.LENGTH_LONG).show();
     }

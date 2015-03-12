@@ -70,8 +70,8 @@ public class NewClubActivity extends ActionBarActivity {
 
         mFirebaseRef.child("clubs").child(club_name).setValue(club);
 
-        Intent i = new Intent(this, ClubActivity.class);
-        i.putExtra("Club", club_name);
+        Intent i = new Intent(this, ClubViewActivity.class);
+        i.putExtra("clubName", club_name);
         startActivity(i);
         finish();
     }

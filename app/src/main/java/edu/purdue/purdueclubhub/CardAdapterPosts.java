@@ -40,13 +40,19 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                 for(DataSnapshot ds: iterator){
                     String description = ds.child("description").getValue().toString();
                     String clubName = ds.child("club").getValue().toString();
-                    String key = ds.getKey();
+                    Object obj = ds.child("username").getValue();
+                    String user;
+                    if(obj != null) {
+                        user = ds.child("username").getValue().toString();
+                    }else{
+                        user = "No Username Found";
+                    }
                     String likes = ds.child("likes").getValue().toString();
                     //Toast.makeText(context, description, Toast.LENGTH_LONG).show();
                     //DataSnapshot officers = ds.child("officers");
                     //String first_officer = officers.child("0").getValue().toString();
                     //Toast.makeText(context, first_officer, Toast.LENGTH_LONG).show();
-                    Post post = new Post(clubName, description, key, likes);
+                    Post post = new Post(clubName, description, user, likes);
                     posts.add(post);
                 }
                 CardAdapterPosts.this.notifyDataSetChanged();
@@ -83,10 +89,25 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
     }
 
     @Override
-    public void onBindViewHolder(ViewHolderPosts holder, int position) {
-        Post post = posts.get(position);
-        holder.clubName.setText(post.clubName);
+    public void onBindViewHolder(final ViewHolderPosts holder, int position) {
+        final Post post = posts.get(position);
         holder.userid.setText(post.username);
+        if (!post.username.equals("No Username Found")){
+            clubhub.child("users").child(post.getUsername()).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String trueName = dataSnapshot.getValue().toString();
+                    holder.userid.setText(trueName);
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
+
+        }
+        holder.clubName.setText(post.clubName);
         holder.contents.setText((post.contents));
         holder.scoreText.setText((post.likes));
     }

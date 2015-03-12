@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
@@ -73,9 +74,18 @@ public class ClubViewActivity extends ActionBarActivity {
         findViewById(R.id.newpostbutton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(), NewPostActivity.class);
-                i.putExtra("Club", clubname);
-                startActivity(i);
+                //Bundle bundle = getIntent().getExtras();
+                //String UID = bundle.getString("Uid");
+                //Toast.makeText(getApplicationContext(), UID, Toast.LENGTH_SHORT).show();
+                if(UID.contains("anonymous:-") == true)
+                {
+                    Toast.makeText(getApplicationContext(), "Please login to create a post.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent i = new Intent(getBaseContext(), NewPostActivity.class);
+                    i.putExtra("Club", clubname);
+                    startActivity(i);
+                }
             }
         });
 

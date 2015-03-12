@@ -51,7 +51,7 @@ public class CardAdapterClubs extends RecyclerView.Adapter<ViewHolderClubs>{
 
                    Object fo_obj = snapshot.child("users").child(first_officer_UID).child("username").getValue();
                     if(fo_obj!= null) {
-                        first_officer = snapshot.child("users").child(first_officer_UID).child("username").getValue().toString();
+                        first_officer = fo_obj.toString();
                     }else{
                         first_officer = "null";
                     }

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.MutableData;
@@ -44,6 +46,13 @@ public class PostViewActivity extends Activity{
                 clubhub.runTransaction(new Transaction.Handler(){
                     @Override
                     public Transaction.Result doTransaction(MutableData currentData) {
+                        AuthData auth = clubhub.getAuth();
+                        String UID = auth.getUid();
+                        if(UID.contains("anonymous:-") == true)
+                        {
+                            //Toast.makeText(getBaseContext(), "Please login to vote on a post.", Toast.LENGTH_SHORT).show();
+                            return Transaction.abort();
+                        }
                         if (currentData.getValue() == null) {
                             currentData.setValue("1");
                         } else {

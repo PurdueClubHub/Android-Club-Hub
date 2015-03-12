@@ -41,11 +41,12 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                     String description = ds.child("description").getValue().toString();
                     String clubName = ds.child("club").getValue().toString();
                     String key = ds.getKey();
+                    String likes = ds.child("likes").getValue().toString();
                     //Toast.makeText(context, description, Toast.LENGTH_LONG).show();
                     //DataSnapshot officers = ds.child("officers");
                     //String first_officer = officers.child("0").getValue().toString();
                     //Toast.makeText(context, first_officer, Toast.LENGTH_LONG).show();
-                    Post post = new Post(clubName, description, key);
+                    Post post = new Post(clubName, description, key, likes);
                     posts.add(post);
                 }
                 CardAdapterPosts.this.notifyDataSetChanged();
@@ -87,6 +88,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
         holder.clubName.setText(post.clubName);
         holder.userid.setText(post.username);
         holder.contents.setText((post.contents));
+        holder.scoreText.setText((post.likes));
     }
 
     @Override
@@ -101,10 +103,12 @@ class ViewHolderPosts extends RecyclerView.ViewHolder{
     public TextView contents;
     public TextView clubName;
     public TextView userid;
+    public TextView scoreText;
 
     public ViewHolderPosts(View itemView) {
         super(itemView);
         view = itemView;
+        scoreText = (TextView) itemView.findViewById(R.id.score);
         contents = (TextView)itemView.findViewById(R.id.contents);
         clubName = (TextView)itemView.findViewById(R.id.club_name);
         userid = (TextView)itemView.findViewById(R.id.username);
@@ -113,10 +117,12 @@ class ViewHolderPosts extends RecyclerView.ViewHolder{
                 String content = contents.getText().toString();
                 String cName = clubName.getText().toString();
                 String user = userid.getText().toString();
+                String score = scoreText.getText().toString();
                 Intent intent = new Intent(v.getContext(), PostViewActivity.class);
                 intent.putExtra("content",content);
                 intent.putExtra("clubName",cName);
                 intent.putExtra("userid",user);
+                intent.putExtra("score",score);
                 v.getContext().startActivity(intent);
             }
         });

@@ -74,7 +74,7 @@ public class NewPostActivity extends ActionBarActivity{
         if(content == null || content.equals(""))
             return;
 
-        Post p = new Post(clubName, content, username);
+        Post p = new Post(clubName, content, username, "0");
         Firebase postsRef = mFirebaseRef.child("posts");
         postsRef.push().setValue(p.toMap());
         finish();

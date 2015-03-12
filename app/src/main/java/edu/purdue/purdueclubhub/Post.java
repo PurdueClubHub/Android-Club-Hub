@@ -15,11 +15,11 @@ public class Post {
 
     public Post(){}
 
-    public Post(String cn, String cont, String un){
+    public Post(String cn, String cont, String un, String likes){
         this.clubName = cn;
         this.contents = cont;
         this.username = un;
-        this.likes = "0";
+        this.likes = likes;//"0";
     }
 
     public String getClubName(){

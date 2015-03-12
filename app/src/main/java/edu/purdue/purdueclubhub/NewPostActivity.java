@@ -36,20 +36,17 @@ public class NewPostActivity extends ActionBarActivity{
         clubName = getIntent().getStringExtra("Club");
         String uid = mFirebaseRef.getAuth().getUid();
 
-        //username = FirebaseUtilities.lookupUsername(uid);
-        Firebase userRef = mFirebaseRef.child("users").child(uid);
-        //final String[] ret = new String[1];
+       Firebase userRef = mFirebaseRef.child("users").child(uid);
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild("username")) {
                     Map<String, Object> value = (Map<String, Object>) dataSnapshot.getValue();
-                    //ret[0] = (String) value.get("username");
                     ((TextView)findViewById(R.id.usernameTextView)).setText(value.get("username").toString());
                 }
                 else {
-                    //ret[0] = "Username";
+                    ((TextView)findViewById(R.id.usernameTextView)).setText("User Not Found");
                 }
             }
 

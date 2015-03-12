@@ -1,50 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#222"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A3792C"
     android:id="@+id/RelativeLayout">
-
-    <FrameLayout
-        android:layout_width="325dp"
-        android:layout_height="340dp"
-        android:layout_marginLeft="20dp"
-        android:background="#A3792C"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/frameLayout"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
-
-    </FrameLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create Club"
-        android:id="@+id/create_club_submit"
-        android:onClick="onCreateClub"
-        android:layout_below="@+id/cc_club_info"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal|bottom" />
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="225dp"
-        android:id="@+id/cc_club_info"
-        android:backgroundTint="#ffffffff"
-        android:enabled="true"
-        android:editable="true"
-        android:layout_below="@+id/textView12"
-        android:inputType="text|textLongMessage"
-        android:nestedScrollingEnabled="true"
-        android:background="#ffffffff"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/frameLayout"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,6 +19,23 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:background="#A3792C" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:id="@+id/cc_club_info"
+        android:enabled="true"
+        android:editable="true"
+        android:layout_below="@+id/textView12"
+        android:inputType="textMultiLine"
+        android:nestedScrollingEnabled="true"
+        android:layout_gravity="center_horizontal|top"
+        android:padding="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -135,5 +111,14 @@
         android:layout_alignStart="@+id/textView11"
         android:layout_marginTop="250dp"
         android:background="#A3792C" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Club"
+        android:id="@+id/create_club_submit"
+        android:onClick="onCreateClub"
+        android:layout_below="@+id/cc_club_info"
+        android:layout_toEndOf="@+id/textView11" />
 
 </RelativeLayout>

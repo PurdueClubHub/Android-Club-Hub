@@ -36,8 +36,6 @@ public class NewClubActivity extends ActionBarActivity {
 
         prefs = getPreferences(Context.MODE_PRIVATE);
 
-        //mFirebaseRef.authWithPassword(prefs.getString("USER_ID", "NOT_FOUND"), prefs.getString("USER_PW", "NOT_FOUND"), new  Firebase.AuthResultHandler() {
-        //});
 
         AuthData auth = mFirebaseRef.getAuth();
         UID = auth.getUid();
@@ -73,7 +71,7 @@ public class NewClubActivity extends ActionBarActivity {
         mFirebaseRef.child("clubs").child(club_name).setValue(club);
 
         Intent i = new Intent(this, ClubViewActivity.class);
-        i.putExtra("Club", club_name);
+        i.putExtra("clubName", club_name);
         startActivity(i);
         finish();
     }

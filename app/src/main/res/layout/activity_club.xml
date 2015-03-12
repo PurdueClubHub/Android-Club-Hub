@@ -2,72 +2,81 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/toolbar_actionbar"
+        layout="@layout/toolbar_default"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
+        android:id="@+id/clubNameTextView"
+        android:layout_below="@+id/toolbar_actionbar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Posts"
-        android:id="@+id/button2"
+        android:id="@+id/postsButton"
         android:layout_marginBottom="24dp"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/textView2"
-        android:layout_toStartOf="@+id/textView2" />
+        android:layout_toLeftOf="@+id/clubNameTextView"
+        android:layout_toStartOf="@+id/clubNameTextView" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Events"
-        android:id="@+id/button3"
+        android:id="@+id/eventsButton"
         android:layout_alignTop="@+id/newpostbutton"
-        android:layout_toRightOf="@+id/newpostbutton"
-        android:layout_toEndOf="@+id/newpostbutton"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp" />
+        android:layout_toRightOf="@+id/postsButton"
+        android:layout_toEndOf="@+id/postsButton"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Post"
         android:id="@+id/newpostbutton"
-        android:layout_alignTop="@+id/button2"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_alignEnd="@+id/textView2" />
+        android:layout_alignTop="@+id/postsButton"
+        android:layout_toRightOf="@+id/eventsButton"
+        android:layout_toEndOf="@+id/eventsButton"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/scrollView"
-        android:layout_below="@+id/textView2"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2"
+        android:layout_below="@+id/clubNameTextView"
+        android:layout_alignLeft="@+id/postsButton"
+        android:layout_alignStart="@+id/postsButton"
         android:layout_toStartOf="@+id/newpostbutton"
-        android:layout_above="@+id/button2"
-        android:layout_alignRight="@+id/button3"
-        android:layout_alignEnd="@+id/button3">
+        android:layout_above="@+id/postsButton"
+        android:layout_alignRight="@+id/eventsButton"
+        android:layout_alignEnd="@+id/eventsButton">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_alignTop="@+id/scrollView"
-            android:layout_alignRight="@+id/button3"
-            android:layout_alignEnd="@+id/button3"
+            android:layout_alignRight="@+id/eventsButton"
+            android:layout_alignEnd="@+id/eventsButton"
             android:weightSum="1">
 
             <TextView
                 android:layout_width="292dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Information"
+                android:text="Description"
                 android:id="@+id/textView3"
                 android:layout_weight="0.32" />
 
@@ -76,12 +85,32 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="This is filler test."
-                android:id="@+id/textView4"
+                android:id="@+id/descriptionTextView"
                 android:layout_alignTop="@+id/scrollView"
                 android:layout_alignLeft="@+id/scrollView"
                 android:layout_alignStart="@+id/scrollView"
-                android:layout_marginTop="44dp" />
+                android:layout_marginTop="10dp" />
 
+            <TextView
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Officers"
+                android:id="@+id/textView4"
+                android:layout_weight="0.32"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="This is filler test."
+                android:id="@+id/officersTextView"
+                android:layout_alignTop="@+id/scrollView"
+                android:layout_alignLeft="@+id/scrollView"
+                android:layout_alignStart="@+id/scrollView"
+                android:layout_marginTop="10dp" />
+<!--
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -103,6 +132,8 @@
                 android:layout_alignLeft="@+id/scrollView"
                 android:layout_alignStart="@+id/scrollView"
                 android:layout_marginBottom="116dp" />
+
+-->
         </LinearLayout>
     </ScrollView>
 

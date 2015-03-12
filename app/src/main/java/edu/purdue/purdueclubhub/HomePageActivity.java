@@ -25,6 +25,10 @@ import java.util.List;
  */
 public class HomePageActivity extends ActionBarActivity implements NavigationDrawerCallbacks {
 
+    private ArrayList<Post> foundPosts;
+    private ArrayList<Club> foundClubs;
+    private ArrayList<Club> clubs = new ArrayList<Club>();
+    private ArrayList<Post> posts = new ArrayList<Post>();
     private Toolbar mToolbar;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private String m_Text = "";
@@ -56,6 +60,8 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         clubAdapter = new CardAdapterClubs(getApplicationContext());
         mRecyclerView.setAdapter(clubAdapter);
 
+        clubs = (ArrayList)clubAdapter.getClubs();
+        posts = (ArrayList)postAdapter.getPosts();
     }
 
 
@@ -109,16 +115,21 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
     public void onNavigationDrawerItemSelected(int position) {
         //Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
         if(position == 0){
-            mRecyclerView.setAdapter(clubAdapter);
-            mToolbar.setTitle("Clubs");
+            mRecyclerView.setAdapter(postAdapter);
+            //posts = (ArrayList)postAdapter.getPosts();
+            postAdapter.switchPostList(posts);
+            mToolbar.setTitle("Posts");
         }
         if(position == 1){
-            mRecyclerView.setAdapter(postAdapter);
-            mToolbar.setTitle("Posts");
+            mRecyclerView.setAdapter(clubAdapter);
+            //clubs = (ArrayList)clubAdapter.getClubs();
+            clubAdapter.switchClubList(clubs);
+            mToolbar.setTitle("Clubs");
         }
         if(position == 2){
             //Toast.makeText(this, "Search Clubs Selected", Toast.LENGTH_SHORT).show();
             mRecyclerView.setAdapter(postAdapter);
+            mToolbar.setTitle("Posts");
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Search Posts");
 
@@ -132,17 +143,19 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 public void onClick(DialogInterface dialog, int which) {
                     m_Text = input.getText().toString();
                     int j = 0;
-                    List<Post> posts = postAdapter.getPosts();
-                    List<Post> foundPosts = new ArrayList<Post>();;
+                    posts = (ArrayList)postAdapter.getPosts();
+                    foundPosts = new ArrayList<Post>();;
                     for(int i = 0; i < posts.size(); i++){
                         Post tempPost = posts.get(i);
                         //displayText(posts.get(i).username);
-                        if(tempPost.contents.equalsIgnoreCase(m_Text)){
-                            displayText("Found a match at " + i);
+                        if(tempPost.contents.toUpperCase().contains(m_Text.toUpperCase())){
+                            //displayText("Found a match at " + i);
+                            //posts.remove(i);
                             foundPosts.add(j, tempPost);
                             j++;
                         }
                     }
+                    postAdapter.switchPostList(foundPosts);
                 }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -156,7 +169,9 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         }
         if(position == 3){
             //Search Clubs
+            foundClubs = new ArrayList<Club>();
             mRecyclerView.setAdapter(clubAdapter);
+            mToolbar.setTitle("Clubs");
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Search Clubs");
 
@@ -165,22 +180,29 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             input.setInputType(InputType.TYPE_CLASS_TEXT);
             builder.setView(input);
 
+            /*for(int i = 0; i < clubAdapter.getClubs().size(); i++) {
+                Club tempClub = clubAdapter.getClubs().get(i);
+                displayText(clubAdapter.getClubs().get(i).clubName + " at " + i);
+            }*/
+
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    foundClubs.clear();
                     m_Text = input.getText().toString();
                     int j = 0;
-                    List<Club> clubs = clubAdapter.getClubs();
-                    List<Club> foundClubs = new ArrayList<Club>();;
+                    clubs = (ArrayList)clubAdapter.getClubs();
+                    //List<Club> foundClubs = new ArrayList<Club>();;
                     for(int i = 0; i < clubs.size(); i++){
                         Club tempClub = clubs.get(i);
                         //displayText(posts.get(i).username);
-                        if(tempClub.clubName.equalsIgnoreCase(m_Text)){
-                            displayText("Found a match at " + i);
+                        //displayText(clubs.get(i).clubName + " is here");
+                        if(tempClub.clubName.toUpperCase().contains(m_Text.toUpperCase())){
                             foundClubs.add(j, tempClub);
                             j++;
                         }
                     }
+                    clubAdapter.switchClubList(foundClubs);
                 }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

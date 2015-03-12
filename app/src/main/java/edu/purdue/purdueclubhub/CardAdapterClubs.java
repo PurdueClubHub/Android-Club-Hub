@@ -69,6 +69,11 @@ public class CardAdapterClubs extends RecyclerView.Adapter<ViewHolderClubs>{
         return clubs;
     }
 
+    public void switchClubList(ArrayList<Club> c){
+        clubs = c;
+        CardAdapterClubs.this.notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolderClubs onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())

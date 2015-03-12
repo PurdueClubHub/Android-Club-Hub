@@ -32,24 +32,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Events"
-        android:id="@+id/eventsButton"
-        android:layout_alignTop="@+id/newpostbutton"
-        android:layout_toRightOf="@+id/postsButton"
-        android:layout_toEndOf="@+id/postsButton"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="New Post"
         android:id="@+id/newpostbutton"
         android:layout_alignTop="@+id/postsButton"
-        android:layout_toRightOf="@+id/eventsButton"
-        android:layout_toEndOf="@+id/eventsButton"
         android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp" />
+        android:layout_marginStart="10dp"
+        android:layout_toRightOf="@+id/postsButton"
+        android:layout_toEndOf="@+id/postsButton" />
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -59,9 +48,7 @@
         android:layout_alignLeft="@+id/postsButton"
         android:layout_alignStart="@+id/postsButton"
         android:layout_toStartOf="@+id/newpostbutton"
-        android:layout_above="@+id/postsButton"
-        android:layout_alignRight="@+id/eventsButton"
-        android:layout_alignEnd="@+id/eventsButton">
+        android:layout_above="@+id/postsButton">
 
         <LinearLayout
             android:orientation="vertical"

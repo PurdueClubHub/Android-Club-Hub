@@ -46,26 +46,21 @@ public class PostViewActivity extends Activity{
                 clubhub.runTransaction(new Transaction.Handler(){
                     @Override
                     public Transaction.Result doTransaction(MutableData currentData) {
-                       // Firebase mFirebaseRef;
-                        //Firebase.setAndroidContext(this);
-                        //mFirebaseRef = new Firebase(getResources().getString(R.string.firebase_url));
-                        String UID;
                         AuthData auth = clubhub.getAuth();
-                        UID = auth.getUid();
-                        if(UID.contains("anonymous:-") == true) {
-                            Toast.makeText(getApplicationContext(), "Please login to vote on a post.", Toast.LENGTH_SHORT).show();
-                        }
-                        else
+                        String UID = auth.getUid();
+                        if(UID.contains("anonymous:-") == true)
                         {
-                            if (currentData.getValue() == null) {
-                                currentData.setValue("1");
-                            } else {
-                                int val = Integer.parseInt(currentData.getValue().toString());
-                                val++;
-                                currentData.setValue((String) String.valueOf(val));
-                            }
-                            return Transaction.success(currentData);
+                            //Toast.makeText(getBaseContext(), "Please login to vote on a post.", Toast.LENGTH_SHORT).show();
+                            return Transaction.abort();
                         }
+                        if (currentData.getValue() == null) {
+                            currentData.setValue("1");
+                        } else {
+                            int val = Integer.parseInt(currentData.getValue().toString());
+                            val++;
+                            currentData.setValue((String) String.valueOf(val));
+                        }
+                        return Transaction.success(currentData);
                     }
                     @Override
                     public void onComplete(FirebaseError firebaseError, boolean committed, DataSnapshot currentData) {

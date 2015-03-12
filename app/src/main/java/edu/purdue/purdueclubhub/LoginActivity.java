@@ -303,8 +303,8 @@ public class LoginActivity extends ActionBarActivity {
         }
         if(!Validation.isValidUsername(username))
         {
+            Toast.makeText(getBaseContext(), "Invalid Username: Must not be specail username, \"guest\" or \"anonymous:-\" and must be composed of letters, numbers, dashes, and underscores. Username should be between 3 and 18 characters long", Toast.LENGTH_LONG).show();
             setFormEnabled(true);
-            Toast.makeText(getBaseContext(), "Invalid Username: Must not be specail username, \"guest\"", Toast.LENGTH_LONG).show();
             return;
         }
 

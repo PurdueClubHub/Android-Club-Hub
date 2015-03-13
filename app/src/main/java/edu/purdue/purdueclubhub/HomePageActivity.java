@@ -58,10 +58,36 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
 
         postAdapter = new CardAdapterPosts();
         clubAdapter = new CardAdapterClubs(getApplicationContext());
-        mRecyclerView.setAdapter(clubAdapter);
 
-        clubs = (ArrayList)clubAdapter.getClubs();
-        posts = (ArrayList)postAdapter.getPosts();
+
+        Bundle recdData = getIntent().getExtras();
+        String possibleClub = (recdData.getString("Club"));
+        if(possibleClub != null)
+        {
+            mToolbar.setTitle("Posts");
+            posts = (ArrayList)postAdapter.getPosts();
+            clubs = (ArrayList)clubAdapter.getClubs();
+            foundPosts = new ArrayList<Post>();;
+            int j = 0;
+            for(int i = 0; i < posts.size(); i++){
+                Post tempPost = posts.get(i);
+                //displayText(posts.get(i).username);
+                if(tempPost.contents.toUpperCase().contains(possibleClub.toUpperCase())){
+                    //displayText("Found a match at " + i);
+                    //posts.remove(i);
+                    foundPosts.add(j, tempPost);
+                    j++;
+                }
+            }
+            postAdapter.switchPostList(foundPosts);
+            mRecyclerView.setAdapter(postAdapter);
+        }
+        else
+        {
+            mRecyclerView.setAdapter(clubAdapter);
+            posts = (ArrayList)postAdapter.getPosts();
+            clubs = (ArrayList)clubAdapter.getClubs();
+        }
     }
 
 

@@ -77,15 +77,26 @@ public class ClubViewActivity extends ActionBarActivity {
                 //Bundle bundle = getIntent().getExtras();
                 //String UID = bundle.getString("Uid");
                 //Toast.makeText(getApplicationContext(), UID, Toast.LENGTH_SHORT).show();
-                if(UID.contains("anonymous:-") == true)
+               if(UID.contains("anonymous:-") == true)
                 {
                     Toast.makeText(getApplicationContext(), "Please login to create a post.", Toast.LENGTH_SHORT).show();
                 }
-                else {
+               else
+               {
                     Intent i = new Intent(getBaseContext(), NewPostActivity.class);
                     i.putExtra("Club", clubname);
                     startActivity(i);
                 }
+            }
+        });
+
+        findViewById(R.id.postsButton).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                Intent i = new Intent(getBaseContext(), HomePageActivity.class);
+                i.putExtra("Club",clubname);
+                startActivity(i);
+                finish();
             }
         });
 

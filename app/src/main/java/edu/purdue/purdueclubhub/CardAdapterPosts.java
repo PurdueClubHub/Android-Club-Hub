@@ -40,6 +40,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                 for(DataSnapshot ds: iterator){
                     String description = ds.child("description").getValue().toString();
                     String clubName = ds.child("club").getValue().toString();
+                    String id = ds.getKey();
                     Object obj = ds.child("username").getValue();
                     String user;
                     if(obj != null) {
@@ -52,7 +53,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                     //DataSnapshot officers = ds.child("officers");
                     //String first_officer = officers.child("0").getValue().toString();
                     //Toast.makeText(context, first_officer, Toast.LENGTH_LONG).show();
-                    Post post = new Post(clubName, description, user, likes);
+                    Post post = new Post(clubName, description, user, likes, id);
                     posts.add(post);
                 }
                 CardAdapterPosts.this.notifyDataSetChanged();
@@ -92,7 +93,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
     public void onBindViewHolder(final ViewHolderPosts holder, int position) {
         final Post post = posts.get(position);
         holder.userid.setText(post.username);
-        if (!post.username.equals("No Username Found")){
+        if (!post.username.equals("No Username Found") && post.username.contains("simplelogin")){
             clubhub.child("users").child(post.getUsername()).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -110,6 +111,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
         holder.clubName.setText(post.clubName);
         holder.contents.setText((post.contents));
         holder.scoreText.setText((post.likes));
+        holder.postId = post.getId();
     }
 
     @Override
@@ -125,6 +127,7 @@ class ViewHolderPosts extends RecyclerView.ViewHolder{
     public TextView clubName;
     public TextView userid;
     public TextView scoreText;
+    public String postId;
 
     public ViewHolderPosts(View itemView) {
         super(itemView);
@@ -143,6 +146,7 @@ class ViewHolderPosts extends RecyclerView.ViewHolder{
                 intent.putExtra("content",content);
                 intent.putExtra("clubName",cName);
                 intent.putExtra("userid",user);
+                intent.putExtra("postid", postId);
                 intent.putExtra("score",score);
                 v.getContext().startActivity(intent);
             }

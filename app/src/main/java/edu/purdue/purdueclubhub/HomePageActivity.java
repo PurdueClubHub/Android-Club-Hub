@@ -62,7 +62,12 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
 
 
         Bundle recdData = getIntent().getExtras();
-        String possibleClub = (recdData.getString("Club"));
+        String possibleClub = null;
+       try{
+           possibleClub = (recdData.getString("Club"));
+       }catch (Exception e){
+
+       }
         if(possibleClub != null)
         {
             mToolbar.setTitle("Posts");

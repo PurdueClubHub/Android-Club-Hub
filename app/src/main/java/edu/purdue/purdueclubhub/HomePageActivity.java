@@ -62,6 +62,17 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         posts = (ArrayList)postAdapter.getPosts();
         clubs = (ArrayList)clubAdapter.getClubs();
         mRecyclerView.setAdapter(clubAdapter);
+
+        SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
+        SharedPreferences.Editor prefsEdit = prefs.edit();
+        int flag;
+        String club_name = "";
+        flag = prefs.getInt("CLUB_FLAG", 0);
+        Toast.makeText(this, "" + flag, Toast.LENGTH_LONG).show();
+        if(flag == 1){
+            club_name = prefs.getString("CLUB_NAME", "");
+            Toast.makeText(this, club_name, Toast.LENGTH_LONG).show();
+        }
     }
 
 

@@ -28,6 +28,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
     private ArrayList<Post> foundPosts;
     private ArrayList<Club> foundClubs;
     private ArrayList<Post> sortedPosts;
+    private ArrayList<Post> clubPosts;
     private ArrayList<Club> clubs = new ArrayList<Club>();
     private ArrayList<Post> posts = new ArrayList<Post>();
     private Toolbar mToolbar;
@@ -62,6 +63,29 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         posts = (ArrayList)postAdapter.getPosts();
         clubs = (ArrayList)clubAdapter.getClubs();
         mRecyclerView.setAdapter(clubAdapter);
+
+        SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
+        SharedPreferences.Editor prefsEdit = prefs.edit();
+        int flag;
+        String club_name = "";
+        flag = prefs.getInt("CLUB_FLAG", 0);
+        Toast.makeText(this, "" + flag, Toast.LENGTH_LONG).show();
+        if(flag == 1){
+            int j = 0;
+            club_name = prefs.getString("CLUB_NAME", "");
+            Toast.makeText(this, club_name, Toast.LENGTH_LONG).show();
+            clubPosts = new ArrayList<Post>();
+            for(int i = 0; i < posts.size(); i ++){
+                if(posts.get(i).clubName.equals(club_name)){
+                    clubPosts.add(j, posts.get(i));
+                    j++;
+                }
+            }
+            mRecyclerView.setAdapter(postAdapter);
+            mToolbar.setTitle("Posts from Club \"" + club_name + "\"");
+            postAdapter.switchPostList(clubPosts);
+            prefs.edit().putInt("CLUB_FLAG", 0);
+        }
     }
 
 
@@ -93,6 +117,48 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 startActivity(intent);
                 //finish();
             }
+        }
+        else if (id == R.id.sort_posts){
+            mRecyclerView.setAdapter(postAdapter);
+            posts = (ArrayList)postAdapter.getPosts();
+            sortedPosts = new ArrayList<Post>();
+            int j;
+            for(int i = 0; i < posts.size(); i++){
+                j = 0;
+                Post tempPost = posts.get(i);
+                //displayText(posts.get(i).username);
+                for(j = 0; j < sortedPosts.size(); j++){
+                    Post tempPost2 = sortedPosts.get(j);
+                    if(Integer.parseInt(tempPost.likes) <= Integer.parseInt(tempPost2.likes)){
+                        continue;
+                    }else{
+                        break;
+                    }
+                }
+                sortedPosts.add(j, tempPost);
+            }
+            postAdapter.switchPostList(sortedPosts);
+        }
+        else if (id == R.id.sort_posts_club){
+            mRecyclerView.setAdapter(postAdapter);
+            posts = (ArrayList)postAdapter.getPosts();
+            sortedPosts = new ArrayList<Post>();
+            int j;
+            for(int i = 0; i < posts.size(); i++){
+                j = 0;
+                Post tempPost = posts.get(i);
+                //displayText(posts.get(i).username);
+                for(j = 0; j < sortedPosts.size(); j++){
+                    Post tempPost2 = sortedPosts.get(j);
+                    if(tempPost.clubName.compareToIgnoreCase(tempPost2.clubName) >= 0){
+                        continue;
+                    }else{
+                        break;
+                    }
+                }
+                sortedPosts.add(j, tempPost);
+            }
+            postAdapter.switchPostList(sortedPosts);
         }
         else if(id == R.id.logout)
         {
@@ -168,27 +234,6 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             builder.show();
         }
         if(position == 3){
-            mRecyclerView.setAdapter(postAdapter);
-            posts = (ArrayList)postAdapter.getPosts();
-            sortedPosts = new ArrayList<Post>();
-            int j;
-            for(int i = 0; i < posts.size(); i++){
-                j = 0;
-                Post tempPost = posts.get(i);
-                //displayText(posts.get(i).username);
-                for(j = 0; j < sortedPosts.size(); j++){
-                    Post tempPost2 = posts.get(j);
-                    if(Integer.parseInt(tempPost.likes) <= Integer.parseInt(tempPost2.likes)){
-                        continue;
-                    }else{
-                        break;
-                    }
-                }
-                sortedPosts.add(j, tempPost);
-            }
-            postAdapter.switchPostList(sortedPosts);
-        }
-        if(position == 4){
             //Search Clubs
             foundClubs = new ArrayList<Club>();
             mRecyclerView.setAdapter(clubAdapter);
@@ -235,7 +280,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
 
             builder.show();
         }
-        if(position == 5){
+        if(position == 4){
             /*Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
             intent.putExtra("Uid", "Guest");
             startActivity(intent);
@@ -252,10 +297,10 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 //finish();
             }
         }
-        if(position == 6){
+        if(position == 5){
             //Go to settings page
         }
-        if(position == 7){
+        if(position == 6){
             Intent intent = new Intent(getBaseContext(), LoginActivity.class);
             SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
             SharedPreferences.Editor prefsEdit = prefs.edit();

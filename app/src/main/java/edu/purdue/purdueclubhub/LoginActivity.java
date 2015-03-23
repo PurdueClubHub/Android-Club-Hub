@@ -18,15 +18,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.MutableData;
+import com.firebase.client.Transaction;
+import com.firebase.client.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
 
 public class LoginActivity extends ActionBarActivity {
 
     private Firebase ref;
+    private Firebase postUpdate;
     private String PREF_NAME;
     private String userID;
     private boolean isRegistrationForm = false;
@@ -49,6 +55,40 @@ public class LoginActivity extends ActionBarActivity {
 
         ref = new Firebase(getString(R.string.firebase_url));
         PREF_NAME = getResources().getString(R.string.prefs_name);
+        Firebase ref2 = new Firebase("https://clubhub.firebaseio.com/lastUpdate/time");
+        ref2.runTransaction(new Transaction.Handler(){
+            @Override
+            public Transaction.Result doTransaction(MutableData currentData) {
+                long prev = Long.parseLong(currentData.getValue().toString());
+                Date day = new Date();
+                long now = day.getTime();
+
+                /*if(now-prev>86400000) {
+                    currentData.setValue(now);
+                    Firebase clubhub = new Firebase("https://clubhub.firebaseio.com");
+                    clubhub.child("posts").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            Iterable<DataSnapshot> iterator = snapshot.getChildren();
+                            for(DataSnapshot ds: iterator){
+                                String postKey = ds.getKey();
+                                Firebase ref3 = new Firebase("https://clubhub.firebaseio.com/posts/"+postKey+"/likes");
+                                int likes = Integer.parseInt(ds.child("likes").getValue().toString());
+                                likes=(int)(likes*0.8);
+                                ref3.setValue((String) String.valueOf(likes));
+                            }
+                        }
+                        @Override public void onCancelled(FirebaseError error) { }
+                    });
+                }*/
+
+                return Transaction.success(currentData);
+            }
+            @Override
+            public void onComplete(FirebaseError firebaseError, boolean committed, DataSnapshot currentData) {
+                //This method will be called once with the results of the transaction.
+            }
+        });
 
         //Set up login button
         Button login_button = (Button) findViewById(R.id.logInButton);

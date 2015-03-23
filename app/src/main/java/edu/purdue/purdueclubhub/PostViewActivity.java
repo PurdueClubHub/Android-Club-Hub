@@ -21,7 +21,7 @@ import com.firebase.client.ValueEventListener;
 public class PostViewActivity extends Activity{
 
     TextView contents, clubName, userid;
-    Firebase clubhub;
+    Firebase clubhub, clubhub2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,8 @@ public class PostViewActivity extends Activity{
         String postID = recdData.getString("postid");
         String url = "https://clubhub.firebaseio.com/posts/"+postID+"/likes";
         clubhub = new Firebase(url);
+        url = "https://clubhub.firebaseio.com/posts/"+postID+"/allTimeLikes";
+        clubhub2 = new Firebase(url);
 
         Button upvote_button = (Button)findViewById(R.id.button_up_vote);
         upvote_button.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +49,30 @@ public class PostViewActivity extends Activity{
                     @Override
                     public Transaction.Result doTransaction(MutableData currentData) {
                         AuthData auth = clubhub.getAuth();
+                        String UID = auth.getUid();
+                        if(UID.contains("anonymous:-") == true)
+                        {
+                            //Toast.makeText(getBaseContext(), "Please login to vote on a post.", Toast.LENGTH_SHORT).show();
+                            return Transaction.abort();
+                        }
+                        if (currentData.getValue() == null) {
+                            currentData.setValue("1");
+                        } else {
+                            int val = Integer.parseInt(currentData.getValue().toString());
+                            val++;
+                            currentData.setValue((String) String.valueOf(val));
+                        }
+                        return Transaction.success(currentData);
+                    }
+                    @Override
+                    public void onComplete(FirebaseError firebaseError, boolean committed, DataSnapshot currentData) {
+                        //This method will be called once with the results of the transaction.
+                    }
+                });
+                clubhub2.runTransaction(new Transaction.Handler(){
+                    @Override
+                    public Transaction.Result doTransaction(MutableData currentData) {
+                        AuthData auth = clubhub2.getAuth();
                         String UID = auth.getUid();
                         if(UID.contains("anonymous:-") == true)
                         {

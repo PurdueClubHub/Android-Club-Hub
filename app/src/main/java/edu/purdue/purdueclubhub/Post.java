@@ -12,6 +12,7 @@ public class Post {
     String contents;
     String username;
     String likes;
+    String allTimeLikes;
     String id;
 
     public Post(){}
@@ -21,6 +22,7 @@ public class Post {
         this.contents = cont;
         this.username = un;
         this.likes = likes;//"0";
+        this.allTimeLikes = likes;
         id = "";
     }
 
@@ -29,6 +31,7 @@ public class Post {
         this.contents = cont;
         this.username = un;
         this.likes = likes;//"0";
+        this.allTimeLikes = likes;
         this.id = id;
     }
 
@@ -50,6 +53,8 @@ public class Post {
         return likes;
     }
 
+    public String getAllTimeLikes() { return allTimeLikes; }
+
     public Map<String, String> toMap()
     {
         Map<String, String> r = new HashMap<String, String>();
@@ -58,6 +63,7 @@ public class Post {
         r.put("description", contents);
         r.put("username", username);
         r.put("likes", likes);
+        r.put("allTimeLikes", allTimeLikes);
 
         return r;
     }

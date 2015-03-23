@@ -91,6 +91,18 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
     public List<Post> getPosts(){
         return posts;
     }
+    public List<Post> getClubPosts(String club_name)
+    {
+        List<Post> retPosts = new ArrayList<Post>();;
+        int j = 0;
+        for(int i = 0; i < posts.size(); i ++){
+            if(posts.get(i).clubName.equals(club_name)){
+                posts.add(j, posts.get(i));
+                j++;
+            }
+        }
+        return retPosts;
+    }
 
     @Override
     public ViewHolderPosts onCreateViewHolder(ViewGroup parent, int viewType) {

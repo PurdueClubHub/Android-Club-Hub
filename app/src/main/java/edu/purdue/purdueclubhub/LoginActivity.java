@@ -36,6 +36,13 @@ public class LoginActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Possibly Remove
+        SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
+        SharedPreferences.Editor prefsEdit = prefs.edit();
+        prefs.edit().putInt("CLUB_FLAG", 0).apply();
+        //^^^^^^^^^^^^^^^^
+
         super.onCreate(savedInstanceState);
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_login);

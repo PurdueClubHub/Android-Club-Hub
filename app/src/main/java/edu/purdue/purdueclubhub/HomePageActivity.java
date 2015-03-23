@@ -59,35 +59,19 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
 
         postAdapter = new CardAdapterPosts();
         clubAdapter = new CardAdapterClubs(getApplicationContext());
+        posts = (ArrayList)postAdapter.getPosts();
+        clubs = (ArrayList)clubAdapter.getClubs();
+        mRecyclerView.setAdapter(clubAdapter);
 
-
-        Bundle recdData = getIntent().getExtras();
-        String possibleClub = (recdData.getString("Club"));
-        if(possibleClub != null)
-        {
-            mToolbar.setTitle("Posts");
-            posts = (ArrayList)postAdapter.getPosts();
-            clubs = (ArrayList)clubAdapter.getClubs();
-            foundPosts = new ArrayList<Post>();;
-            int j = 0;
-            for(int i = 0; i < posts.size(); i++){
-                Post tempPost = posts.get(i);
-                //displayText(posts.get(i).username);
-                if(tempPost.contents.toUpperCase().contains(possibleClub.toUpperCase())){
-                    //displayText("Found a match at " + i);
-                    //posts.remove(i);
-                    foundPosts.add(j, tempPost);
-                    j++;
-                }
-            }
-            postAdapter.switchPostList(foundPosts);
-            mRecyclerView.setAdapter(postAdapter);
-        }
-        else
-        {
-            mRecyclerView.setAdapter(clubAdapter);
-            posts = (ArrayList)postAdapter.getPosts();
-            clubs = (ArrayList)clubAdapter.getClubs();
+        SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
+        SharedPreferences.Editor prefsEdit = prefs.edit();
+        int flag;
+        String club_name = "";
+        flag = prefs.getInt("CLUB_FLAG", 0);
+        Toast.makeText(this, "" + flag, Toast.LENGTH_LONG).show();
+        if(flag == 1){
+            club_name = prefs.getString("CLUB_NAME", "");
+            Toast.makeText(this, club_name, Toast.LENGTH_LONG).show();
         }
     }
 

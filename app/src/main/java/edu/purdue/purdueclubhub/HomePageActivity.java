@@ -58,24 +58,38 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        postAdapter = new CardAdapterPosts();
-        clubAdapter = new CardAdapterClubs(getApplicationContext());
-        posts = (ArrayList)postAdapter.getPosts();
-        clubs = (ArrayList)clubAdapter.getClubs();
-        mRecyclerView.setAdapter(clubAdapter);
 
         SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
         SharedPreferences.Editor prefsEdit = prefs.edit();
         int flag;
         String club_name = "";
         flag = prefs.getInt("CLUB_FLAG", 0);
-        Toast.makeText(this, "" + flag, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "" + flag, Toast.LENGTH_LONG).show();
+        if(flag == 1) {
+            club_name = prefs.getString("CLUB_NAME", "");
+            mToolbar.setTitle("Posts from Club \"" + club_name + "\"");
+        }
+
+        postAdapter = new CardAdapterPosts(flag, club_name);
+        clubAdapter = new CardAdapterClubs(getApplicationContext());
+        posts = (ArrayList)postAdapter.getPosts();
+        clubs = (ArrayList)clubAdapter.getClubs();
+
+        mRecyclerView.setAdapter(postAdapter);
+        mToolbar.setTitle("Posts");
+
+        /*SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
+        SharedPreferences.Editor prefsEdit = prefs.edit();
+        int flag;
+        String club_name = "";
+        flag = prefs.getInt("CLUB_FLAG", 0);
+        //Toast.makeText(this, "" + flag, Toast.LENGTH_LONG).show();
         if(flag == 1){
             int j = 0;
             club_name = prefs.getString("CLUB_NAME", "");
-            Toast.makeText(this, club_name, Toast.LENGTH_LONG).show();
             clubPosts = new ArrayList<Post>();
             for(int i = 0; i < posts.size(); i ++){
+                Toast.makeText(this, posts.get(i).clubName, Toast.LENGTH_LONG);
                 if(posts.get(i).clubName.equals(club_name)){
                     clubPosts.add(j, posts.get(i));
                     j++;
@@ -85,7 +99,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             mToolbar.setTitle("Posts from Club \"" + club_name + "\"");
             postAdapter.switchPostList(clubPosts);
             prefs.edit().putInt("CLUB_FLAG", 0);
-        }
+        }*/
     }
 
 

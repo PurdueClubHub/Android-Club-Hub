@@ -5,6 +5,7 @@ package edu.purdue.purdueclubhub;
  */
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
     List<Post> posts;
     Firebase clubhub;
 
-    public CardAdapterPosts(){
+    public CardAdapterPosts(final int clubFlag, final String clubPosts){
         super();
         posts = new ArrayList<Post>();
         clubhub = new Firebase("https://clubhub.firebaseio.com");
@@ -59,6 +60,12 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                     //Toast.makeText(context, first_officer, Toast.LENGTH_LONG).show();
                     Post post = new Post(clubName, description, user, likes, id);
                     posts.add(post);
+
+                    if(clubFlag == 1){
+                        if(!post.clubName.equals(clubPosts)){
+                            posts.remove(post);
+                        }
+                    }
                 }
                 CardAdapterPosts.this.notifyDataSetChanged();
                 /*DataSnapshot description = snapshot.child("description");

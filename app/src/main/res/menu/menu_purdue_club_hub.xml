@@ -4,6 +4,8 @@
     <item android:id="@+id/create_club_menu_item" android:title="Create Club"  />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/sort_posts" android:title="Sort Posts by Up-votes"   />
+    <item android:id="@+id/sort_posts_club" android:title = "Sort Posts by Club" />
     <item android:id="@+id/logout" android:title="Logout"/>
 
 </menu>

@@ -68,6 +68,8 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         if(flag == 1) {
             club_name = prefs.getString("CLUB_NAME", "");
             mToolbar.setTitle("Posts from Club \"" + club_name + "\"");
+        }else{
+            mToolbar.setTitle("Posts");
         }
 
         postAdapter = new CardAdapterPosts(flag, club_name);
@@ -76,7 +78,6 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         clubs = (ArrayList)clubAdapter.getClubs();
 
         mRecyclerView.setAdapter(postAdapter);
-        mToolbar.setTitle("Posts");
 
         /*SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
         SharedPreferences.Editor prefsEdit = prefs.edit();

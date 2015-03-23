@@ -37,7 +37,7 @@ public class ClubViewActivity extends ActionBarActivity {
     Intent calling;
 
     TextView description, clubName, officers;
-    Button editButton, newPostButton, postsButton;
+    Button editButton, newPostButton, postsButton, subscribeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,12 @@ public class ClubViewActivity extends ActionBarActivity {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         mToolbar.setTitle("View Club");
         setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //get textviews
@@ -58,8 +64,9 @@ public class ClubViewActivity extends ActionBarActivity {
         editButton = (Button) findViewById(R.id.editclubButton);
         newPostButton = (Button) findViewById(R.id.newpostbutton);
         postsButton = (Button) findViewById(R.id.postsButton);
+        subscribeButton = (Button) findViewById(R.id.subscribeButton);
 
-        Bundle recdData = getIntent().getExtras();
+        final Bundle recdData = getIntent().getExtras();
         description.setText(recdData.getString("description"));
         clubName.setText(recdData.getString("clubName"));
         //first_officer.setText(recdData.getString("firstOfficer"));
@@ -110,10 +117,40 @@ public class ClubViewActivity extends ActionBarActivity {
             }
         });
 
+        subscribeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Firebase userRef = mFirebaseRef.child("users").child(mFirebaseRef.getAuth().getUid()).child("clubs");//.child(recdData.getString("clubName"));
+                userRef.push().setValue(recdData.getString("clubName"));
+                //userRef.push(recdData.getString("clubName"));
+                subscribeButton.setEnabled(false);
+            }
+        });
+
         isUserOfficer(clubname);
+        checkSubscribed(clubname);
     }
 
+    public void checkSubscribed(final String club_name){
+        final String uid = mFirebaseRef.getAuth().getUid();
+        Firebase clubRef  = mFirebaseRef.child("users").child(mFirebaseRef.getAuth().getUid()).child("clubs");
+        clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> iterator = dataSnapshot.getChildren();
+                for(DataSnapshot ds: iterator){
+                    if (ds.getValue().equals(club_name)){
+                        subscribeButton.setEnabled(false);
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
 
     public void isUserOfficer(String club_name) {
         final String uid = mFirebaseRef.getAuth().getUid();
@@ -147,6 +184,11 @@ public class ClubViewActivity extends ActionBarActivity {
             public void onCancelled(FirebaseError firebaseError) {
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
 }

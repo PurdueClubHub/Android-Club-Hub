@@ -93,9 +93,9 @@ public class ClubViewActivity extends ActionBarActivity {
         findViewById(R.id.postsButton).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                Intent i = new Intent(getBaseContext(), HomePageActivity.class);
-                i.putExtra("Club",clubname);
-                startActivity(i);
+                //Intent i = new Intent(getBaseContext(), HomePageActivity.class);
+                //i.putExtra("Club",clubname);
+                //startActivity(i);
                 finish();
             }
         });

@@ -58,6 +58,9 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
 
         postAdapter = new CardAdapterPosts();
         clubAdapter = new CardAdapterClubs(getApplicationContext());
+        posts = (ArrayList)postAdapter.getPosts();
+        clubs = (ArrayList)clubAdapter.getClubs();
+        mRecyclerView.setAdapter(clubAdapter);
 
 
         Bundle recdData = getIntent().getExtras();
@@ -65,8 +68,8 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         if(possibleClub != null)
         {
             mToolbar.setTitle("Posts");
-            posts = (ArrayList)postAdapter.getPosts();
-            clubs = (ArrayList)clubAdapter.getClubs();
+        //    posts = (ArrayList)postAdapter.getPosts();
+         //   clubs = (ArrayList)clubAdapter.getClubs();
             foundPosts = new ArrayList<Post>();;
             int j = 0;
             for(int i = 0; i < posts.size(); i++){
@@ -85,10 +88,10 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         else
         {
             mRecyclerView.setAdapter(clubAdapter);
-            posts = (ArrayList)postAdapter.getPosts();
-            clubs = (ArrayList)clubAdapter.getClubs();
+      //      posts = (ArrayList)postAdapter.getPosts();
+       //     clubs = (ArrayList)clubAdapter.getClubs();
         }
-    }
+   */ }
 
 
     @Override

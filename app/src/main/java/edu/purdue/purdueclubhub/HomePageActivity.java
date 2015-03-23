@@ -27,6 +27,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
 
     private ArrayList<Post> foundPosts;
     private ArrayList<Club> foundClubs;
+    private ArrayList<Post> sortedPosts;
     private ArrayList<Club> clubs = new ArrayList<Club>();
     private ArrayList<Post> posts = new ArrayList<Post>();
     private Toolbar mToolbar;
@@ -170,7 +171,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                     m_Text = input.getText().toString();
                     int j = 0;
                     posts = (ArrayList)postAdapter.getPosts();
-                    foundPosts = new ArrayList<Post>();;
+                    foundPosts = new ArrayList<Post>();
                     for(int i = 0; i < posts.size(); i++){
                         Post tempPost = posts.get(i);
                         //displayText(posts.get(i).username);
@@ -194,6 +195,27 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             builder.show();
         }
         if(position == 3){
+            mRecyclerView.setAdapter(postAdapter);
+            posts = (ArrayList)postAdapter.getPosts();
+            sortedPosts = new ArrayList<Post>();
+            int j;
+            for(int i = 0; i < posts.size(); i++){
+                j = 0;
+                Post tempPost = posts.get(i);
+                //displayText(posts.get(i).username);
+                for(j = 0; j < sortedPosts.size(); j++){
+                    Post tempPost2 = posts.get(j);
+                    if(Integer.parseInt(tempPost.likes) <= Integer.parseInt(tempPost2.likes)){
+                        continue;
+                    }else{
+                        break;
+                    }
+                }
+                sortedPosts.add(j, tempPost);
+            }
+            postAdapter.switchPostList(sortedPosts);
+        }
+        if(position == 4){
             //Search Clubs
             foundClubs = new ArrayList<Club>();
             mRecyclerView.setAdapter(clubAdapter);
@@ -240,7 +262,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
 
             builder.show();
         }
-        if(position == 4){
+        if(position == 5){
             /*Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
             intent.putExtra("Uid", "Guest");
             startActivity(intent);
@@ -257,10 +279,10 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 //finish();
             }
         }
-        if(position == 5){
+        if(position == 6){
             //Go to settings page
         }
-        if(position == 6){
+        if(position == 7){
             Intent intent = new Intent(getBaseContext(), LoginActivity.class);
             SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
             SharedPreferences.Editor prefsEdit = prefs.edit();

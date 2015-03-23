@@ -9,11 +9,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.MutableData;
+import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
@@ -98,7 +102,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String trueName = dataSnapshot.getValue().toString();
-                    holder.userid.setText(trueName);
+                    holder.userid.setText("by " + trueName);
                 }
 
                 @Override
@@ -108,10 +112,42 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
             });
 
         }
-        holder.clubName.setText(post.clubName);
+        holder.clubName.setText("for " + post.clubName);
         holder.contents.setText((post.contents));
         holder.scoreText.setText((post.likes));
         holder.postId = post.getId();
+        holder.upvoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clubhub = new Firebase("https://clubhub.firebaseio.com");
+                Firebase clublikes = clubhub.child("posts").child(post.id).child("likes");
+                ((Button)v).setEnabled(false);
+                clublikes.runTransaction(new Transaction.Handler(){
+                    @Override
+                    public Transaction.Result doTransaction(MutableData currentData) {
+                        AuthData auth = clubhub.getAuth();
+                        String UID = auth.getUid();
+                        if(UID.contains("anonymous:-") == true)
+                        {
+                            //Toast.makeText(getBaseContext(), "Please login to vote on a post.", Toast.LENGTH_SHORT).show();
+                            return Transaction.abort();
+                        }
+                        if (currentData.getValue() == null) {
+                            currentData.setValue("1");
+                        } else {
+                            int val = Integer.parseInt(currentData.getValue().toString());
+                            val++;
+                            currentData.setValue(String.valueOf(val));
+                        }
+                        return Transaction.success(currentData);
+                    }
+                    @Override
+                    public void onComplete(FirebaseError firebaseError, boolean committed, DataSnapshot currentData) {
+                        //This method will be called once with the results of the transaction.
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -128,6 +164,7 @@ class ViewHolderPosts extends RecyclerView.ViewHolder{
     public TextView userid;
     public TextView scoreText;
     public String postId;
+    public Button   upvoteButton;
 
     public ViewHolderPosts(View itemView) {
         super(itemView);
@@ -136,6 +173,7 @@ class ViewHolderPosts extends RecyclerView.ViewHolder{
         contents = (TextView)itemView.findViewById(R.id.contents);
         clubName = (TextView)itemView.findViewById(R.id.club_name);
         userid = (TextView)itemView.findViewById(R.id.username);
+        upvoteButton = (Button) itemView.findViewById(R.id.upvote_shortcut);
         view.setOnClickListener(new View.OnClickListener(){
             @Override public void onClick(View v){
                 String content = contents.getText().toString();

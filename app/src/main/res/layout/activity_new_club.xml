@@ -28,7 +28,6 @@
         android:enabled="true"
         android:editable="true"
         android:layout_below="@+id/textView12"
-        android:inputType="textMultiLine"
         android:nestedScrollingEnabled="true"
         android:layout_gravity="center_horizontal|top"
         android:padding="20dp"

@@ -43,16 +43,6 @@ public class LoginActivity extends ActionBarActivity {
         ref = new Firebase(getString(R.string.firebase_url));
         PREF_NAME = getResources().getString(R.string.prefs_name);
 
-        //make form invisible
-        setFormVisible(false);
-
-        //attempt log in with saved prefs before enabling form
-        attemptLoginFromPrefs();
-
-        //log in with saved prefs failed. Present form
-        setFormVisible(true);
-
-
         //Set up login button
         Button login_button = (Button) findViewById(R.id.logInButton);
         login_button.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +75,21 @@ public class LoginActivity extends ActionBarActivity {
                 attemptGuestLogin();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+        //make form invisible
+        setFormVisible(false);
+
+        //attempt log in with saved prefs before enabling form
+        attemptLoginFromPrefs();
+
+        //log in with saved prefs failed. Present form
+        setFormVisible(true);
     }
 
     private void attemptGuestLogin() {
@@ -247,7 +252,7 @@ public class LoginActivity extends ActionBarActivity {
         repeatPassEditText.setTextColor(Color.BLACK);
         repeatPassEditText.setLinkTextColor(Color.BLACK);
         repeatPassEditText.setEms(10);
-        repeatPassEditText.setTextAppearance(this,android.R.style.TextAppearance_Medium);
+        repeatPassEditText.setTextAppearance(this, android.R.style.TextAppearance_Medium);
 
         repeatPassEditTextID = View.generateViewId();
         repeatPassEditText.setId(repeatPassEditTextID);

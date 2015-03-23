@@ -119,21 +119,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if (id == R.id.create_club_menu_item) {
-            Bundle bundle = getIntent().getExtras();
-            String UID = bundle.getString("Uid");
-            if(UID.equals("Guest")) {
-                Toast.makeText(this, "Please login to create a club.", Toast.LENGTH_SHORT).show();
-            }else {
-                Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
-                startActivity(intent);
-                //finish();
-            }
-        }
-        else if (id == R.id.sort_posts){
+        if (id == R.id.sort_posts){
             mRecyclerView.setAdapter(postAdapter);
             posts = (ArrayList)postAdapter.getPosts();
             sortedPosts = new ArrayList<Post>();
@@ -154,20 +140,20 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             }
             postAdapter.switchPostList(sortedPosts);
         }
-        else if (id == R.id.sort_posts_club){
+        else if (id == R.id.sort_posts_club) {
             mRecyclerView.setAdapter(postAdapter);
-            posts = (ArrayList)postAdapter.getPosts();
+            posts = (ArrayList) postAdapter.getPosts();
             sortedPosts = new ArrayList<Post>();
             int j;
-            for(int i = 0; i < posts.size(); i++){
+            for (int i = 0; i < posts.size(); i++) {
                 j = 0;
                 Post tempPost = posts.get(i);
                 //displayText(posts.get(i).username);
-                for(j = 0; j < sortedPosts.size(); j++){
+                for (j = 0; j < sortedPosts.size(); j++) {
                     Post tempPost2 = sortedPosts.get(j);
-                    if(tempPost.clubName.compareToIgnoreCase(tempPost2.clubName) >= 0){
+                    if (tempPost.clubName.compareToIgnoreCase(tempPost2.clubName) >= 0) {
                         continue;
-                    }else{
+                    } else {
                         break;
                     }
                 }
@@ -175,16 +161,6 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             }
             postAdapter.switchPostList(sortedPosts);
         }
-        else if(id == R.id.logout)
-        {
-            Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-            SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
-            SharedPreferences.Editor prefsEdit = prefs.edit();
-            prefsEdit.clear().commit();
-            startActivity(intent);
-            finish();
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

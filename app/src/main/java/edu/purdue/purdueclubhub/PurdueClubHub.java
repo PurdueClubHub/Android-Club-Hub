@@ -85,21 +85,7 @@ public class PurdueClubHub extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if (id == R.id.create_club_menu_item) {
-            Bundle bundle = getIntent().getExtras();
-            String UID = bundle.getString("Uid");
-            if(UID.equals("Guest")) {
-                Toast.makeText(this, "Please login to create a club.", Toast.LENGTH_SHORT).show();
-            }else {
-                Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
-                startActivity(intent);
-                //finish();
-            }
-        }
+
 
         return super.onOptionsItemSelected(item);
     }

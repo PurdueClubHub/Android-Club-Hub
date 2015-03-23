@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -35,6 +37,8 @@ public class ClubViewActivity extends ActionBarActivity {
     Intent calling;
 
     TextView description, clubName, officers;
+    Button editButton, newPostButton, postsButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +49,15 @@ public class ClubViewActivity extends ActionBarActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //get textviews
         description = (TextView) findViewById(R.id.descriptionTextView);
         clubName = (TextView) findViewById(R.id.clubNameTextView);
         officers = (TextView) findViewById(R.id.officersTextView);
+
+        //get buttons
+        editButton = (Button) findViewById(R.id.editclubButton);
+        newPostButton = (Button) findViewById(R.id.newpostbutton);
+        postsButton = (Button) findViewById(R.id.postsButton);
 
         Bundle recdData = getIntent().getExtras();
         description.setText(recdData.getString("description"));
@@ -103,14 +113,20 @@ public class ClubViewActivity extends ActionBarActivity {
             }
         });
 
-        //clubName.setText(clubname);
+        isUserOfficer(clubname);
+    }
 
-        //String uid = mFirebaseRef.getAuth().getUid();
-        Firebase clubRef = mFirebaseRef.child("clubs").child(clubname);
+
+
+    public void isUserOfficer(String club_name) {
+        final String uid = mFirebaseRef.getAuth().getUid();
+        Firebase clubRef  = mFirebaseRef.child("clubs").child(club_name);
 
         clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //set description
                 if(dataSnapshot.hasChild("description")) {
                     Map<String, Object> value = (Map<String, Object>) dataSnapshot.getValue();
                     description.setText(value.get("description").toString());
@@ -118,19 +134,22 @@ public class ClubViewActivity extends ActionBarActivity {
                 else {
                     description.setText("Could not find club description");
                 }
+
+                for (DataSnapshot officer : dataSnapshot.child("officers").getChildren()) {
+                    if (officer.getValue().toString().equals(uid)) {
+                        newPostButton.setVisibility(View.VISIBLE);
+                        editButton.setVisibility(View.VISIBLE);
+                        break;
+                    }
+                }
+
+
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
             }
         });
-
-        //TODO: Verify that the club exists and find out if used is admin
-
-
     }
-
-
-
 
 }

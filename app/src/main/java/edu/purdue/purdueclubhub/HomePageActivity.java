@@ -28,6 +28,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
     private ArrayList<Post> foundPosts;
     private ArrayList<Club> foundClubs;
     private ArrayList<Post> sortedPosts;
+    private ArrayList<Post> clubPosts;
     private ArrayList<Club> clubs = new ArrayList<Club>();
     private ArrayList<Post> posts = new ArrayList<Post>();
     private Toolbar mToolbar;
@@ -70,8 +71,20 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         flag = prefs.getInt("CLUB_FLAG", 0);
         Toast.makeText(this, "" + flag, Toast.LENGTH_LONG).show();
         if(flag == 1){
+            int j = 0;
             club_name = prefs.getString("CLUB_NAME", "");
             Toast.makeText(this, club_name, Toast.LENGTH_LONG).show();
+            clubPosts = new ArrayList<Post>();
+            for(int i = 0; i < posts.size(); i ++){
+                if(posts.get(i).clubName.equals(club_name)){
+                    clubPosts.add(j, posts.get(i));
+                    j++;
+                }
+            }
+            mRecyclerView.setAdapter(postAdapter);
+            mToolbar.setTitle("Posts from Club \"" + club_name + "\"");
+            postAdapter.switchPostList(clubPosts);
+            prefs.edit().putInt("CLUB_FLAG", 0);
         }
     }
 

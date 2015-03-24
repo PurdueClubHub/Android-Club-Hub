@@ -30,6 +30,11 @@
         </activity>
 
         <activity
+            android:name=".PostsFromClub"
+            android:label="Posts from Club Activity" >
+        </activity>
+
+        <activity
             android:name=".NewClubActivity"
             android:label="@string/title_activity_new_club"
             android:parentActivityName=".HomePageActivity" >

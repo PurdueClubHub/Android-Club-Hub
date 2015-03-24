@@ -38,6 +38,7 @@ public class LoginActivity extends ActionBarActivity {
     private boolean isRegistrationForm = false;
     int repeatPassEditTextID;
     int usernameEditTextID;
+    long postTime;
 
 
     @Override
@@ -61,9 +62,9 @@ public class LoginActivity extends ActionBarActivity {
             public Transaction.Result doTransaction(MutableData currentData) {
                 long prev = Long.parseLong(currentData.getValue().toString());
                 Date day = new Date();
-                long now = day.getTime();
+                final long now = day.getTime();
 
-                /*if(now-prev>86400000) {
+                if(now-prev>86400000) {
                     currentData.setValue(now);
                     Firebase clubhub = new Firebase("https://clubhub.firebaseio.com");
                     clubhub.child("posts").addValueEventListener(new ValueEventListener() {
@@ -73,14 +74,35 @@ public class LoginActivity extends ActionBarActivity {
                             for(DataSnapshot ds: iterator){
                                 String postKey = ds.getKey();
                                 Firebase ref3 = new Firebase("https://clubhub.firebaseio.com/posts/"+postKey+"/likes");
-                                int likes = Integer.parseInt(ds.child("likes").getValue().toString());
-                                likes=(int)(likes*0.8);
-                                ref3.setValue((String) String.valueOf(likes));
+                                Firebase ref4 = new Firebase("https://clubhub.firebaseio.com/posts/"+postKey);
+                                Firebase toGetTime = ref4.child("updated");
+                                toGetTime.runTransaction(new Transaction.Handler() {
+                                    @Override
+                                    public Transaction.Result doTransaction(MutableData currentData) {
+                                        if(currentData.getValue()==null){
+                                            currentData.setValue(0);
+                                            postTime = 0;
+                                        }else{
+                                            postTime = Long.parseLong(currentData.getValue().toString());
+                                        }
+                                        return Transaction.success(currentData);
+                                    }
+                                    @Override
+                                    public void onComplete(FirebaseError firebaseError, boolean committed, DataSnapshot currentData) {
+                                        //This method will be called once with the results of the transaction.
+                                    }
+                                });
+                                if(now-postTime>86400000) {
+                                    int likes = Integer.parseInt(ds.child("likes").getValue().toString());
+                                    likes = (int) (likes * 0.8);
+                                    ref3.setValue((String) String.valueOf(likes));
+                                    toGetTime.setValue(now);
+                                }
                             }
                         }
                         @Override public void onCancelled(FirebaseError error) { }
                     });
-                }*/
+                }
 
                 return Transaction.success(currentData);
             }

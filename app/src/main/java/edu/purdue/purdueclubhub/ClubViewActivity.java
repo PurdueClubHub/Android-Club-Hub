@@ -113,7 +113,7 @@ public class ClubViewActivity extends ActionBarActivity {
                 //Intent i = new Intent(getBaseContext(), HomePageActivity.class);
                 //i.putExtra("Club",clubname);
                 //startActivity(i);
-                Intent i = new Intent(getBaseContext(), HomePageActivity.class);
+                Intent i = new Intent(getBaseContext(), PostsFromClub.class);
                 SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
                 SharedPreferences.Editor prefsEdit = prefs.edit();
                 prefs.edit().putString("CLUB_NAME", clubname).apply();

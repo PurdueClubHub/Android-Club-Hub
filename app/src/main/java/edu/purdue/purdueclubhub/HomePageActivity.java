@@ -40,6 +40,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
     CardAdapterPosts postAdapter;
     CardAdapterClubs clubAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,9 +97,9 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                     j++;
                 }
             }
+            postAdapter.switchPostList(clubPosts);
             mRecyclerView.setAdapter(postAdapter);
             mToolbar.setTitle("Posts from Club \"" + club_name + "\"");
-            postAdapter.switchPostList(clubPosts);
             prefs.edit().putInt("CLUB_FLAG", 0);
         }*/
     }

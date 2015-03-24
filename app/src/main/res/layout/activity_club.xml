@@ -21,11 +21,13 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/scrollView"
         android:layout_below="@+id/clubNameTextView"
-        android:layout_above="@+id/postsButton"
-        android:layout_margin="16dp">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_above="@+id/linearLayout">
 
         <LinearLayout
             android:orientation="vertical"
@@ -101,38 +103,54 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Posts"
-        android:id="@+id/postsButton"
-        android:layout_marginBottom="24dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout"
+        android:layout_gravity="center"
+        android:layout_alignParentEnd="true">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Post"
-        android:id="@+id/newpostbutton"
-        android:visibility="gone"
-        android:layout_below="@+id/scrollView"
-        android:layout_toEndOf="@+id/editclubButton" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Posts"
+            android:id="@+id/postsButton"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/editclubButton"
+            android:layout_weight="1" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="edit"
-        android:id="@+id/editclubButton"
-        android:visibility="gone"
-        android:layout_below="@+id/scrollView"
-        android:layout_toEndOf="@+id/subscribeButton" />
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edit"
+                android:id="@+id/editclubButton"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/subscribeButton"
+            android:visibility="gone"
+            android:layout_weight="1" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Subscribe"
-        android:id="@+id/subscribeButton"
-        android:layout_alignTop="@+id/postsButton"
-        android:layout_toEndOf="@+id/postsButton" />
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Post"
+                android:id="@+id/newpostbutton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"
+            android:layout_weight="1" />
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subscribe"
+                android:id="@+id/subscribeButton"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/newpostbutton"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </RelativeLayout>
+

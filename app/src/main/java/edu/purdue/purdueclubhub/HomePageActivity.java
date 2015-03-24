@@ -128,6 +128,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 sortedPosts.add(j, tempPost);
             }*/
             sortedPosts = posts;
+            postAdapter.setCurrCompare(Post.VotesComparator);
             Collections.sort(sortedPosts, Post.VotesComparator);
             postAdapter.switchPostList(sortedPosts);
         }
@@ -151,6 +152,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 }
                 sortedPosts.add(j, tempPost);
             }*/
+            postAdapter.setCurrCompare(Post.ClubComparator);
             Collections.sort(sortedPosts,Post.ClubComparator);
             postAdapter.switchPostList(sortedPosts);
         }

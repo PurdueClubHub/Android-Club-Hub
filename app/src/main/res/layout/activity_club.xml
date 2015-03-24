@@ -107,36 +107,32 @@
         android:text="Posts"
         android:id="@+id/postsButton"
         android:layout_marginBottom="24dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Post"
         android:id="@+id/newpostbutton"
-        android:layout_marginLeft="10dp"
         android:visibility="gone"
         android:layout_below="@+id/scrollView"
-        android:layout_toStartOf="@+id/clubNameTextView" />
+        android:layout_toEndOf="@+id/editclubButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="edit"
         android:id="@+id/editclubButton"
-        android:layout_marginLeft="10dp"
+        android:visibility="gone"
         android:layout_below="@+id/scrollView"
-        android:layout_toEndOf="@+id/postsButton"
-        android:visibility="gone" />
+        android:layout_toEndOf="@+id/subscribeButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Subscribe"
         android:id="@+id/subscribeButton"
-        android:layout_marginBottom="63dp"
-        android:layout_alignBottom="@+id/scrollView"
+        android:layout_alignTop="@+id/postsButton"
         android:layout_toEndOf="@+id/postsButton" />
 
 </RelativeLayout>

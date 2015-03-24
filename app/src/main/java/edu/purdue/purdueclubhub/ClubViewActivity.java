@@ -119,7 +119,7 @@ public class ClubViewActivity extends ActionBarActivity {
                 prefs.edit().putString("CLUB_NAME", clubname).apply();
                 prefs.edit().putInt("CLUB_FLAG", 1).apply();
                 startActivity(i);
-                finish();
+                //finish();
             }
         });
 

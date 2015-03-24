@@ -31,24 +31,27 @@ public class PostsFromClub extends ActionBarActivity //implements NavigationDraw
     private ArrayList<Post> clubPosts;
     private ArrayList<Post> posts = new ArrayList<Post>();
     private Toolbar mToolbar;
-    //private NavigationDrawerFragment mNavigationDrawerFragment;
     private String m_Text = "";
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager layoutManager;
     CardAdapterPosts postAdapter;
-    CardAdapterClubs clubAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
+        SharedPreferences.Editor prefsEdit = prefs.edit();
+        int flag;
+        String club_name = "";
+        flag = prefs.getInt("CLUB_FLAG", 0);
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);                //here
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);  //?
+        setContentView(R.layout.activity_posts_from_clubs);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        mToolbar.setTitle("Posts from Clubs");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         //mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.fragment_drawer);
-        //mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer),mToolbar);
-
+        //mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
@@ -56,37 +59,17 @@ public class PostsFromClub extends ActionBarActivity //implements NavigationDraw
         mRecyclerView.setLayoutManager(layoutManager);
 
 
-        SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
-        SharedPreferences.Editor prefsEdit = prefs.edit();
-        int flag;
-        String club_name = "";
-        flag = prefs.getInt("CLUB_FLAG", 0);
-        prefs.edit().putInt("CLUB_FLAG", 0).apply();
+
         //Toast.makeText(this, "" + flag, Toast.LENGTH_LONG).show();
         club_name = prefs.getString("CLUB_NAME", "");
         mToolbar.setTitle("Posts from Club \"" + club_name + "\"");
 
         postAdapter = new CardAdapterPosts(flag, club_name);
-        //clubAdapter = new CardAdapterClubs(getApplicationContext());
         posts = (ArrayList)postAdapter.getPosts();
+
         mRecyclerView.setAdapter(postAdapter);
-        sortedPosts = new ArrayList<Post>();
-        int j;
-        for(int i = 0; i < posts.size(); i++){
-            j = 0;
-            Post tempPost = posts.get(i);
-            //displayText(posts.get(i).username);
-            for(j = 0; j < sortedPosts.size(); j++){
-                Post tempPost2 = sortedPosts.get(j);
-                if(Integer.parseInt(tempPost.likes) <= Integer.parseInt(tempPost2.likes)){
-                    continue;
-                }else{
-                    break;
-                }
-            }
-            sortedPosts.add(j, tempPost);
-        }
-        postAdapter.switchPostList(sortedPosts);
+
+        prefs.edit().putInt("CLUB_FLAG", 0);
     }
 
 

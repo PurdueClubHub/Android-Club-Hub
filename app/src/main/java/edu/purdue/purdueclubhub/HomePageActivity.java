@@ -88,29 +88,6 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         mRecyclerView.setAdapter(postAdapter);
 
         prefs.edit().putInt("CLUB_FLAG", 0);
-
-        /*SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
-        SharedPreferences.Editor prefsEdit = prefs.edit();
-        int flag;
-        String club_name = "";
-        flag = prefs.getInt("CLUB_FLAG", 0);
-        //Toast.makeText(this, "" + flag, Toast.LENGTH_LONG).show();
-        if(flag == 1){
-            int j = 0;
-            club_name = prefs.getString("CLUB_NAME", "");
-            clubPosts = new ArrayList<Post>();
-            for(int i = 0; i < posts.size(); i ++){
-                Toast.makeText(this, posts.get(i).clubName, Toast.LENGTH_LONG);
-                if(posts.get(i).clubName.equals(club_name)){
-                    clubPosts.add(j, posts.get(i));
-                    j++;
-                }
-            }
-            postAdapter.switchPostList(clubPosts);
-            mRecyclerView.setAdapter(postAdapter);
-            mToolbar.setTitle("Posts from Club \"" + club_name + "\"");
-            prefs.edit().putInt("CLUB_FLAG", 0);
-        }*/
     }
 
 

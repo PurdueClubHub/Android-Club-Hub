@@ -31,7 +31,7 @@
 
         <activity
             android:name=".PostsFromClub"
-            android:label="Posts from Club Activity" >
+            android:label="Posts from Club" >
         </activity>
 
         <activity

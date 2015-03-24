@@ -203,6 +203,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             mToolbar.setTitle("Club Subscriptions");
             clubs = (ArrayList) clubAdapter.getClubs();
             subscribedClubs = new ArrayList<Club>();
+            subscribedClubs.clear();
 
             clubhub = new Firebase("https://clubhub.firebaseio.com");
             clubhub.child("users").child(clubhub.getAuth().getUid()).child("clubs").addValueEventListener(new ValueEventListener() {

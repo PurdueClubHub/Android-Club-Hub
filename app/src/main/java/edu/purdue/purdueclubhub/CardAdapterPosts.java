@@ -22,6 +22,7 @@ import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -68,6 +69,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                         }
                     }
                 }
+                Collections.sort(posts,Post.TimeComparator);
                 CardAdapterPosts.this.notifyDataSetChanged();
                 /*DataSnapshot description = snapshot.child("description");
                 Toast.makeText(context, description.getValue().toString(), Toast.LENGTH_LONG).show();

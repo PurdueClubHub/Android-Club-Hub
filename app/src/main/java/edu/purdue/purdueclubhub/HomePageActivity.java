@@ -23,6 +23,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -111,7 +112,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             mToolbar.setTitle("Sorted Posts by Up-Votes");
             posts = (ArrayList)postAdapter.getPosts();
             sortedPosts = new ArrayList<Post>();
-            int j;
+            /*int j;
             for(int i = 0; i < posts.size(); i++){
                 j = 0;
                 Post tempPost = posts.get(i);
@@ -125,15 +126,17 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                     }
                 }
                 sortedPosts.add(j, tempPost);
-            }
+            }*/
+            sortedPosts = posts;
+            Collections.sort(sortedPosts, Post.VotesComparator);
             postAdapter.switchPostList(sortedPosts);
         }
         else if (id == R.id.sort_posts_club) {
             mRecyclerView.setAdapter(postAdapter);
             mToolbar.setTitle("Sorted Posts by Club");
             posts = (ArrayList) postAdapter.getPosts();
-            sortedPosts = new ArrayList<Post>();
-            int j;
+            sortedPosts = posts;//new ArrayList<Post>();
+            /*int j;
             for (int i = 0; i < posts.size(); i++) {
                 j = 0;
                 Post tempPost = posts.get(i);
@@ -147,7 +150,8 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                     }
                 }
                 sortedPosts.add(j, tempPost);
-            }
+            }*/
+            Collections.sort(sortedPosts,Post.ClubComparator);
             postAdapter.switchPostList(sortedPosts);
         }
         return super.onOptionsItemSelected(item);

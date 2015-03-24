@@ -1,5 +1,6 @@
 package edu.purdue.purdueclubhub;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,6 +68,33 @@ public class Post {
 
         return r;
     }
+
+    public static Comparator<Post> VotesComparator = new Comparator<Post>() {
+        @Override
+        public int compare(Post lhs, Post rhs) {
+            int likes1 = Integer.parseInt(lhs.getLikes());
+            int likes2 = Integer.parseInt(rhs.getLikes());
+            return likes2-likes1;
+        }
+    };
+
+    public static Comparator<Post> ClubComparator = new Comparator<Post>() {
+        @Override
+        public int compare(Post lhs, Post rhs) {
+            String club1 = lhs.getClubName().toLowerCase();
+            String club2 = rhs.getClubName().toLowerCase();
+            return club1.compareTo(club2);
+        }
+    };
+
+    public static Comparator<Post> TimeComparator = new Comparator<Post>() {
+        @Override
+        public int compare(Post lhs, Post rhs) {
+            String id1 = lhs.getId();
+            String id2 = rhs.getId();
+            return id2.compareTo(id1);
+        }
+    };
 
 }
 

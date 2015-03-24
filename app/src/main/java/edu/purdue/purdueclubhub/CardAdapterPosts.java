@@ -22,6 +22,8 @@ import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,11 +31,13 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
 
     List<Post> posts;
     Firebase clubhub;
+    Comparator<Post> currCompare;
 
     public CardAdapterPosts(final int clubFlag, final String clubPosts){
         super();
         posts = new ArrayList<Post>();
         clubhub = new Firebase("https://clubhub.firebaseio.com");
+        currCompare = Post.TimeComparator;
 
         clubhub.child("posts").addValueEventListener(new ValueEventListener() {
             @Override
@@ -68,6 +72,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                         }
                     }
                 }
+                Collections.sort(posts,currCompare);
                 CardAdapterPosts.this.notifyDataSetChanged();
                 /*DataSnapshot description = snapshot.child("description");
                 Toast.makeText(context, description.getValue().toString(), Toast.LENGTH_LONG).show();
@@ -87,6 +92,10 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
     public void switchPostList(ArrayList<Post> p){
         posts = p;
         CardAdapterPosts.this.notifyDataSetChanged();
+    }
+
+    public void setCurrCompare(Comparator<Post> comp){
+        currCompare = comp;
     }
 
     public List<Post> getPosts(){
@@ -133,6 +142,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
 
         }
 
+        holder.upvoteButton.setEnabled(true);
         clubhub.child("posts").child(post.id).child("likedBy").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -140,8 +150,6 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                 for (DataSnapshot ds : it){
                     if (ds.getValue().toString().equals(clubhub.getAuth().getUid())){
                         holder.upvoteButton.setEnabled(false);
-                    }else{
-                        holder.upvoteButton.setEnabled(true);
                     }
                 }
             }
@@ -161,7 +169,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
             public void onClick(View v) {
                 clubhub = new Firebase("https://clubhub.firebaseio.com");
                 Firebase clublikes = clubhub.child("posts").child(post.id).child("likes");
-                ((Button)v).setEnabled(false);
+               // ((Button)v).setEnabled(false);
                 clublikes.runTransaction(new Transaction.Handler(){
                     @Override
                     public Transaction.Result doTransaction(MutableData currentData) {

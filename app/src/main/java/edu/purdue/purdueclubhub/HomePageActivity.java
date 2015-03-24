@@ -201,14 +201,13 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             //View Subscriptions
             mRecyclerView.setAdapter(clubAdapter);
             mToolbar.setTitle("Club Subscriptions");
-            clubs = (ArrayList) clubAdapter.getClubs();
             subscribedClubs = new ArrayList<Club>();
-            subscribedClubs.clear();
 
             clubhub = new Firebase("https://clubhub.firebaseio.com");
             clubhub.child("users").child(clubhub.getAuth().getUid()).child("clubs").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
+                    subscribedClubs.clear();
                     Iterable<DataSnapshot> iterator;
                     if ((iterator = snapshot.getChildren()) != null) {
                         for (DataSnapshot ds : iterator) {

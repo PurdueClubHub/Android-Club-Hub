@@ -135,8 +135,8 @@
         android:layout_height="wrap_content"
         android:text="Subscribe"
         android:id="@+id/subscribeButton"
-        android:layout_marginBottom="65dp"
+        android:layout_marginBottom="63dp"
         android:layout_alignBottom="@+id/scrollView"
-        android:layout_toEndOf="@+id/clubNameTextView" />
+        android:layout_toEndOf="@+id/postsButton" />
 
 </RelativeLayout>

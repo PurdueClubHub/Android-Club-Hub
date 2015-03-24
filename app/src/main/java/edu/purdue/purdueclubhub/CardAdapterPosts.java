@@ -22,6 +22,7 @@ import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
@@ -131,6 +132,26 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
             });
 
         }
+
+        clubhub.child("posts").child(post.id).child("likedBy").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> it = dataSnapshot.getChildren();
+                for (DataSnapshot ds : it){
+                    if (ds.getValue().toString().equals(clubhub.getAuth().getUid())){
+                        holder.upvoteButton.setEnabled(false);
+                    }else{
+                        holder.upvoteButton.setEnabled(true);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
         holder.clubName.setText("for " + post.clubName);
         holder.contents.setText((post.contents));
         holder.scoreText.setText((post.likes));
@@ -158,6 +179,8 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                             val++;
                             currentData.setValue(String.valueOf(val));
                         }
+                        clubhub.child("posts").child(post.id).child("likedBy").push().setValue(UID);
+
                         return Transaction.success(currentData);
                     }
                     @Override

@@ -1,24 +1,16 @@
 package edu.purdue.purdueclubhub;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Shade390 on 3/24/2015.
@@ -50,6 +42,7 @@ public class PostsFromClub extends ActionBarActivity //implements NavigationDraw
         mToolbar.setTitle("Posts from Clubs");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.fragment_drawer);
         //mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
@@ -76,7 +69,7 @@ public class PostsFromClub extends ActionBarActivity //implements NavigationDraw
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_purdue_club_hub, menu); //???
+        //getMenuInflater().inflate(R.menu.menu_purdue_club_hub, menu); //???
         return true;
     }
 

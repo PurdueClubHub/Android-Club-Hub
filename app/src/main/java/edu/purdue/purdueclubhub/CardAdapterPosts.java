@@ -101,6 +101,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
     public List<Post> getPosts(){
         return posts;
     }
+
     public List<Post> getClubPosts(String club_name)
     {
         List<Post> retPosts = new ArrayList<Post>();;

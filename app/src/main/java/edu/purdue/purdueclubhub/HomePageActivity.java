@@ -36,6 +36,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
     private ArrayList<Post> sortedPosts;
     private ArrayList<Post> clubPosts;
     private ArrayList<Club> subscribedClubs;
+    private ArrayList<Post> subscribedPosts;
     private ArrayList<Club> clubs = new ArrayList<Club>();
     private ArrayList<Post> posts = new ArrayList<Post>();
     private Toolbar mToolbar;
@@ -209,7 +210,36 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                 }
             });
         }
-        if(position==3) {
+        if(position==3){
+            //View Subscription Posts
+            mRecyclerView.setAdapter(postAdapter);
+            mToolbar.setTitle("Subscription Posts");
+            subscribedPosts = new ArrayList<Post>();
+
+            clubhub = new Firebase("https://clubhub.firebaseio.com");
+            clubhub.child("users").child(clubhub.getAuth().getUid()).child("clubs").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    subscribedPosts.clear();
+                    Iterable<DataSnapshot> iterator;
+                    if ((iterator = snapshot.getChildren()) != null) {
+                        for (DataSnapshot ds : iterator) {
+                            for(int i = 0; i < posts.size(); i++){
+                                if(posts.get(i).clubName.equals(ds.getValue().toString())){
+                                    subscribedPosts.add(posts.get(i));
+                                }
+                            }
+                        }
+                        postAdapter.switchPostList(subscribedPosts);
+                    }
+                }
+
+                @Override
+                public void onCancelled(FirebaseError error) {
+                }
+            });
+        }
+        if(position==4) {
                    //Search Posts
                    //Toast.makeText(this, "Search Clubs Selected", Toast.LENGTH_SHORT).show();
                    mRecyclerView.setAdapter(postAdapter);
@@ -252,7 +282,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                    builder.show();
                }
 
-               if(position==4)
+               if(position==5)
 
                {
                    //Search Clubs
@@ -302,7 +332,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                    builder.show();
                }
 
-               if(position==5)
+               if(position==6)
 
                {
                    //Create Club
@@ -323,7 +353,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                    }
                }
 
-               if(position==6)
+               if(position==7)
 
                {
                    //Logout

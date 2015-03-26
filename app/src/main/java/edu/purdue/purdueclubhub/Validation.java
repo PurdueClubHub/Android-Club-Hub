@@ -19,7 +19,7 @@ public class Validation {
         }
 
         if (!pass.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-_!@#$%^&*]).+$")){
-            return false;
+            //return false;
         }
         return true;
     }

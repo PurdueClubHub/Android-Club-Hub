@@ -72,7 +72,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
-
+//laksjd;flkajsdf;lkajsdf;lkasd;flkjas;ldfkjas;ldfkjas;dlfkjas;dflkjasd;flkj
 
         //Toast.makeText(this, "" + flag, Toast.LENGTH_LONG).show();
         if(flag == 1) {

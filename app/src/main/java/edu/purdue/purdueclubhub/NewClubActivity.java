@@ -83,6 +83,10 @@ public class NewClubActivity extends ActionBarActivity {
                 }
                 else {
                     Toast.makeText(getBaseContext(), "Club with that name already exists", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(getBaseContext(), ClubViewActivity.class);
+                    i.putExtra("clubName", club_name);
+                    startActivity(i);
+                    finish();
                 }
             }
 

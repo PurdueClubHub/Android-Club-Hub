@@ -99,6 +99,9 @@ public class ClubViewActivity extends ActionBarActivity {
                if(UID.contains("anonymous:-") == true)
                 {
                     Toast.makeText(getApplicationContext(), "Please login to create a post.", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getBaseContext(), NewPostActivity.class);
+                    i.putExtra("Club", clubname);
+                    startActivity(i);
                 }
                else
                {
@@ -178,7 +181,7 @@ public class ClubViewActivity extends ActionBarActivity {
                 }
 
                 for (DataSnapshot officer : dataSnapshot.child("officers").getChildren()) {
-                    if (officer.getValue().toString().equals(uid)) {
+                    if (!officer.getValue().toString().equals(uid)) {
                         newPostButton.setVisibility(View.VISIBLE);
                         //editButton.setVisibility(View.VISIBLE);
                         canUpdate = true;

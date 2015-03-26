@@ -336,6 +336,9 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                    String UID = bundle.getString("Uid");
                    if (UID.equals("Guest")) {
                        Toast.makeText(this, "Please login to create a club.", Toast.LENGTH_SHORT).show();
+                       Intent intent = new Intent(getBaseContext(), NewClubActivity.class);
+                       intent.putExtra("Uid", UID);
+                       startActivity(intent);
                    } else {
                        //Toast.makeText(this, UID + " clicked 'Create Clubs'", Toast.LENGTH_SHORT).show();
                        Intent intent = new Intent(getBaseContext(), NewClubActivity.class);

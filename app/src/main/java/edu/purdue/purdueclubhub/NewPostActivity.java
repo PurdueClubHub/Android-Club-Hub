@@ -71,7 +71,7 @@ public class NewPostActivity extends ActionBarActivity{
     {
         String content = ((EditText)findViewById(R.id.postContentEditText)).getText().toString();
 
-        if(content == null || content.equals(""))
+        if(content == null /*|| content.equals("")*/)
             return;
 
         Post p = new Post(clubName, content, UID, "0");

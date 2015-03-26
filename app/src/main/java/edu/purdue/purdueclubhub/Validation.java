@@ -18,7 +18,7 @@ public class Validation {
             return false;
         }
 
-        if (!pass.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-_!@#$%^&*]).+$")){
+        if (!pass.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-_!@#$%^&*]).+$")){
             return false;
         }
         return true;

@@ -15,9 +15,10 @@ public class Validation {
 
         int length = pass.length();
         if(length < minLength || length > maxLength){
-            return false;
+            return true;
         }
 
+        
         if (!pass.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-_!@#$%^&*]).+$")){
             return false;
         }

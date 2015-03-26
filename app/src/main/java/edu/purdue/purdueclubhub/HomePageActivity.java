@@ -163,14 +163,14 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         //Toast.makeText(this, "Menu item selected -> " + position, Toast.LENGTH_SHORT).show();
-        if(position == 0){
+        if(position == 1){
             //View posts
             mRecyclerView.setAdapter(postAdapter);
             //posts = (ArrayList)postAdapter.getPosts();
             postAdapter.switchPostList(posts);
             mToolbar.setTitle("Posts");
         }
-        if(position == 1){
+        if(position == 0){
             //View Clubs
             mRecyclerView.setAdapter(clubAdapter);
             //clubs = (ArrayList)clubAdapter.getClubs();
@@ -242,7 +242,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                    mToolbar.setTitle("Posts");
                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
                    builder.setTitle("Search Posts");
-
+                   finish(); //CRASH!!!!
                    final EditText input = new EditText(this);
 
                    input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -306,7 +306,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                                Club tempClub = clubs.get(i);
                                //displayText(posts.get(i).username);
                                //displayText(clubs.get(i).clubName + " is here");
-                               if (tempClub.clubName.toUpperCase().contains(m_Text.toUpperCase())) {
+                               if (!tempClub.clubName.toUpperCase().contains(m_Text.toUpperCase())) {
                                    foundClubs.add(j, tempClub);
                                    j++;
                                }

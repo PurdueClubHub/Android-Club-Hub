@@ -365,7 +365,7 @@ public class LoginActivity extends ActionBarActivity {
         if(!password.equals(confirm)) {
             setFormEnabled(true);
             Toast.makeText(getBaseContext(), "Password fields must match!", Toast.LENGTH_LONG).show();
-            return;
+            //return;
         }
 
         //validate that password is strong
@@ -376,7 +376,7 @@ public class LoginActivity extends ActionBarActivity {
         }
         if(!Validation.isValidUsername(username))
         {
-            Toast.makeText(getBaseContext(), "Invalid Username: Must not be specail username, \"guest\" or \"anonymous:-\" and must be composed of letters, numbers, dashes, and underscores. Username should be between 3 and 18 characters long", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Invalid Username: Must not be special username, \"guest\" or \"anonymous:-\" and must be composed of letters, numbers, dashes, and underscores. Username should be between 3 and 18 characters long", Toast.LENGTH_LONG).show();
             setFormEnabled(true);
             return;
         }

@@ -9,54 +9,55 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <activity
             android:name=".PurdueClubHub"
             android:label="@string/app_name" >
         </activity>
-
         <activity
             android:name=".LoginActivity"
             android:label="ClubHub" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".HomePageActivity"
             android:label="@string/title_home_page_activity" >
         </activity>
-
         <activity
             android:name=".PostsFromClub"
-            android:label="Posts from Club" >
+            android:label="Posts from Club"
+            android:parentActivityName=".ClubViewActivity" >
         </activity>
-
         <activity
             android:name=".NewClubActivity"
             android:label="@string/title_activity_new_club"
             android:parentActivityName=".HomePageActivity" >
             >
         </activity>
-
         <activity
             android:name=".PostViewActivity"
             android:label="@string/title_post_view_activity" >
         </activity>
-
         <activity
             android:name=".ClubViewActivity"
             android:label="@string/title_club_view_activity"
             android:parentActivityName=".HomePageActivity" >
         </activity>
-
         <activity
             android:name=".NewPostActivity"
             android:label="@string/title_new_post_activity" >
         </activity>
-
+        <activity
+            android:name=".UpdateClubActivity"
+            android:label="@string/title_activity_update_club"
+            android:parentActivityName=".ClubViewActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.purdue.purdueclubhub.ClubViewActivity" />
+        </activity>
     </application>
 
 </manifest>

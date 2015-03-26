@@ -12,11 +12,9 @@
     <string name="title_club_view_activity">Club View</string>
     <string name="firebase_url">https://clubhub.firebaseio.com</string>
     <string name="prefs_name">App Prefs</string>
-
-
-
     <string name="drawer_open">Menu opened</string>
     <string name="drawer_close">Menu closed</string>
     <string name="title_activity_club">ClubActivity</string>
+    <string name="title_activity_update_club">UpdateClubActivity</string>
 
 </resources>

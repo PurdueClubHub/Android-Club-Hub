@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,7 +19,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -38,7 +39,8 @@ public class ClubViewActivity extends ActionBarActivity {
 
     TextView description, clubName, officers;
     Button editButton, newPostButton, postsButton, subscribeButton;
-
+    String clubname;
+    boolean canUpdate = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,15 +55,14 @@ public class ClubViewActivity extends ActionBarActivity {
                 finish();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+       
         //get textviews
         description = (TextView) findViewById(R.id.descriptionTextView);
         clubName = (TextView) findViewById(R.id.clubNameTextView);
         officers = (TextView) findViewById(R.id.officersTextView);
 
         //get buttons
-        editButton = (Button) findViewById(R.id.editclubButton);
+        //editButton = (Button) findViewById(R.id.editclubButton);
         newPostButton = (Button) findViewById(R.id.newpostbutton);
         postsButton = (Button) findViewById(R.id.postsButton);
         subscribeButton = (Button) findViewById(R.id.subscribeButton);
@@ -86,7 +87,8 @@ public class ClubViewActivity extends ActionBarActivity {
         UID = auth.getUid();
 
         //calling = getIntent();
-        final String clubname = recdData.getString("clubName");
+        clubname = recdData.getString("clubName");
+
 
         findViewById(R.id.newpostbutton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +105,7 @@ public class ClubViewActivity extends ActionBarActivity {
                     Intent i = new Intent(getBaseContext(), NewPostActivity.class);
                     i.putExtra("Club", clubname);
                     startActivity(i);
-                }
+               }
             }
         });
 
@@ -178,7 +180,8 @@ public class ClubViewActivity extends ActionBarActivity {
                 for (DataSnapshot officer : dataSnapshot.child("officers").getChildren()) {
                     if (officer.getValue().toString().equals(uid)) {
                         newPostButton.setVisibility(View.VISIBLE);
-                        editButton.setVisibility(View.VISIBLE);
+                        //editButton.setVisibility(View.VISIBLE);
+                        canUpdate = true;
                         break;
                     }
                 }
@@ -195,6 +198,36 @@ public class ClubViewActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_view_club, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        switch(id) {
+            case R.id.updateinfo:
+                if(canUpdate) {
+                    Intent i = new Intent(getBaseContext(), UpdateClubActivity.class);
+                    i.putExtra("clubName", clubname);
+                    startActivity(i);
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "You do not have permission to update this club", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

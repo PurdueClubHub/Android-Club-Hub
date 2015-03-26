@@ -3,14 +3,15 @@ package edu.purdue.purdueclubhub;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class NewClubActivity extends ActionBarActivity {
+public class UpdateClubActivity extends ActionBarActivity {
     //Firebase Reference
     Firebase mFirebaseRef;
 
@@ -30,6 +31,7 @@ public class NewClubActivity extends ActionBarActivity {
     //preferences
     SharedPreferences prefs;
     String UID;
+    String club_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +41,42 @@ public class NewClubActivity extends ActionBarActivity {
         Firebase.setAndroidContext(this);
         mFirebaseRef = new Firebase(getResources().getString(R.string.firebase_url));
 
-
         prefs = getPreferences(Context.MODE_PRIVATE);
 
+        final Bundle recdData = getIntent().getExtras();
+        //description.setText(recdData.getString("description"));
+        //clubName.setText(recdData.getString("clubName"));
+
+        club_name = recdData.getString("clubName");
+        TextView titleView = (TextView)findViewById(R.id.titleTextView);
+        titleView.setText("Update Club");
+
+        EditText cnameET = (EditText)(findViewById(R.id.cc_name_input));
+        cnameET.setText(club_name);
+        cnameET.setEnabled(false);
+
+        ((Button)findViewById(R.id.create_club_submit)).setText("Update Club");
 
         AuthData auth = mFirebaseRef.getAuth();
         UID = auth.getUid();
+
+        mFirebaseRef.child("clubs").child(club_name).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChildren()) {
+                    ((EditText)findViewById(R.id.cc_club_info)).setText((String)dataSnapshot.child("description").getValue());
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "Club with that name does not exist", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
     }
 
 
@@ -74,7 +106,7 @@ public class NewClubActivity extends ActionBarActivity {
         mFirebaseRef.child("clubs").child(club_name).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.hasChildren()) {
+                if (dataSnapshot.hasChildren()) {
                     mFirebaseRef.child("clubs").child(club_name).setValue(club);
                     Intent i = new Intent(getBaseContext(), ClubViewActivity.class);
                     i.putExtra("clubName", club_name);
@@ -82,7 +114,7 @@ public class NewClubActivity extends ActionBarActivity {
                     finish();
                 }
                 else {
-                    Toast.makeText(getBaseContext(), "Club with that name already exists", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Club with that name does not exist", Toast.LENGTH_LONG).show();
                 }
             }
 

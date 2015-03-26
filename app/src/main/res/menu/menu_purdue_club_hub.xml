@@ -3,5 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".PurdueClubHub">
     <item android:id="@+id/sort_posts" android:title="Sort Posts by Up-votes"   />
     <item android:id="@+id/sort_posts_club" android:title = "Sort Posts by Club" />
+    <item android:id="@+id/sort_posts_time" android:title = "Sort Posts by Most Recent" />
 
 </menu>

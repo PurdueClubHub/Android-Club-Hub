@@ -138,25 +138,21 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             mToolbar.setTitle("Sorted Posts by Club");
             posts = (ArrayList) postAdapter.getPosts();
             sortedPosts = posts;//new ArrayList<Post>();
-            /*int j;
-            for (int i = 0; i < posts.size(); i++) {
-                j = 0;
-                Post tempPost = posts.get(i);
-                //displayText(posts.get(i).username);
-                for (j = 0; j < sortedPosts.size(); j++) {
-                    Post tempPost2 = sortedPosts.get(j);
-                    if (tempPost.clubName.compareToIgnoreCase(tempPost2.clubName) >= 0) {
-                        continue;
-                    } else {
-                        break;
-                    }
-                }
-                sortedPosts.add(j, tempPost);
-            }*/
+            //removed brute force sorting from here
             postAdapter.setCurrCompare(Post.ClubComparator);
             Collections.sort(sortedPosts,Post.ClubComparator);
             postAdapter.switchPostList(sortedPosts);
+        }else if (id == R.id.sort_posts_time) {
+            mRecyclerView.setAdapter(postAdapter);
+            mToolbar.setTitle("Sorted Posts by Time");
+            posts = (ArrayList) postAdapter.getPosts();
+            sortedPosts = posts;//new ArrayList<Post>();
+            //removed brute force sorting from here
+            postAdapter.setCurrCompare(Post.TimeComparator);
+            Collections.sort(sortedPosts,Post.TimeComparator);
+            postAdapter.switchPostList(sortedPosts);
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -297,10 +293,6 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                    input.setInputType(InputType.TYPE_CLASS_TEXT);
                    builder.setView(input);
 
-            /*for(int i = 0; i < clubAdapter.getClubs().size(); i++) {
-                Club tempClub = clubAdapter.getClubs().get(i);
-                displayText(clubAdapter.getClubs().get(i).clubName + " at " + i);
-            }*/
 
                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                        @Override

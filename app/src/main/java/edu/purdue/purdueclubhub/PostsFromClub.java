@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -52,6 +53,12 @@ public class PostsFromClub extends ActionBarActivity //implements NavigationDraw
         mRecyclerView.setLayoutManager(layoutManager);
 
 
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //Toast.makeText(this, "" + flag, Toast.LENGTH_LONG).show();
         club_name = prefs.getString("CLUB_NAME", "");
@@ -132,7 +139,7 @@ public class PostsFromClub extends ActionBarActivity //implements NavigationDraw
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        finish();
     }
 
 }

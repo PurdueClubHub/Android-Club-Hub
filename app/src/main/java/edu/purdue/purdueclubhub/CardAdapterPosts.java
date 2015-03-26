@@ -225,7 +225,7 @@ class ViewHolderPosts extends RecyclerView.ViewHolder{
         clubName = (TextView)itemView.findViewById(R.id.club_name);
         userid = (TextView)itemView.findViewById(R.id.username);
         upvoteButton = (Button) itemView.findViewById(R.id.upvote_shortcut);
-        view.setOnClickListener(new View.OnClickListener(){
+       /* view.setOnClickListener(new View.OnClickListener(){
             @Override public void onClick(View v){
                 String content = contents.getText().toString();
                 String cName = clubName.getText().toString();
@@ -239,7 +239,7 @@ class ViewHolderPosts extends RecyclerView.ViewHolder{
                 intent.putExtra("score",score);
                 v.getContext().startActivity(intent);
             }
-        });
+        });*/
 
     }
 }

@@ -179,7 +179,15 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                         if(UID.contains("anonymous:-") == true)
                         {
                             //Toast.makeText(getBaseContext(), "Please login to vote on a post.", Toast.LENGTH_SHORT).show();
-                            return Transaction.abort();
+                            //return Transaction.abort();
+                            if (currentData.getValue() == null) {
+                                currentData.setValue("1");
+                            } else {
+                                int val = Integer.parseInt(currentData.getValue().toString());
+                                val++;
+                                currentData.setValue(String.valueOf(val));
+                                return Transaction.success(currentData);
+                            }
                         }
                         if (currentData.getValue() == null) {
                             currentData.setValue("1");

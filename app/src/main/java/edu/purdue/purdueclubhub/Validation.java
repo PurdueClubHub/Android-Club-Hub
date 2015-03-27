@@ -18,7 +18,6 @@ public class Validation {
             return true;
         }
 
-        
         if (!pass.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-_!@#$%^&*]).+$")){
             return false;
         }
@@ -32,12 +31,12 @@ public class Validation {
     public static boolean isValidUsername(String user){
 
         //must be alphanumeric with underscores, spaces, periods, dashes
-        int maxLength = 18, minLength = 3;
+        int maxLength = 17, minLength = 6;
 
         int length = user.length();
         if(length < minLength || length > maxLength){
          //   Toast.makeText(getBaseContext(), "Invalid Username: Must be at least three characters and below eighteen", Toast.LENGTH_LONG).show();
-            return false;
+            return true;
         }
 
         //if(user.matches(".*^([A-Za-z0-9 -_.]).*")){

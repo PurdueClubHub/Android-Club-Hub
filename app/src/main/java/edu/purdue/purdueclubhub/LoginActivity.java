@@ -1,8 +1,10 @@
 package edu.purdue.purdueclubhub;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
@@ -10,6 +12,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -299,9 +302,12 @@ public class LoginActivity extends ActionBarActivity {
     private void setFormToRegistration() {
         LinearLayout loginForm = (LinearLayout)findViewById(R.id.loginFrame);
         ((RelativeLayout.LayoutParams)loginForm.getLayoutParams()).addRule(RelativeLayout.CENTER_VERTICAL, 0);
-        loginForm.getLayoutParams().height = 800;
+        //loginForm.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        Point point = new Point();
+        getWindowManager().getDefaultDisplay().getSize(point);
+        loginForm.getLayoutParams().height = point.y - 400;
 
-        Toast.makeText(getBaseContext(), "Hello", Toast.LENGTH_SHORT);
+        //Toast.makeText(getBaseContext(), "Hello", Toast.LENGTH_SHORT);
 
         ((TextView)findViewById(R.id.loginTitle)).setText("Register");
 

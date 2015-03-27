@@ -24,7 +24,8 @@
         </activity>
         <activity
             android:name=".HomePageActivity"
-            android:label="@string/title_home_page_activity" >
+            android:label="@string/title_home_page_activity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".PostsFromClub"
@@ -44,16 +45,20 @@
         <activity
             android:name=".ClubViewActivity"
             android:label="@string/title_club_view_activity"
-            android:parentActivityName=".HomePageActivity" >
+            android:parentActivityName=".HomePageActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".NewPostActivity"
-            android:label="@string/title_new_post_activity" >
+            android:label="@string/title_new_post_activity"
+            android:screenOrientation="portrait">
+
         </activity>
         <activity
             android:name=".UpdateClubActivity"
             android:label="@string/title_activity_update_club"
-            android:parentActivityName=".ClubViewActivity" >
+            android:parentActivityName=".ClubViewActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.purdue.purdueclubhub.ClubViewActivity" />

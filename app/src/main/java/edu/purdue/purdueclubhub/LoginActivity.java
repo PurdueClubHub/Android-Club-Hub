@@ -43,6 +43,8 @@ public class LoginActivity extends ActionBarActivity {
     int usernameEditTextID;
     long postTime;
 
+    LinearLayout oldLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,8 +301,15 @@ public class LoginActivity extends ActionBarActivity {
     /*
         Function that animates the form from login to registration
      */
+
+    private void returnToLogin(){
+        LinearLayout loginForm = (LinearLayout)findViewById(R.id.loginFrame);
+        loginForm.setLayoutParams(oldLayout.getLayoutParams());
+    }
+
     private void setFormToRegistration() {
         LinearLayout loginForm = (LinearLayout)findViewById(R.id.loginFrame);
+        oldLayout = loginForm;
         ((RelativeLayout.LayoutParams)loginForm.getLayoutParams()).addRule(RelativeLayout.CENTER_VERTICAL, 0);
         //loginForm.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         Point point = new Point();
@@ -423,4 +432,16 @@ public class LoginActivity extends ActionBarActivity {
 
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        if(isRegistrationForm){
+            Intent i = new Intent(getBaseContext(),LoginActivity.class);
+            startActivity(i);
+            finish();
+        }else{
+            finish();
+        }
+    }
+
 }

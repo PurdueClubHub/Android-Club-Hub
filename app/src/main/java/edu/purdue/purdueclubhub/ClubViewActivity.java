@@ -141,7 +141,13 @@ public class ClubViewActivity extends ActionBarActivity {
 
     public void checkSubscribed(final String club_name){
         final String uid = mFirebaseRef.getAuth().getUid();
+
         Firebase clubRef  = mFirebaseRef.child("users").child(mFirebaseRef.getAuth().getUid()).child("clubs");
+        if(UID.contains("anonymous:-") == true)
+        {
+            //Toast.makeText(getApplicationContext(), "Please login to create a post.", Toast.LENGTH_SHORT).show();
+            subscribeButton.setEnabled(false);
+        }
         clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

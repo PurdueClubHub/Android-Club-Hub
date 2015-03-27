@@ -67,7 +67,7 @@ public class LoginActivity extends ActionBarActivity {
                 Date day = new Date();
                 final long now = day.getTime();
 
-                if(now-prev>86400000) {
+                if(now-prev>3600000) {
                     currentData.setValue(now);
                     Firebase clubhub = new Firebase("https://clubhub.firebaseio.com");
                     clubhub.child("posts").addValueEventListener(new ValueEventListener() {

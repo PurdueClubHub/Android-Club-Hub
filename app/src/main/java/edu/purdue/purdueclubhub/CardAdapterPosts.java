@@ -53,7 +53,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                     String id = ds.getKey();
                     Object obj = ds.child("username").getValue();
                     String user;
-                    if(obj != null) {
+                    if(obj == null) {
                         user = ds.child("username").getValue().toString();
                     }else{
                         user = "No Username Found";
@@ -150,7 +150,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                 Iterable<DataSnapshot> it = dataSnapshot.getChildren();
                 for (DataSnapshot ds : it){
                     if (ds.getValue().toString().equals(clubhub.getAuth().getUid())){
-                        holder.upvoteButton.setEnabled(false);
+                        //holder.upvoteButton.setEnabled(false);
                     }
                 }
             }
@@ -179,7 +179,7 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
                         if(UID.contains("anonymous:-") == true)
                         {
                             //Toast.makeText(getBaseContext(), "Please login to vote on a post.", Toast.LENGTH_SHORT).show();
-                            return Transaction.abort();
+                            //return Transaction.abort();
                         }
                         if (currentData.getValue() == null) {
                             currentData.setValue("1");

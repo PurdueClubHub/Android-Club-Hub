@@ -68,8 +68,8 @@ public class ClubViewActivity extends ActionBarActivity {
         subscribeButton = (Button) findViewById(R.id.subscribeButton);
 
         final Bundle recdData = getIntent().getExtras();
-        description.setText(recdData.getString("description"));
-        clubName.setText(recdData.getString("clubName"));
+        clubName.setText(recdData.getString("description"));
+        description.setText(recdData.getString("clubName"));
         //first_officer.setText(recdData.getString("firstOfficer"));
         /*String [] array = new String[5];
         String officersFromArray = "";
@@ -174,10 +174,10 @@ public class ClubViewActivity extends ActionBarActivity {
                 //set description
                 if(dataSnapshot.hasChild("description")) {
                     Map<String, Object> value = (Map<String, Object>) dataSnapshot.getValue();
-                    description.setText(value.get("description").toString());
+                    clubName.setText(value.get("description").toString());
                 }
                 else {
-                    description.setText("Could not find club description");
+                    clubName.setText("Could not find club description");
                 }
 
                 for (DataSnapshot officer : dataSnapshot.child("officers").getChildren()) {
@@ -200,7 +200,7 @@ public class ClubViewActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
+        /*finish();*/
     }
 
     @Override

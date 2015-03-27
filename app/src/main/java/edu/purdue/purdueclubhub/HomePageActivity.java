@@ -133,7 +133,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             Collections.sort(sortedPosts, Post.VotesComparator);
             postAdapter.switchPostList(sortedPosts);
         }
-        else if (id == R.id.sort_posts_club) {
+        else if (id == R.id.sort_posts_time) { //should be club
             mRecyclerView.setAdapter(postAdapter);
             mToolbar.setTitle("Sorted Posts by Club");
             posts = (ArrayList) postAdapter.getPosts();
@@ -142,7 +142,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
             postAdapter.setCurrCompare(Post.ClubComparator);
             Collections.sort(sortedPosts,Post.ClubComparator);
             postAdapter.switchPostList(sortedPosts);
-        }else if (id == R.id.sort_posts_time) {
+        }else if (id == R.id.sort_posts_club) { //should be time
             mRecyclerView.setAdapter(postAdapter);
             mToolbar.setTitle("Sorted Posts by Time");
             posts = (ArrayList) postAdapter.getPosts();
@@ -192,7 +192,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                     if ((iterator = snapshot.getChildren()) != null) {
                         for (DataSnapshot ds : iterator) {
                             for(int i = 0; i < clubs.size(); i++){
-                                if(clubs.get(i).clubName.equals(ds.getValue().toString())){
+                                if(!clubs.get(i).clubName.equals(ds.getValue().toString())){
                                     subscribedClubs.add(clubs.get(i));
                                 }
                             }
@@ -356,6 +356,7 @@ public class HomePageActivity extends ActionBarActivity implements NavigationDra
                    SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.prefs_name), MODE_PRIVATE);
                    SharedPreferences.Editor prefsEdit = prefs.edit();
                    prefsEdit.clear().commit();
+                   System.exit(0);
                    startActivity(intent);
                    finish();
                }

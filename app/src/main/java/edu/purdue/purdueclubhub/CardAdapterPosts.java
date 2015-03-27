@@ -131,8 +131,10 @@ public class CardAdapterPosts extends RecyclerView.Adapter<ViewHolderPosts>{
             clubhub.child("users").child(post.getUsername()).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    String trueName = dataSnapshot.getValue().toString();
-                    holder.userid.setText("by " + trueName);
+                    if(dataSnapshot.getValue() != null) {
+                        String trueName = dataSnapshot.getValue().toString();
+                        holder.userid.setText("by " + trueName);
+                    }
                 }
 
                 @Override
